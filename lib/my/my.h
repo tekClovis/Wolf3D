@@ -1,16 +1,19 @@
 /*
-** EPITECH PROJECT, 2024
-** my.h
+** EPITECH PROJECT, 2025
+** minishell
 ** File description:
-** define your lib
+** my
 */
+
+
+#ifndef MY_H
+    #define MY_H
+
+#include "call_csfml.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <stdarg.h>
-
-#ifndef MY_H
-    #define MY_H
 
 typedef struct node_s {
     void *data;
@@ -85,4 +88,6 @@ int my_putcharerr(char c);
 list_t *dup_list(list_t *list);
 char *int_to_str(int nb);
 
-#endif
+int wolf3d(void);
+
+#endif //MY_H
