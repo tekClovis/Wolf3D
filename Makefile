@@ -22,14 +22,17 @@ LDFLAG = -lcsfml-graphics -lcsfml-system -lcsfml-audio \
 	-lcsfml-window -lm -lncurses
 
 all: $(NAME)
+
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAG)
-	rm -rf $(OBJ)
+		make -C ./lib/
+		gcc $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAG)
 
 clean:
-	rm -rf $(OBJ)
+		make clean -C ./lib/
+		rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+		make fclean -C ./lib/
+		rm -rf $(NAME)
 
 re: fclean all
