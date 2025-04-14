@@ -16,7 +16,7 @@ SRC += src/check/is_wall.c
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -g -Iinclude
+CFLAGS = -Wall -Wextra -g -Iinclude -Llib/ -lmy
 
 LDFLAG = -lcsfml-graphics -lcsfml-system -lcsfml-audio \
 	-lcsfml-window -lm -lncurses
