@@ -19,7 +19,7 @@ SRC += src/init/init_player_ennemies.c
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -g -Iinclude -Llib/ -lmy
+CFLAGS = -Wall -Wextra -Iinclude -Llib/ -lmy
 
 LDFLAG = -lcsfml-graphics -lcsfml-system -lcsfml-audio \
 	-lcsfml-window -lm -lncurses
@@ -39,3 +39,6 @@ fclean: clean
 		rm -rf $(NAME)
 
 re: fclean all
+
+debug: CFLAGS += -g
+debug: fclean all

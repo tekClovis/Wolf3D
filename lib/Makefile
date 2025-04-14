@@ -62,13 +62,17 @@ SRCS =  my/my_compute_power_rec.c   \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Iinclude/ -g
+INCLUDE = ../include/
+
+LDFLAGS	= -L./ -lmy
+
+CFLAGS	= $(INCLUDE:%=-I%) -Wall -Wextra
 
 all : $(NAME)
 
 $(NAME): $(OBJ)
 	ar rc libmy.a ./my/*.o
-	cp ./my/my.h ../include
+
 clean:
 	rm -f $(OBJ)
 
