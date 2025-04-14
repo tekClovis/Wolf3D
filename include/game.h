@@ -19,10 +19,12 @@
 typedef struct entities_handler_s{
     player_t player;
     object_handler_t object;
+    ennemies_t ennemies;
 }entities_handler_t;
 
 typedef struct game_handler_s
 {
-
+    entities_handler_t entities;
+    sfRenderWindow *window;
 }game_handler_t;
 #endif //GAME_H

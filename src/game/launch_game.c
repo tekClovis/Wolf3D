@@ -5,7 +5,7 @@
 ** launch_game
 */
 
-int launch_game()
+int launch_game(void)
 {
     return 0;
 }

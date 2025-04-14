@@ -8,12 +8,16 @@
 #include "init.h"
 #include "map.h"
 #include <time.h>
+#include "game.h"
 
 int wolf3d(void)
 {
-    sfRenderWindow *window = create_window();
+    game_handler_t game_handler;
+    int error = 0;
     /*init some struct*/
-
-    launch_game(window);
+    error = init_game_handler(&game_handler);
+    if (error == 84)
+        return 84;
+    launch_game();
     return 0;
 }

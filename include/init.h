@@ -10,7 +10,6 @@
     #define INIT_H
 
     #include "call_csfml.h"
-    #include "player.h"
 
 sfRenderWindow *create_window(void);
 void init_player(player_t* player ); // Initializes the player 's position and angle

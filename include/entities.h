@@ -37,7 +37,7 @@ typedef struct ennemy_s {
     guner_t guner_class;
 }ennemy_t;
 
-typedef struct object_handler_s{
+typedef struct object_s{
     entities_class_t property;
     size_t size;
     size_t alloc;
