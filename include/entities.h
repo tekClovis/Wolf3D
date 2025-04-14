@@ -16,4 +16,43 @@ typedef struct coord_s {
     float y;
 }coord_t;
 
+typedef struct entities_class_s{
+    coord_t coord;
+    sfSprite *sprite;
+    sfTexture *texture;
+}entities_class_t;
+
+typedef struct guner_s {
+    int life;
+    int weapon;
+}guner_t;
+
+typedef struct player_s {
+    entities_class_t property;
+    guner_t guner_class;
+}player_t;
+
+typedef struct ennemy_s {
+    entities_class_t property;
+    guner_t guner_class;
+}ennemy_t;
+
+typedef struct object_handler_s{
+    entities_class_t property;
+    size_t size;
+    size_t alloc;
+}object_handler_t;
+
+/*
+** Mettre une énume
+** pour les weapons
+**
+*/
+
+
+typedef struct ennemies_s {
+    coord_t coord;
+    int life;
+}ennemies_t;
+
 #endif //ENTITIES_H

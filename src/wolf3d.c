@@ -12,15 +12,8 @@
 int wolf3d(void)
 {
     sfRenderWindow *window = create_window();
+    /*init some struct*/
 
-    while (1)
-    {
-        sleep(1);
-        if (is_wall(0, 0) == 0)
-            printf("Je suis un wall\n");
-        else
-            printf("Je ne suis pas un wall\n");
-    }
-    
+    launch_game(window);
     return 0;
 }
