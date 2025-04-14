@@ -14,6 +14,8 @@ SRC += src/wolf3d.c
 SRC += src/init/create_window.c
 SRC += src/check/is_wall.c
 SRC += src/game/launch_game.c
+SRC += src/init/init_game_handler.c
+SRC += src/init/init_player_ennemies.c
 
 OBJ = $(SRC:.c=.o)
 
