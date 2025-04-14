@@ -15,7 +15,6 @@
 ** contient toute les 
 ** entité
 */
-
 typedef struct entities_handler_s{
     player_t player;
     object_handler_t object;
@@ -27,4 +26,7 @@ typedef struct game_handler_s
     entities_handler_t entities;
     sfRenderWindow *window;
 }game_handler_t;
+
+
+
 #endif //GAME_H

@@ -14,7 +14,7 @@ int wolf3d(void)
 {
     game_handler_t game_handler;
     int error = 0;
-    /*init some struct*/
+
     error = init_game_handler(&game_handler);
     if (error == 84)
         return 84;
