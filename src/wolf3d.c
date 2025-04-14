@@ -18,6 +18,6 @@ int wolf3d(void)
     error = init_game_handler(&game_handler);
     if (error == 84)
         return 84;
-    launch_game();
+    launch_game(&game_handler);
     return 0;
 }

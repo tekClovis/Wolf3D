@@ -13,6 +13,7 @@ SRC += src/map.c
 SRC += src/wolf3d.c
 SRC += src/init/create_window.c
 SRC += src/check/is_wall.c
+SRC += src/game/launch_game.c
 
 OBJ = $(SRC:.c=.o)
 

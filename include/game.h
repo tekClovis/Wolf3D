@@ -27,6 +27,6 @@ typedef struct game_handler_s
     sfRenderWindow *window;
 }game_handler_t;
 
-
+int launch_game(game_handler_t *game_handler);
 
 #endif //GAME_H
