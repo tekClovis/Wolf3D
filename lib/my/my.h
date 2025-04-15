@@ -8,12 +8,11 @@
 
 #ifndef MY_H
     #define MY_H
-
-#include "call_csfml.h"
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/stat.h>
-#include <stdarg.h>
+    #include "call_csfml.h"
+    #include <stdint.h>
+    #include <stdio.h>
+    #include <sys/stat.h>
+    #include <stdarg.h>
 
 typedef struct node_s {
     void *data;

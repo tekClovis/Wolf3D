@@ -13,8 +13,12 @@ SRC += src/map.c
 SRC += src/wolf3d.c
 SRC += src/init/create_window.c
 SRC += src/check/is_wall.c
+SRC += src/game/move_player.c
 SRC += src/game/launch_game.c
+SRC += src/game/choose_window_mode.c
+SRC += src/game/map/display_full_map.c
 SRC += src/init/init_game_handler.c
+SRC += src/init/init_map2d.c
 SRC += src/init/init_player_ennemies.c
 
 OBJ = $(SRC:.c=.o)
@@ -28,7 +32,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C ./lib/
-		gcc $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAG)
+		gcc $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAG) -g
 
 clean:
 		make clean -C ./lib/

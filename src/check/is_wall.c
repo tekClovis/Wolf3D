@@ -5,16 +5,16 @@
 ** is_wall
 */
 #include "map.h"
-
+#include <stdbool.h>
 /*
-** return 0 
+** return 0
 ** si c' est un wall
 ** sinon 1
 */
 
-int is_wall(int x, int y)
+bool is_wall(int x, int y)
 {
     if (map[x][y] == 1)
-        return 0;
-    return 1;
+        return true;
+    return false;
 }

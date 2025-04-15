@@ -11,9 +11,16 @@
     # define TILE_SIZE 64
     # define MAP_WIDTH 8
     # define MAP_HEIGHT 8
+    #include <stdbool.h>
 
-    extern int map[MAP_HEIGHT][MAP_WIDTH];
+/*
+** Variable externe
+** qui sera changé
+** par des fichier de
+** config
+*/
+extern int const map[MAP_HEIGHT][MAP_WIDTH];
 
-    int is_wall(int x, int y);
-    
+bool is_wall(int x, int y);
+
 #endif //MAP_H

@@ -4,7 +4,7 @@
 ** File description:
 ** main
 */
-#include "my.h"
+#include "game.h"
 
 int main(void)
 {
