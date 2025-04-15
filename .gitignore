@@ -1,3 +1,6 @@
 *.o
 a.out
 wolf3d
+coding-style-reports.log
+error
+.vscode
