@@ -15,12 +15,20 @@
 ** to the map in memory
 **
 */
+static
+sfVector2f get_coord(sfVector2f coord_window)
+{
+    coord_window.x -= (960 - ((60 * MAP_HEIGHT) / 2));
+    coord_window.y -= (520 - ((60 * MAP_HEIGHT) / 2));
+    return (sfVector2f)
+        {.x = (coord_window.x / 60),
+        .y = (coord_window.y / 60)};
+}
+
 static bool is_in_real_wall(sfVector2f coord)
 {
     coord.x -= (960 - ((60 * MAP_HEIGHT) / 2));
     coord.y -= (520 - ((60 * MAP_HEIGHT) / 2));
-    printf("coord x: %d  || ", (int)(coord.x) / 60);
-    printf("coord y: %d\n", (int)(coord.y) / 60);
     if ((int)(coord.x) / 60 >= MAP_HEIGHT || (int)(coord.y) / 60 >= MAP_WIDTH)
         return true;
     if (is_wall((int)(coord.x) / 60, (int)(coord.y) / 60) == true)
@@ -28,7 +36,6 @@ static bool is_in_real_wall(sfVector2f coord)
     return false;
 }
 
-static
 int rotate_player(game_handler_t *game_handler)
 {
     float time =
@@ -86,21 +93,34 @@ void display_2dwalls(game_handler_t *game_handler)
 }
 
 static
-void display_ray_casting(game_handler_t *game_handler, float angle_option)
+sfVector2f dichotomie(game_handler_t *game_handler,
+    float angle_option, int precision)
 {
-    sfVertexArray* line = sfVertexArray_create();
-    sfVector2f coord = game_handler->map_2d.map_player.coord;
     sfVector2f tmp_coord;
-    sfVertex p1 = {coord, sfGreen, {0, 0}};
-    sfVertex p2 = {coord, sfGreen, {0, 0}};
+    sfVector2f coord = game_handler->map_2d.map_player.coord;
 
     while (is_in_real_wall(coord) == false){
         tmp_coord = (sfVector2f){(sin(DEG_TO_RAD(-1 *
-            (game_handler->entities.player.angle + angle_option))))
-            * (15), cos(DEG_TO_RAD(-1 * (game_handler->entities.player.angle
-            + angle_option))) * (15)};
+        (game_handler->entities.player.angle + angle_option))))
+        * (precision), cos(DEG_TO_RAD(-1 *
+        (game_handler->entities.player.angle + angle_option))) * (precision)};
         coord = (sfVector2f){coord.x + tmp_coord.x, coord.y + tmp_coord.y};
     }
+    coord = (sfVector2f){coord.x - tmp_coord.x, coord.y - tmp_coord.y};
+    return coord;
+}
+
+static
+void display_ray_casting(game_handler_t *game_handler,
+    float angle_option, int precision)
+{
+    sfVertexArray* line = sfVertexArray_create();
+    sfVector2f coord = game_handler->map_2d.map_player.coord;
+    sfVertex p1 = {coord, sfGreen, {0, 0}};
+    sfVertex p2 = {coord, sfGreen, {0, 0}};
+
+    for (int i = precision; i != 1; i = i / 2)
+        coord = dichotomie(game_handler, angle_option, i);
     p2 = (sfVertex){coord, sfGreen, {0, 0}};
     sfVertexArray_setPrimitiveType(line, sfLines);
     sfVertexArray_append(line, p1);
@@ -109,12 +129,37 @@ void display_ray_casting(game_handler_t *game_handler, float angle_option)
     sfVertexArray_destroy(line);
 }
 
+/*
+** RAY CASTING
+**
+**
+*/
+float get_coord_wall(game_handler_t *game_handler, float angle, int precision)
+{
+    sfVector2f coord_player = game_handler->map_2d.map_player.coord;
+    sfVector2f coord_wall = game_handler->map_2d.map_player.coord;
+    sfVector2f player_in_map = {0, 0};
+    sfVector2f wall_in_map = {0, 0};
+    float dist = 0;
+
+    for (int i = precision; i != 1; i = i / 2)
+        coord_wall = dichotomie(game_handler, angle, i);
+    player_in_map = get_coord(coord_player);
+    wall_in_map = get_coord(coord_wall);
+    dist = sqrt(((player_in_map.x - wall_in_map.x) *
+    (player_in_map.x - wall_in_map.x)) +
+    ((player_in_map.y - wall_in_map.y) *
+    (player_in_map.y - wall_in_map.y)));
+    return dist;
+}
+
 int display_full_map(game_handler_t *game_handler)
 {
     sfRenderWindow_clear(game_handler->window, sfBlack);
     display_2dplayer(game_handler);
     display_2dwalls(game_handler);
-    for (float i = -45; i < 45; i += 2)
-        display_ray_casting(game_handler, i);
+    for (float i = -45; i < 45; i += 1){
+        display_ray_casting(game_handler, i, 60);
+    }
     return 0;
 }
