@@ -10,6 +10,7 @@
     #define GAME_H
     #include "entities.h"
     #include "call_csfml.h"
+    #include <stdbool.h>
     #define FPS_SET_60 16.666
     #define MOVEMENT_SPEED_2D_MAP 400
     #define M_PI 3.14159265358979323846
@@ -61,5 +62,13 @@ int display_full_map(game_handler_t *game_handler);
 
 /*Player*/
 int move_player(game_handler_t *game_handler);
+int rotate_player(game_handler_t *game_handler);
 
+/*3D*/
+float get_coord_wall(game_handler_t *game_handler, float angle, int precision);
+int display_3d_map(game_handler_t *game_handler);
+
+/*get*/
+sfVector2f get_coord(sfVector2f coord_window);
+bool is_in_real_wall(sfVector2f coord);
 #endif //GAME_H

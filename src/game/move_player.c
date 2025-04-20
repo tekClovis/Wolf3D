@@ -17,6 +17,8 @@ void moove_up(game_handler_t *game_handler, sfVector2f *coord, float time)
         * (MOVEMENT_SPEED_2D_MAP * time),
         cos(DEG_TO_RAD(-1 * game_handler->entities.player.angle))
         * (MOVEMENT_SPEED_2D_MAP * time)};
+    if (is_in_real_wall(tmp) == true)
+        return;
     *coord = tmp;
 }
 
@@ -30,6 +32,8 @@ void moove_down(game_handler_t *game_handler, sfVector2f *coord, float time)
         * (MOVEMENT_SPEED_2D_MAP * time), -1 *
         cos(DEG_TO_RAD(-1 * game_handler->entities.player.angle))
         * (MOVEMENT_SPEED_2D_MAP * time)};
+    if (is_in_real_wall(tmp) == true)
+        return;
     *coord = tmp;
 }
 
@@ -43,6 +47,8 @@ void moove_right(game_handler_t *game_handler, sfVector2f *coord, float time)
         (MOVEMENT_SPEED_2D_MAP * time),
         cos((DEG_TO_RAD(-1 * game_handler->entities.player.angle))
         - M_PI / 2) * (MOVEMENT_SPEED_2D_MAP * time)};
+    if (is_in_real_wall(tmp) == true)
+        return;
     *coord = tmp;
 }
 
@@ -75,7 +81,10 @@ int move_player(game_handler_t *game_handler)
         moove_right(game_handler, &coord, time);
     if (sfKeyboard_isKeyPressed(sfKeyQ))
         moove_left(game_handler, &coord, time);
-    game_handler->map_2d.map_player.coord.y += coord.y;
+    if (is_in_real_wall((sfVector2f){game_handler->map_2d.map_player.coord.x +
+    coord.x, game_handler->map_2d.map_player.coord.y + coord.y}) == true)
+        return 0;
     game_handler->map_2d.map_player.coord.x += coord.x;
+    game_handler->map_2d.map_player.coord.y += coord.y;
     return 0;
 }

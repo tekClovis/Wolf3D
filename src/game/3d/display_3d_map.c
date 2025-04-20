@@ -7,9 +7,9 @@
 #include "game.h"
 
 void draw_ray_casting(game_handler_t *game_handler,
-    sfRectangleShape *square, int i, int count)
+    sfRectangleShape *square, float i, float count)
 {
-    int ray = (i > 0) ? i : i * 1;
+    float ray = (i > 0) ? i : i * 1;
     float ray_angle = 0;
     float projected_height = 0;
 
@@ -31,12 +31,13 @@ int display_3d_map(game_handler_t *game_handler)
 {
     sfRectangleShape *square = sfRectangleShape_create();
     int ray = 0;
-    int count = 0;
+    float count = 0;
+    sfColor color = {69, 69, 69, 0};
 
-    sfRenderWindow_clear(game_handler->window, sfRed);
-    for (float i = -45; i != 45; i++){
+    sfRenderWindow_clear(game_handler->window, color);
+    for (float i = -45; i < 45; i += 0.0625){
         draw_ray_casting(game_handler, square, i, count);
-        count++;
+        count += 0.0625;
     }
     sfRectangleShape_destroy(square);
     move_player(game_handler);

@@ -15,7 +15,6 @@
 ** to the map in memory
 **
 */
-static
 sfVector2f get_coord(sfVector2f coord_window)
 {
     coord_window.x -= (960 - ((60 * MAP_HEIGHT) / 2));
@@ -25,7 +24,7 @@ sfVector2f get_coord(sfVector2f coord_window)
         .y = (coord_window.y / 60)};
 }
 
-static bool is_in_real_wall(sfVector2f coord)
+bool is_in_real_wall(sfVector2f coord)
 {
     coord.x -= (960 - ((60 * MAP_HEIGHT) / 2));
     coord.y -= (520 - ((60 * MAP_HEIGHT) / 2));

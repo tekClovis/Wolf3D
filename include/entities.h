@@ -44,8 +44,6 @@ typedef struct object_s {
 ** pour les weapons
 **
 */
-
-
 typedef struct ennemies_s {
     sfVector2f coord;
     int life;
