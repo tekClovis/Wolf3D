@@ -12,9 +12,9 @@
 ** sinon 1
 */
 
-bool is_wall(int x, int y)
+bool is_wall(int y, int x)
 {
-    if (map[x][y] == 1)
+    if (map[y][x] == 1)
         return true;
     return false;
 }

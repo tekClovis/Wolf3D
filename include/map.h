@@ -9,8 +9,8 @@
 #ifndef MAP_H
     #define MAP_H
     # define TILE_SIZE 60
-    # define MAP_WIDTH 8
-    # define MAP_HEIGHT 8
+    # define MAP_WIDTH 15
+    # define MAP_HEIGHT 15
     #include <stdbool.h>
 
 /*

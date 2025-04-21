@@ -17,7 +17,7 @@
 */
 sfVector2f get_coord(sfVector2f coord_window)
 {
-    coord_window.x -= (960 - ((60 * MAP_HEIGHT) / 2));
+    coord_window.x -= (960 - ((60 * MAP_WIDTH) / 2));
     coord_window.y -= (520 - ((60 * MAP_HEIGHT) / 2));
     return (sfVector2f)
         {.x = (coord_window.x / 60),
@@ -26,11 +26,11 @@ sfVector2f get_coord(sfVector2f coord_window)
 
 bool is_in_real_wall(sfVector2f coord)
 {
-    coord.x -= (960 - ((60 * MAP_HEIGHT) / 2));
+    coord.x -= (960 - ((60 * MAP_WIDTH) / 2));
     coord.y -= (520 - ((60 * MAP_HEIGHT) / 2));
-    if ((int)(coord.x) / 60 >= MAP_HEIGHT || (int)(coord.y) / 60 >= MAP_WIDTH)
+    if ((int)(coord.x) / 60 >= MAP_WIDTH || (int)(coord.y) / 60 >= MAP_HEIGHT)
         return true;
-    if (is_wall((int)(coord.x) / 60, (int)(coord.y) / 60) == true)
+    if (is_wall((int)(coord.y) / 60, (int)(coord.x) / 60) == true)
         return true;
     return false;
 }
@@ -73,12 +73,11 @@ void display_2dplayer(game_handler_t *game_handler)
 static
 void display_one_2dwall(game_handler_t *game_handler, int y)
 {
-    for (int x = 0; x != MAP_WIDTH; x++)
-        if (is_wall(x, y) == true){
+    for (int x = 0; x < MAP_WIDTH; x++)
+        if (is_wall(y, x) == true){
             sfSprite_setPosition(game_handler->map_2d.map_wall.sprite,
-                (sfVector2f){((960 - ((60 * MAP_HEIGHT) / 2))
-                + (x * 60)), ((520 - ((60 * MAP_HEIGHT) / 2))
-                + (y * 60))});
+            (sfVector2f){((960 - ((60 * MAP_WIDTH) / 2))
+            + (x * 60)), ((520 - ((60 * MAP_HEIGHT) / 2)) + (y * 60))});
             sfRenderWindow_drawSprite(game_handler->window,
                 game_handler->map_2d.map_wall.sprite, NULL);
         }
@@ -87,7 +86,7 @@ void display_one_2dwall(game_handler_t *game_handler, int y)
 static
 void display_2dwalls(game_handler_t *game_handler)
 {
-    for (int y = 0; y != MAP_HEIGHT; y++)
+    for (int y = 0; y < MAP_HEIGHT; y++)
         display_one_2dwall(game_handler, y);
 }
 
