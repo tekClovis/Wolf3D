@@ -20,19 +20,21 @@ SRC += src/game/map/display_full_map.c
 SRC += src/init/init_game_handler.c
 SRC += src/init/init_map2d.c
 SRC += src/init/init_player_ennemies.c
+SRC += src/game/3d/display_3d_map.c
 
 OBJ = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Iinclude -Llib/ -lmy
 
-LDFLAG = -lcsfml-graphics -lcsfml-system -lcsfml-audio \
-	-lcsfml-window -lm -lncurses
+LDFLAG = -g -lcsfml-graphics \
+ 		-lcsfml-system -lcsfml-audio \
+		-lcsfml-window -lm -lncurses -g \
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C ./lib/
-		gcc $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAG) -g
+		gcc -g $(OBJ) $(CFLAGS) -o $(NAME)  $(LDFLAG)
 
 clean:
 		make clean -C ./lib/

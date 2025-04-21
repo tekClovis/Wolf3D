@@ -48,6 +48,7 @@ typedef struct game_handler_s {
     class_map_t map_2d;
     sfRenderWindow *window;
     int window_mode;
+    sfTexture *wall;
 }game_handler_t;
 
 typedef struct game_mode_s {

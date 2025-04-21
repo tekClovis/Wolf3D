@@ -10,6 +10,11 @@
 #include <time.h>
 #include "game.h"
 
+void free_game(game_handler_t *game_handler)
+{
+    sfRenderWindow_destroy(game_handler->window);
+}
+
 int wolf3d(void)
 {
     game_handler_t game_handler;
@@ -19,5 +24,6 @@ int wolf3d(void)
     if (error == 84)
         return 84;
     launch_game(&game_handler);
+    free_game(&game_handler);
     return 0;
 }
