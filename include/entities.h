@@ -15,6 +15,7 @@ typedef struct entities_class_s {
     sfVector2f coord;
     sfSprite *sprite;
     sfTexture *texture;
+    int speed;
 }entities_class_t;
 
 typedef struct guner_s {

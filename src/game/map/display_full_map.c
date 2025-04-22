@@ -92,7 +92,7 @@ void display_2dwalls(game_handler_t *game_handler)
 
 static
 sfVector2f dichotomie(game_handler_t *game_handler,
-    float angle_option, int precision)
+    float angle_option, double precision)
 {
     sfVector2f tmp_coord;
     sfVector2f coord = game_handler->map_2d.map_player.coord;
@@ -117,7 +117,7 @@ void display_ray_casting(game_handler_t *game_handler,
     sfVertex p1 = {coord, sfGreen, {0, 0}};
     sfVertex p2 = {coord, sfGreen, {0, 0}};
 
-    for (int i = precision; i != 1; i = i / 2)
+    for (double i = precision; i > 1; i = i / 2)
         coord = dichotomie(game_handler, angle_option, i);
     p2 = (sfVertex){coord, sfGreen, {0, 0}};
     sfVertexArray_setPrimitiveType(line, sfLines);
@@ -129,7 +129,9 @@ void display_ray_casting(game_handler_t *game_handler,
 
 /*
 ** RAY CASTING
-**
+** SI ON VEUT FAIRE
+** UN NIVEAU DE GRAPHISME
+** FAUT CHANGER precision
 **
 */
 float get_coord_wall(game_handler_t *game_handler, float angle, int precision)
@@ -140,7 +142,7 @@ float get_coord_wall(game_handler_t *game_handler, float angle, int precision)
     sfVector2f wall_in_map = {0, 0};
     float dist = 0;
 
-    for (int i = precision; i != 1; i = i / 2)
+    for (double i = precision; i > 0.5; i = i / 2)
         coord_wall = dichotomie(game_handler, angle, i);
     player_in_map = get_coord(coord_player);
     wall_in_map = get_coord(coord_wall);
