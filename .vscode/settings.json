@@ -5,6 +5,7 @@
         "game.h": "c",
         "call_csfml.h": "c",
         "stdbool.h": "c",
-        "my.h": "c"
+        "my.h": "c",
+        "entities.h": "c"
     }
 }

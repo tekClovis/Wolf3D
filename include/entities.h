@@ -5,34 +5,33 @@
 ** my
 */
 
-
 #ifndef ENTITIES_H
     #define ENTITIES_H
-
     #include "call_csfml.h"
+    #define SS 2
+    #define MUTANT 3
+    #define BRUT 4
 
 typedef struct entities_class_s {
     sfVector2f coord;
     sfSprite *sprite;
     sfTexture *texture;
+    time_management_t clock;
     int speed;
-}entities_class_t;
-
-typedef struct guner_s {
+    float angle;
     int life;
-    int weapon;
-}guner_t;
+}entities_class_t;
 
 typedef struct player_s {
     entities_class_t property;
-    guner_t guner_class;
+    int (*gun_shot)(entities_class_t);
     float angle;
 }player_t;
 
-typedef struct ennemy_s {
+typedef struct ennemies_s {
     entities_class_t property;
-    guner_t guner_class;
-}ennemy_t;
+    int (*gun_shot)(entities_class_t);
+}ennemies_t;
 
 typedef struct object_s {
     entities_class_t property;
@@ -45,9 +44,5 @@ typedef struct object_s {
 ** pour les weapons
 **
 */
-typedef struct ennemies_s {
-    sfVector2f coord;
-    int life;
-}ennemies_t;
 
 #endif //ENTITIES_H
