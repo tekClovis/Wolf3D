@@ -10,6 +10,6 @@ int init_player(player_t *player)
 {
     player->angle = 0;
     player->guner_class = (guner_t){100, 0};
-    player->property = (entities_class_t){(sfVector2f){0, 0}, NULL, NULL};
+    player->property = (entities_class_t){(sfVector2f){0, 0}, NULL, NULL, 0};
     return 0;
 }

@@ -14,9 +14,9 @@ void moove_up(game_handler_t *game_handler, sfVector2f *coord, float time)
 
     tmp = (sfVector2f){(sin(DEG_TO_RAD(-1 *
         game_handler->entities.player.angle)))
-        * (MOVEMENT_SPEED_2D_MAP * time),
+        * (game_handler->entities.player.property.speed * time),
         cos(DEG_TO_RAD(-1 * game_handler->entities.player.angle))
-        * (MOVEMENT_SPEED_2D_MAP * time)};
+        * (game_handler->entities.player.property.speed * time)};
     if (is_in_real_wall((sfVector2f){tmp.x + tmp.x, tmp.y + tmp.y}) == true)
         return;
     *coord = tmp;
@@ -29,9 +29,9 @@ void moove_down(game_handler_t *game_handler, sfVector2f *coord, float time)
 
     tmp = (sfVector2f){-1 * (sin(DEG_TO_RAD(-1 *
         game_handler->entities.player.angle)))
-        * (MOVEMENT_SPEED_2D_MAP * time), -1 *
+        * (game_handler->entities.player.property.speed * time), -1 *
         cos(DEG_TO_RAD(-1 * game_handler->entities.player.angle))
-        * (MOVEMENT_SPEED_2D_MAP * time)};
+        * (game_handler->entities.player.property.speed * time)};
     if (is_in_real_wall((sfVector2f){tmp.x + tmp.x, tmp.y + tmp.y}) == true)
         return;
     *coord = tmp;
@@ -44,9 +44,9 @@ void moove_right(game_handler_t *game_handler, sfVector2f *coord, float time)
 
     tmp = (sfVector2f){(sin((DEG_TO_RAD(-1 *
         game_handler->entities.player.angle)) - M_PI / 2)) *
-        (MOVEMENT_SPEED_2D_MAP * time),
+        (game_handler->entities.player.property.speed * time),
         cos((DEG_TO_RAD(-1 * game_handler->entities.player.angle))
-        - M_PI / 2) * (MOVEMENT_SPEED_2D_MAP * time)};
+        - M_PI / 2) * (game_handler->entities.player.property.speed * time)};
     if (is_in_real_wall((sfVector2f){tmp.x + tmp.x, tmp.y + tmp.y}) == true)
         return;
     *coord = tmp;
@@ -59,9 +59,9 @@ void moove_left(game_handler_t *game_handler, sfVector2f *coord, float time)
 
     tmp = (sfVector2f){(sin((DEG_TO_RAD(-1 *
         game_handler->entities.player.angle)) + M_PI / 2)) *
-        (MOVEMENT_SPEED_2D_MAP * time),
+        (game_handler->entities.player.property.speed * time),
         cos((DEG_TO_RAD(-1 * game_handler->entities.player.angle))
-        + M_PI / 2) * (MOVEMENT_SPEED_2D_MAP * time)};
+        + M_PI / 2) * (game_handler->entities.player.property.speed * time)};
     if (is_in_real_wall((sfVector2f){tmp.x, tmp.y}) == true)
         return;
     *coord = tmp;
@@ -88,15 +88,16 @@ int move_player(game_handler_t *game_handler)
 
     game_handler->map_2d.
         frame_rate_clock.time_as_second = time;
-    move_came(game_handler, &coord, time);
+   
     if (sfKeyboard_isKeyPressed(sfKeyLShift))
-        game_handler->entities.player.property.speed = 400;
+        game_handler->entities.player.property.speed = RUN;
+    move_came(game_handler, &coord, time);
     if (is_in_real_wall((sfVector2f){game_handler->map_2d.map_player.coord.x +
         coord.x + coord.x / 3, game_handler->map_2d.map_player.coord.y +
         coord.y + coord.y / 3}) == true)
         return 0;
     game_handler->map_2d.map_player.coord.x += coord.x;
     game_handler->map_2d.map_player.coord.y += coord.y;
-    game_handler->entities.player.property.speed = 200;
+    game_handler->entities.player.property.speed = WALK;
     return 0;
 }
