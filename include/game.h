@@ -12,7 +12,8 @@
     #include "call_csfml.h"
     #include <stdbool.h>
     #define FPS_SET_60 16.666
-    #define MOVEMENT_SPEED_2D_MAP 400
+    #define WALK 200
+    #define RUN 300
     #define M_PI 3.14159265358979323846
     #define DEG_TO_RAD(angle) ((angle) * (M_PI / 180.0))
 int wolf3d(void);
@@ -24,7 +25,7 @@ int wolf3d(void);
 typedef struct entities_handler_s {
     player_t player;
     object_handler_t object;
-    ennemies_t ennemies;
+    ennemies_t *ennemies;
 }entities_handler_t;
 
 
