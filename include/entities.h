@@ -9,6 +9,7 @@
     #define ENTITIES_H
     #include "call_csfml.h"
     #include "time.h"
+    #include "my.h"
     #define SS 2
     #define MUTANT 3
     #define BRUT 4
@@ -18,6 +19,7 @@ typedef struct entities_class_s {
     sfSprite *sprite;
     sfTexture *texture;
     time_management_t clock;
+    sfVector2f hb_2d;
     int speed;
     float angle;
     int life;
@@ -25,13 +27,13 @@ typedef struct entities_class_s {
 
 typedef struct player_s {
     entities_class_t property;
-    int (*gun_shot)(entities_class_t);
+    int (*gun_shot)(list_t *, entities_class_t);
     float angle;
 }player_t;
 
 typedef struct ennemies_s {
     entities_class_t property;
-    int (*gun_shot)(entities_class_t);
+    int (*gun_shot)(list_t *, entities_class_t);
 }ennemies_t;
 
 typedef struct object_s {

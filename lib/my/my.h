@@ -86,7 +86,11 @@ int mini_printerr(const char *format, ...);
 int my_putcharerr(char c);
 list_t *dup_list(list_t *list);
 char *int_to_str(int nb);
-
+list_t *list_create(void);
+int push_front(list_t *list, void *data);
+int push_back(list_t *list, void *data);
+int destroy_nodes(list_t *list, node_t *current);
+void my_rev_list(node_t **head);
 int wolf3d(void);
 
 #endif //MY_H
