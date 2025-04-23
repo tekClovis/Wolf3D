@@ -49,7 +49,7 @@ int launch_game(game_handler_t *game_handler)
         if (need_refresh(game_handler) == false)
             continue;
         get_event(game_handler);
-        handle_ent_event(game_handler);
+        //handle_ent_event(game_handler);
         choose_window_mode(game_handler);
         sfRenderWindow_display(game_handler->window);
     }

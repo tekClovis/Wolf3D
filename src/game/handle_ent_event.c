@@ -8,7 +8,7 @@
 #include "entities.h"
 
 
-void handle_ent_env(game_handler_t *game_handler)
-{
-    game_handler->
-}
+//void handle_ent_env(game_handler_t *game_handler)
+//{
+//    game_handler->entities.
+//}
