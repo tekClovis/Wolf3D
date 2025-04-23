@@ -29,7 +29,8 @@ void draw_wall(game_handler_t *game_handler,
     ray = (i > 0) ? i : i * 1;
     ray_angle = (-1 * game_handler->entities.player.angle)
         - (90 / 2) + ray;
-    projected_height = 1000 / (get_coord_wall(game_handler, ray, 90) * cos(DEG_TO_RAD(ray)));
+    projected_height = 1000 / (get_coord_wall(game_handler, ray, 90)
+    * cos(DEG_TO_RAD(ray)));
     sfRectangleShape_setSize(square, (sfVector2f)
         {1980 / 770, projected_height});
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90)
