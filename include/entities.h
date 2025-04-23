@@ -20,6 +20,7 @@ typedef struct entities_class_s {
     sfTexture *texture;
     time_management_t clock;
     sfVector2f hb_2d;
+    int id;
     int speed;
     float angle;
     int life;
