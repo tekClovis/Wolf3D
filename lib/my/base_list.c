@@ -21,9 +21,12 @@ list_t *list_create(void)
 
 int push_front(list_t *list, void *data)
 {
-    node_t *current = malloc(sizeof(node_t));
+    node_t *current = NULL;
 
-    if (current == NULL)
+    if (data == NULL)
+        return 84;
+    current = malloc(sizeof(node_t));
+    if (!current)
         return 84;
     current->data = data;
     current->next = NULL;
@@ -41,8 +44,13 @@ int push_front(list_t *list, void *data)
 
 int push_back(list_t *list, void *data)
 {
-    node_t *current = malloc(sizeof(node_t));
+    node_t *current = NULL;
 
+    if (data == NULL)
+        return 84;
+    current = malloc(sizeof(node_t));
+    if (current == NULL)
+        return 84;
     current->data = data;
     current->next = NULL;
     current->prev = NULL;

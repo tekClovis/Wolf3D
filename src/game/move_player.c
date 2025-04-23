@@ -111,7 +111,6 @@ void move_player(game_handler_t *game_handler)
 
     game_handler->map_2d.
         frame_rate_clock.time_as_second = time;
-   
     if (sfKeyboard_isKeyPressed(sfKeyLShift))
         game_handler->entities.player.property.speed = RUN;
     move_came(game_handler, &coord, time);

@@ -58,7 +58,8 @@ SRCS =  my/my_compute_power_rec.c   \
 	my/miniprinterror.c 	\
 	my/my_put_nbrerr.c		\
 	my/dup_list.c 			\
-	my/int_to_str.c
+	my/int_to_str.c			\
+	my/base_list.c
 
 OBJ = $(SRCS:.c=.o)
 
