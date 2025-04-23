@@ -21,6 +21,7 @@ SRC += src/init/init_game_handler.c
 SRC += src/init/init_map2d.c
 SRC += src/init/init_player_ennemies.c
 SRC += src/game/3d/display_3d_map.c
+SRC += src/game/free_game.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -8,6 +8,7 @@
 #ifndef ENTITIES_H
     #define ENTITIES_H
     #include "call_csfml.h"
+    #include "time.h"
     #define SS 2
     #define MUTANT 3
     #define BRUT 4
@@ -39,10 +40,5 @@ typedef struct object_s {
     size_t alloc;
 }object_handler_t;
 
-/*
-** Mettre une énume
-** pour les weapons
-**
-*/
 
 #endif //ENTITIES_H

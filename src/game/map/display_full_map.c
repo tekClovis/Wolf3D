@@ -35,30 +35,6 @@ bool is_in_real_wall(sfVector2f coord)
     return false;
 }
 
-int rotate_player(game_handler_t *game_handler)
-{
-    float time =
-        game_handler->map_2d.frame_rate_clock.time_as_second;
-
-    if (sfKeyboard_isKeyPressed(sfKeyRight)){
-        game_handler->entities.player.angle += 5;
-        if (game_handler->entities.player.angle >= 360)
-            game_handler->entities.player.angle = 0;
-        sfSprite_setRotation(game_handler->map_2d.map_player.sprite, 0);
-        sfSprite_rotate(game_handler->map_2d.
-            map_player.sprite, game_handler->entities.player.angle);
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyLeft)){
-        game_handler->entities.player.angle -= 5;
-        if (game_handler->entities.player.angle <= 0)
-            game_handler->entities.player.angle = 360;
-        sfSprite_setRotation(game_handler->map_2d.map_player.sprite, 0);
-        sfSprite_rotate(game_handler->map_2d.map_player.sprite,
-            game_handler->entities.player.angle);
-    }
-    return 0;
-}
-
 static
 void display_2dplayer(game_handler_t *game_handler)
 {

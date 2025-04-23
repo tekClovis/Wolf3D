@@ -34,6 +34,16 @@ void set_ss(ennemies_t *ennemi, sfVector2f coord)
     //ennemi->gun_shot = &pistol_gun;
 }
 
+static
+void set_mutant(ennemies_t *ennemies)
+{
+}
+
+static
+void set_brut(ennemies_t *ennemies)
+{
+}
+
 void init_enemies(ennemies_t *ennemies, sfVector2f coord, int id)
 {
     if (id == SS)

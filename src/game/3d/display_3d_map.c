@@ -6,7 +6,20 @@
 */
 #include "game.h"
 
-void draw_ray_casting(game_handler_t *game_handler,
+static
+void display_floor(game_handler_t *game_handler, sfRectangleShape *square)
+{
+    sfColor my_color = {69, 200, 69, 255};
+
+    sfRectangleShape_setSize(square, (sfVector2f){1980, 1082 / 2});
+    sfRectangleShape_setPosition(square, (sfVector2f){0, 1080 / 2});
+    sfRectangleShape_setFillColor(square, my_color);
+    sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
+    sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
+}
+
+static
+void draw_wall(game_handler_t *game_handler,
     sfRectangleShape *square, double i, double count)
 {
     float ray = (i > 0) ? i : i * 1;
@@ -27,26 +40,27 @@ void draw_ray_casting(game_handler_t *game_handler,
     sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
 }
 
+void draw_ray_casting(game_handler_t *game_handler, sfRectangleShape *square)
+{
+    double count = 0;
+
+    for (double i = -45; i < 45; i += 0.0625){
+        draw_wall(game_handler, square, i, count);
+        count += 0.0625;
+    }
+}
+
 int display_3d_map(game_handler_t *game_handler)
 {
     sfRectangleShape *square = sfRectangleShape_create();
     int ray = 0;
-    float count = 0;
     sfColor color = {69, 69, 69, 0};
-    sfColor my_color = {69, 200, 69, 255};
 
     sfRenderWindow_clear(game_handler->window, color);
-    sfRectangleShape_setSize(square, (sfVector2f){1980, 1082 / 2});
-    sfRectangleShape_setPosition(square, (sfVector2f){0, 1080 / 2});
-    sfRectangleShape_setFillColor(square, my_color);
-    sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
-    sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
-    for (double i = -45; i < 45; i += 0.0625){
-        draw_ray_casting(game_handler, square, i, count);
-        count += 0.0625;
-    }
-    sfRectangleShape_destroy(square);
+    display_floor(game_handler, square);
+    draw_ray_casting(game_handler, square);
     move_player(game_handler);
     rotate_player(game_handler);
+    sfRectangleShape_destroy(square);
     return 0;
 }

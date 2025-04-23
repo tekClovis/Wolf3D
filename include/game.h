@@ -29,12 +29,6 @@ typedef struct entities_handler_s {
 }entities_handler_t;
 
 
-typedef struct time_management_s {
-    sfClock *clock;
-    sfTime time;
-    sfInt64 time_as_micro_second;
-    float time_as_second;
-}time_management_t;
 
 typedef struct class_map_s {
     entities_class_t map_player;
@@ -63,8 +57,9 @@ int choose_window_mode(game_handler_t *game_handler);
 int display_full_map(game_handler_t *game_handler);
 
 /*Player*/
-int move_player(game_handler_t *game_handler);
-int rotate_player(game_handler_t *game_handler);
+void move_player(game_handler_t *game_handler);
+void rotate_player(game_handler_t *game_handler);
+void manage_player(game_handler_t *game_handler);
 
 /*3D*/
 float get_coord_wall(game_handler_t *game_handler, float angle, int precision);
