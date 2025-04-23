@@ -19,6 +19,6 @@ int wolf3d(void)
     if (error == 84)
         return 84;
     launch_game(&game_handler);
-    free_game(&game_handler);
+    //free_game(&game_handler);
     return 0;
 }
