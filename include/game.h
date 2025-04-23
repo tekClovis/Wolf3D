@@ -10,10 +10,13 @@
     #define GAME_H
     #include "entities.h"
     #include "call_csfml.h"
+    #include "ray_casting.h"
     #include <stdbool.h>
+    #define WINDOW_SIZE_X 1980
+    #define WINDOW_SIZE_y 1080
     #define FPS_SET_60 16.666
-    #define WALK 200
-    #define RUN 300
+    #define WALK 100
+    #define RUN 200
     #define M_PI 3.14159265358979323846
     #define DEG_TO_RAD(angle) ((angle) * (M_PI / 180.0))
 int wolf3d(void);
@@ -27,8 +30,6 @@ typedef struct entities_handler_s {
     object_handler_t object;
     ennemies_t *ennemies;
 }entities_handler_t;
-
-
 
 typedef struct class_map_s {
     entities_class_t map_player;
@@ -44,6 +45,7 @@ typedef struct game_handler_s {
     sfRenderWindow *window;
     int window_mode;
     sfTexture *wall;
+    ray_casting_t binary_tree;
 }game_handler_t;
 
 typedef struct game_mode_s {

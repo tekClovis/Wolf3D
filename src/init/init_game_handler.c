@@ -6,6 +6,16 @@
 */
 #include "game.h"
 #include "init.h"
+#include "ray_casting.h"
+
+static
+int init_binary_tree(ray_casting_t *binary_tree)
+{
+    binary_tree->node = malloc(sizeof(buffer_t) * WINDOW_SIZE_X);
+    if (binary_tree->node == NULL)
+        return 84;
+    return 0;
+}
 
 int init_game_handler(game_handler_t *game_handler)
 {
@@ -14,6 +24,8 @@ int init_game_handler(game_handler_t *game_handler)
     game_handler->window = create_window();
     init_player(&game_handler->entities.player);
     init_map2d(&game_handler->map_2d);
+    if (inint_binary_tree(&game_handler->binary_tree))
+        return 84;
     game_handler->window_mode = 0;
     game_handler->general_clock.clock = sfClock_create();
     game_handler->map_2d.frame_rate_clock.clock = sfClock_create();
