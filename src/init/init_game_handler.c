@@ -24,7 +24,7 @@ int init_game_handler(game_handler_t *game_handler)
     game_handler->window = create_window();
     init_player(&game_handler->entities.player);
     init_map2d(&game_handler->map_2d);
-    if (inint_binary_tree(&game_handler->binary_tree))
+    if (init_binary_tree(&game_handler->binary_tree))
         return 84;
     game_handler->window_mode = 0;
     game_handler->general_clock.clock = sfClock_create();
