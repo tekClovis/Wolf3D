@@ -13,6 +13,9 @@
     #define SS 2
     #define MUTANT 3
     #define BRUT 4
+    #define PLAYER_MOVE 0
+    #define ENNEMIE_MOVE 1
+    #define OBJECT_MOVE 2
 
 typedef struct entities_class_s {
     sfVector2f coord;

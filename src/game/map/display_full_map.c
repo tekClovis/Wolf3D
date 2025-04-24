@@ -75,9 +75,10 @@ sfVector2f dichotomie(game_handler_t *game_handler,
 
     while (is_in_real_wall(coord) == false){
         tmp_coord = (sfVector2f){(sin(DEG_TO_RAD(-1 *
-        (game_handler->entities.player.angle + angle_option))))
+        (game_handler->entities.player.property.angle + angle_option))))
         * (precision), cos(DEG_TO_RAD(-1 *
-        (game_handler->entities.player.angle + angle_option))) * (precision)};
+        (game_handler->entities.player.property.angle + angle_option))) *
+        (precision)};
         coord = (sfVector2f){coord.x + tmp_coord.x, coord.y + tmp_coord.y};
     }
     coord = (sfVector2f){coord.x - tmp_coord.x, coord.y - tmp_coord.y};
