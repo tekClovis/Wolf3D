@@ -22,7 +22,7 @@ const angle_sprite_t SPRITE_TAB[] = {
 static
 void aim_player(player_t *player, ennemies_t *ennemies)
 {
-    ennemies->property.angle = fmodf(player->angle + 180.0, 360.0);  
+    ennemies->property.angle = fmodf(player->angle + 180.0, 360.0);
 }
 
 float get_relative_angle(entities_class_t player, entities_class_t ennemies)
@@ -30,7 +30,15 @@ float get_relative_angle(entities_class_t player, entities_class_t ennemies)
     sfVector2f position_v = {player.coord.x - ennemies.coord.x,
         player.coord.y - ennemies.coord.y};
     double rad_angle = ennemies.angle * (M_PI / 180.0);
-    sfVector2f angle_v = {cos(rad_angle), cos(rad_angle)}
+    sfVector2f angle_v = {cos(rad_angle), sin(rad_angle)};
+    float scalaire = angle_v.x * position_v.x + angle_v.y * position_v.y;
+    float magA = sqrt(position_v.x * position_v.x +
+        position_v.y * position_v.y);
+    float magB = sqrt(angle_v.x * angle_v.x +
+        angle_v.y * angle_v.y);
+    float finalRadians = (scalaire / (magA * magB));
+
+    return finalRadians * (180.0 / M_PI);
 }
 
 void rotate_sprite(player_t *player, ennemies_t *ennemi)

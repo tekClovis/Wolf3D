@@ -19,6 +19,7 @@ int shotgun_shoot(list_t *entities, entities_class_t *shooter)
     return 0;
 }
 
+//TODO: fairre un rand() % dist pour la dispersion des balles;
 int minigun_shoot(list_t *entities, entities_class_t *shooter)
 {
     if (shooter->id == PLAYER)

@@ -117,7 +117,7 @@ void move_player(game_handler_t *game_handler)
     if (is_in_real_wall((sfVector2f){game_handler->map_2d.map_player.coord.x +
         coord.x + coord.x / 3, game_handler->map_2d.map_player.coord.y +
         coord.y + coord.y / 3}) == true)
-        return ;
+        return;
     game_handler->map_2d.map_player.coord.x += coord.x;
     game_handler->map_2d.map_player.coord.y += coord.y;
     game_handler->entities.player.property.speed = WALK;

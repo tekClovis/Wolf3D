@@ -27,7 +27,7 @@ void set_ss(ennemies_t *ennemi, sfVector2f coord)
     sfSprite_setScale(ennemi->property.sprite, (sfVector2f){1, 1});
     sfSprite_setTextureRect(ennemi->property.sprite,
         (sfIntRect){0, 0, 65, 65});
-    //ennemi->gun_shot = &pistol_gun;
+    //ennemi->gun_shot = &gun;
 }
 
 void set_mutant(ennemies_t *ennemi, sfVector2f coord)
@@ -41,7 +41,7 @@ void set_mutant(ennemies_t *ennemi, sfVector2f coord)
     sfSprite_setScale(ennemi->property.sprite, (sfVector2f){1, 1});
     sfSprite_setTextureRect(ennemi->property.sprite,
         (sfIntRect){0, 0, 65, 65});
-    //ennemi->gun_shot = &assault_gun;
+    //ennemi->gun_shot = &assault;
 }
 
 void set_brut(ennemies_t *ennemi, sfVector2f coord)
@@ -55,7 +55,7 @@ void set_brut(ennemies_t *ennemi, sfVector2f coord)
     sfSprite_setScale(ennemi->property.sprite, (sfVector2f){1, 1});
     sfSprite_setTextureRect(ennemi->property.sprite,
         (sfIntRect){0, 0, 65, 65});
-    //ennemi->gun_shot = &mini_gun; fairre un rand() % dist pour la dispersion des balles
+    //ennemi->gun_shot = &mini_gun;
 }
 
 void init_enemies(ennemies_t *ennemies, sfVector2f coord, int id)
