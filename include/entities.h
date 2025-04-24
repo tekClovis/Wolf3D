@@ -12,12 +12,10 @@
     #include "call_csfml.h"
     #include "time.h"
     #include "my.h"
-    #define SS 2
-    #define MUTANT 3
-    #define BRUT 4
-    #define PLAYER_MOVE 0
-    #define ENNEMIE_MOVE 1
-    #define OBJECT_MOVE 2
+    #define PLAYER 2
+    #define SS 3
+    #define MUTANT 4
+    #define BRUT 5
 
 typedef struct entities_class_s {
     sfVector2f coord;
