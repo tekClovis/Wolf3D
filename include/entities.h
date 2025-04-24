@@ -8,6 +8,7 @@
 #ifndef ENTITIES_H
     #define ENTITIES_H
     #include "stdbool.h"
+    #include "stdbool.h"
     #include "call_csfml.h"
     #include "time.h"
     #include "my.h"
