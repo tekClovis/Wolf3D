@@ -12,6 +12,7 @@
     #include "call_csfml.h"
     #include "ray_casting.h"
     #include <stdbool.h>
+    #include <math.h>
     #define WINDOW_SIZE_X 1980
     #define WINDOW_SIZE_y 1080
     #define FPS_SET_60 16.666

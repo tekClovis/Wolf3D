@@ -11,9 +11,10 @@
     #include "call_csfml.h"
     #include "time.h"
     #include "my.h"
-    #define SS 2
-    #define MUTANT 3
-    #define BRUT 4
+    #define PLAYER 2
+    #define SS 3
+    #define MUTANT 4
+    #define BRUT 5
 
 typedef struct entities_class_s {
     sfVector2f coord;
@@ -36,6 +37,7 @@ typedef struct player_s {
 typedef struct ennemies_s {
     entities_class_t property;
     bool can_shoot;
+    time_management_t hit_clock;
     int (*gun_shot)(player_t *, ennemies_t *);
 }ennemies_t;
 
@@ -44,6 +46,11 @@ typedef struct object_s {
     size_t size;
     size_t alloc;
 }object_handler_t;
+
+typedef struct {
+    sfVector2f angle_interval;
+    int sprite_coef;
+} angle_sprite_t;
 
 void handle_ent_env(game_handler_t *game_handler);
 #endif //ENTITIES_H

@@ -25,7 +25,7 @@ SRC += src/game/free_game.c
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Iinclude -Llib/ -lmy
+CFLAGS = -Wall -Wextra -Iinclude -Llib/ -lmy -lm
 
 LDFLAG = -g -lcsfml-graphics \
  		-lcsfml-system -lcsfml-audio \
