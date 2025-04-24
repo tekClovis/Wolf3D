@@ -7,6 +7,7 @@
 
 #ifndef ENTITIES_H
     #define ENTITIES_H
+    #include "stdbool.h"
     #include "call_csfml.h"
     #include "time.h"
     #include "my.h"
@@ -28,13 +29,14 @@ typedef struct entities_class_s {
 
 typedef struct player_s {
     entities_class_t property;
-    int (*gun_shot)(list_t *, entities_class_t);
+    int (*gun_shot)(player_t *, ennemies_t *);
     float angle;
 }player_t;
 
 typedef struct ennemies_s {
     entities_class_t property;
-    int (*gun_shot)(list_t *, entities_class_t);
+    bool can_shoot;
+    int (*gun_shot)(player_t *, ennemies_t *);
 }ennemies_t;
 
 typedef struct object_s {
@@ -43,5 +45,5 @@ typedef struct object_s {
     size_t alloc;
 }object_handler_t;
 
-
+void handle_ent_env(game_handler_t *game_handler);
 #endif //ENTITIES_H

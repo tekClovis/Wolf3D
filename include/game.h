@@ -28,7 +28,7 @@ int wolf3d(void);
 typedef struct entities_handler_s {
     player_t player;
     object_handler_t object;
-    ennemies_t *ennemies;
+    list_t *ennemies;
 }entities_handler_t;
 
 typedef struct class_map_s {
