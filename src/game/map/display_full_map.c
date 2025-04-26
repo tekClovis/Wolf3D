@@ -40,8 +40,10 @@ void display_2dplayer(game_handler_t *game_handler)
 {
     move_player(&game_handler->entities.player.property);
     rotate_player(game_handler);
-    sfRenderWindow_drawSprite(game_handler->window, game_handler->entities.player.property.sprite, NULL);
-    sfSprite_setPosition(game_handler->entities.player.property.sprite, game_handler->entities.player.property.coord);
+    sfRenderWindow_drawSprite(game_handler->window,
+        game_handler->entities.player.property.sprite, NULL);
+    sfSprite_setPosition(game_handler->entities.player.property.sprite,
+        game_handler->entities.player.property.coord);
 }
 
 /*
@@ -76,7 +78,8 @@ sfVector2f dichotomie(entities_class_t *property,
     sfVector2f coord = property->coord;
 
     while (is_in_real_wall(coord) == false){
-        tmp_coord = (sfVector2f){(sin(DEG_TO_RAD(-1 * (property->angle + angle_option))))
+        tmp_coord = (sfVector2f){(sin(DEG_TO_RAD(-1 * (property->angle +
+            angle_option))))
         * (precision), cos(DEG_TO_RAD(-1 * (property->angle + angle_option))) *
         (precision)};
         coord = (sfVector2f){coord.x + tmp_coord.x, coord.y + tmp_coord.y};
@@ -134,9 +137,11 @@ int display_full_map(game_handler_t *game_handler)
 {
     sfRenderWindow_clear(game_handler->window, sfBlack);
     display_2dplayer(game_handler);
-    display_2dwalls(&game_handler->entities.object.property, game_handler->window);
+    display_2dwalls(&game_handler->entities.object.property,
+        game_handler->window);
     for (float i = -45; i < 45; i += 1){
-        display_ray_casting(&game_handler->entities.player.property, game_handler->window ,i, 60);
+        display_ray_casting(&game_handler->entities.player.property,
+        game_handler->window, i, 60);
     }
     return 0;
 }

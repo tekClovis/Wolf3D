@@ -85,14 +85,16 @@ void rotate_player(game_handler_t *game_handler)
         if (game_handler->entities.player.property.angle >= 360)
             game_handler->entities.player.property.angle = 0;
         sfSprite_setRotation(game_handler->entities.player.property.sprite, 0);
-        sfSprite_rotate(game_handler->entities.player.property.sprite, game_handler->entities.player.property.angle);
+        sfSprite_rotate(game_handler->entities.player.property.sprite,
+        game_handler->entities.player.property.angle);
     }
     if (sfKeyboard_isKeyPressed(sfKeyLeft)){
         game_handler->entities.player.property.angle -= 3;
         if (game_handler->entities.player.property.angle <= 0)
             game_handler->entities.player.property.angle = 360;
         sfSprite_setRotation(game_handler->entities.player.property.sprite, 0);
-        sfSprite_rotate(game_handler->entities.player.property.sprite, game_handler->entities.player.property.angle);
+        sfSprite_rotate(game_handler->entities.player.property.sprite,
+        game_handler->entities.player.property.angle);
     }
 }
 
@@ -103,9 +105,10 @@ void move_player(entities_class_t *entities)
 
     entities->clock.time_as_second = time;
     if (sfKeyboard_isKeyPressed(sfKeyLShift))
-        entities->speed = RUN;//bien
+        entities->speed = RUN;
     move_came(entities, &coord, time);
-    if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 3, entities->coord.y + coord.y * 3}) == true)
+    if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 3,
+        entities->coord.y + coord.y * 3}) == true)
         return;
     entities->coord.x += coord.x;
     entities->coord.y += coord.y;

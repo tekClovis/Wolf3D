@@ -19,6 +19,7 @@
     #define WALK 100
     #define RUN 200
     #define M_PI 3.14159265358979323846
+    #define RAY_SCREEN (1980.0f / 1440.0f)
     #define DEG_TO_RAD(angle) ((angle) * (M_PI / 180.0))
 int wolf3d(void);
 /*
