@@ -31,21 +31,14 @@ typedef struct entities_handler_s {
     ennemies_t *ennemies;
 }entities_handler_t;
 
-typedef struct class_map_s {
-    entities_class_t map_player;
-    entities_class_t map_wall;
-    time_management_t frame_rate_clock;
-}class_map_t;
-
 typedef struct game_handler_s {
     sfEvent event;
     time_management_t general_clock;
     entities_handler_t entities;
-    class_map_t map_2d;
     sfRenderWindow *window;
     int window_mode;
     sfTexture *wall;
-    ray_casting_t binary_tree;
+    buffer_z_t *buffer_z;
 }game_handler_t;
 
 typedef struct game_mode_s {
@@ -59,13 +52,14 @@ int choose_window_mode(game_handler_t *game_handler);
 int display_full_map(game_handler_t *game_handler);
 
 /*Player*/
-void move_player(game_handler_t *game_handler);
+void move_player(entities_class_t *entities);
 void rotate_player(game_handler_t *game_handler);
 void manage_player(game_handler_t *game_handler);
 
 /*3D*/
-float get_coord_wall(game_handler_t *game_handler, float angle, int precision);
+float get_coord_wall(entities_class_t *entities, float angle, int precision);
 int display_3d_map(game_handler_t *game_handler);
+void free_game(game_handler_t *game_handler);
 
 /*get*/
 sfVector2f get_coord(sfVector2f coord_window);

@@ -7,12 +7,43 @@
 #include "game.h"
 #include "entities.h"
 
+time_management_t init_clock(void)
+{
+    time_management_t time = {.clock = sfClock_create(), .time = {0}, .time_as_micro_second = 0, .time_as_second = 0};
+    return time;
+}
+
+int init_wall(object_handler_t *wall)
+{
+    wall->property = (entities_class_t){.angle = 0,
+    .clock = init_clock(),
+    .coord = (sfVector2f){0, 0},
+    .hb_2d = (sfVector2f){0, 0},
+    .life = -1,
+    .speed = 0,
+    .texture = sfTexture_createFromFile("wall.png", NULL),
+    .sprite  = sfSprite_create()};
+
+    sfSprite_setTexture(wall->property.sprite, wall->property.texture, sfTrue);
+    sfSprite_setOrigin(wall->property.sprite, (sfVector2f){0, 0});
+    sfSprite_setScale(wall->property.sprite, (sfVector2f){6, 6});
+    return 0;
+}
+
 int init_player(player_t *player)
 {
     player->angle = 0;
-    player->property = (entities_class_t){.coord = (sfVector2f){0, 0},
-    .sprite = NULL, .texture = NULL,
-        .life = 100, .speed = 0, .hb_2d = (sfVector2f){10, 10}};
+    player->property = (entities_class_t){
+        .clock = init_clock(),
+        .coord = (sfVector2f){1920 / 2, 1080 / 2},
+        .texture = sfTexture_createFromFile("player_2d.png", NULL),
+        .sprite = sfSprite_create(),
+        .life = 100,
+        .speed = 0,
+        .hb_2d = (sfVector2f){10, 10}};
+    sfSprite_setTexture(player->property.sprite, player->property.texture, sfTrue);
+    sfSprite_setOrigin(player->property.sprite,(sfVector2f){2.5, 3});
+    sfSprite_setScale(player->property.sprite, (sfVector2f){6, 6});
     return 0;
 }
 

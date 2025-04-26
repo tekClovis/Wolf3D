@@ -7,17 +7,22 @@
 #include "game.h"
 
 static
-void display_floor(game_handler_t *game_handler, sfRectangleShape *square)
+void display_floor(sfRenderWindow *window, sfRectangleShape *square)
 {
     sfColor my_color = {69, 200, 69, 255};
 
     sfRectangleShape_setSize(square, (sfVector2f){1980, 1082 / 2});
     sfRectangleShape_setPosition(square, (sfVector2f){0, 1080 / 2});
     sfRectangleShape_setFillColor(square, my_color);
-    sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
+    sfRenderWindow_drawRectangleShape(window, square, NULL);
     sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
 }
 
+
+/*
+IL FAUT RECOMMENCER
+LA FONCTION DRAW WALL
+*/
 static
 void draw_wall(game_handler_t *game_handler,
     sfRectangleShape *square, double i, double count)
@@ -29,8 +34,7 @@ void draw_wall(game_handler_t *game_handler,
     ray = (i > 0) ? i : i * 1;
     ray_angle = (-1 * game_handler->entities.player.property.angle)
         - (90 / 2) + ray;
-    projected_height = 1000 / (get_coord_wall(game_handler, ray, 90)
-    * cos(DEG_TO_RAD(ray)));
+    projected_height = 1000 / (get_coord_wall(&game_handler->entities.player.property, ray, 90) * cos(DEG_TO_RAD(ray)));
     sfRectangleShape_setSize(square, (sfVector2f)
         {1980 / 770, projected_height});
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90)
@@ -56,9 +60,9 @@ int display_3d_map(game_handler_t *game_handler)
     sfColor color = {69, 69, 69, 0};
 
     sfRenderWindow_clear(game_handler->window, color);
-    display_floor(game_handler, square);
+    display_floor(game_handler->window, square);
     draw_ray_casting(game_handler, square);
-    move_player(game_handler);
+    move_player(&game_handler->entities.player.property);
     rotate_player(game_handler);
     sfRectangleShape_destroy(square);
     return 0;
