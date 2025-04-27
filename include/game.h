@@ -39,6 +39,7 @@ typedef struct game_handler_s {
     sfRenderWindow *window;
     int window_mode;
     sfTexture *wall;
+    sfRectangleShape *square;
     buffer_z_t *buffer_z;
 }game_handler_t;
 
