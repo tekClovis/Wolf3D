@@ -37,6 +37,11 @@ sfColor get_shadow(double distance)
     return color;
 }
 
+/*
+**Parse la variable buffer_z
+**Pour afficher le bon rayon
+**Puis applique l' ombre
+*/
 static
 void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     sfTexture *wall, sfRenderWindow *window)
@@ -46,7 +51,10 @@ void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90) *
         (buffer->id + 45.f), 1080 / 2 - (buffer->distance / 2)});
     sfRectangleShape_setTexture(square, wall, sfTrue);
-    sfRectangleShape_setFillColor(square, get_shadow(buffer->distance));
+    if (sfMouse_isButtonPressed(sfTrue) || check_l2() == true)
+        sfRectangleShape_setFillColor(square, get_shadow(buffer->distance));
+    else
+        sfRectangleShape_setFillColor(square, (sfColor){63.75, 63.75, 63.75, 255});
     //AFFICHE OMBRE 
     sfRenderWindow_drawRectangleShape(window, square, NULL);
 }

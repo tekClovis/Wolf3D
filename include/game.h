@@ -66,4 +66,16 @@ void free_game(game_handler_t *game_handler);
 /*get*/
 sfVector2f get_coord(sfVector2f coord_window);
 bool is_in_real_wall(sfVector2f coord);
+
+/*Controller*/
+bool check_l3(void);
+bool check_l2(void);
+bool check_l1(void);
+sfUint8 get_left_stick(void);
+
+bool check_r3(void);
+bool check_r2(void);
+bool check_r1(void);
+sfUint8 get_right_stick(void);
+
 #endif //GAME_H

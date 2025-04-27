@@ -6,6 +6,7 @@
 */
 #include "call_csfml.h"
 #include "game.h"
+#include "controller.h"
 
 static
 void moove_up(entities_class_t *entities, sfVector2f *coord, float time)
@@ -67,20 +68,28 @@ void moove_left(entities_class_t *entities, sfVector2f *coord, float time)
 static
 void move_came(entities_class_t *player, sfVector2f *coord, float time)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ))
+    sfUint8 controller = get_left_stick();
+
+    if (sfKeyboard_isKeyPressed(sfKeyZ) || controller & UP)
         moove_up(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyS))
+    if (sfKeyboard_isKeyPressed(sfKeyS) || controller & DOWN)
         moove_down(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyD))
+    if (sfKeyboard_isKeyPressed(sfKeyD) || controller & RIGHT)
         moove_right(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyQ))
+    if (sfKeyboard_isKeyPressed(sfKeyQ) || controller & LEFT)
         moove_left(player, coord, time);
     return;
 }
 
+/*
+**Permet la gestion de rotation
+**d' une entitée
+*/
 void rotate_player(entities_class_t *entities)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyRight)){
+    sfUint8 controller = get_right_stick();
+
+    if (sfKeyboard_isKeyPressed(sfKeyRight) || controller & RIGHT){
         entities->angle += 3;
         if (entities->angle >= 360)
             entities->angle = 0;
@@ -88,7 +97,7 @@ void rotate_player(entities_class_t *entities)
         sfSprite_rotate(entities->sprite,
             entities->angle);
     }
-    if (sfKeyboard_isKeyPressed(sfKeyLeft)){
+    if (sfKeyboard_isKeyPressed(sfKeyLeft) || controller & LEFT){
         entities->angle -= 3;
         if (entities->angle <= 0)
             entities->angle = 360;
@@ -98,13 +107,17 @@ void rotate_player(entities_class_t *entities)
     }
 }
 
+/*
+**Permet la gestion de mouvement
+**du jouers et seulement le joueur
+*/
 void move_player(entities_class_t *entities)
 {
     float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
     sfVector2f coord = {0, 0};
 
     entities->clock.time_as_second = time;
-    if (sfKeyboard_isKeyPressed(sfKeyLShift))
+    if (sfKeyboard_isKeyPressed(sfKeyLShift) || check_l3() == true)
         entities->speed = RUN;
     move_came(entities, &coord, time);
     if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 5,
@@ -120,10 +133,3 @@ void manage_player(game_handler_t *game_handler)
     move_player(&game_handler->entities.player.property);
     rotate_player(&game_handler->entities.player.property);
 }
-
-/*
-Moove entity qui prend la struct entity et un define qui correspond
-Au pointeur qui correspond au type d entité.
-
-Move up down left right prend le type entities_class_t
-*/
