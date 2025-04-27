@@ -11,6 +11,7 @@
 int check_l2(void)
 {
     float l2;
+
     if (!sfJoystick_isConnected(0))
         return false;
     l2 = sfJoystick_getAxisPosition(0, sfJoystickZ);

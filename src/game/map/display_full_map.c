@@ -94,12 +94,12 @@ void display_ray_casting(entities_class_t *entities, sfRenderWindow *window,
 {
     sfVertexArray* line = sfVertexArray_create();
     sfVector2f coord = entities->coord;
-    sfVertex p1 = {coord, sfGreen, {0, 0}};
-    sfVertex p2 = {coord, sfGreen, {0, 0}};
+    sfVertex p1 = {coord, (check_l2() == true) ? sfRed : sfGreen, {0, 0}};
+    sfVertex p2 = {coord, (check_l2() == true) ? sfRed : sfGreen, {0, 0}};
 
     for (double i = precision; i > 1; i = i / 2)
         coord = dichotomie(entities, angle_option, i);
-    p2 = (sfVertex){coord, sfGreen, {0, 0}};
+    p2 = (sfVertex){coord, (check_l2() == true) ? sfRed : sfGreen, {0, 0}};
     sfVertexArray_setPrimitiveType(line, sfLines);
     sfVertexArray_append(line, p1);
     sfVertexArray_append(line, p2);
@@ -122,7 +122,7 @@ float get_coord_wall(entities_class_t *entities, float angle, int precision)
     sfVector2f wall_in_map = {0, 0};
     float dist = 0;
 
-    for (double i = precision; i > 0.5; i = i * 0.5)
+    for (double i = precision; i > 0.25; i = i * 0.5)
         coord_wall = dichotomie(entities, angle, i);
     player_in_map = get_coord(coord_player);
     wall_in_map = get_coord(coord_wall);
