@@ -39,7 +39,7 @@ static
 void display_2dplayer(game_handler_t *game_handler)
 {
     move_player(&game_handler->entities.player.property);
-    rotate_player(game_handler);
+    rotate_player(&game_handler->entities.player.property);
     sfRenderWindow_drawSprite(game_handler->window,
         game_handler->entities.player.property.sprite, NULL);
     sfSprite_setPosition(game_handler->entities.player.property.sprite,

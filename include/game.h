@@ -55,7 +55,7 @@ int display_full_map(game_handler_t *game_handler);
 
 /*Player*/
 void move_player(entities_class_t *entities);
-void rotate_player(game_handler_t *game_handler);
+void rotate_player(entities_class_t *entities);
 void manage_player(game_handler_t *game_handler);
 
 /*3D*/
