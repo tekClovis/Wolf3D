@@ -20,11 +20,12 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
 
 static
 void draw_wall(game_handler_t *game_handler,
-sfRectangleShape *square, double i, double count)
+    sfRectangleShape *square, double i, double count)
 {
     float projected_height = 0;
-    
-    projected_height = 1000 / (get_coord_wall(&game_handler->entities.player.property, i, 90) * cos(DEG_TO_RAD(i)));
+
+    projected_height = 1000 / (get_coord_wall(
+        &game_handler->entities.player.property, i, 90) * cos(DEG_TO_RAD(i)));
     sfRectangleShape_setSize(square, (sfVector2f)
     {1980 / 770, projected_height});
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90)
@@ -36,7 +37,7 @@ sfRectangleShape *square, double i, double count)
 void draw_ray_casting(game_handler_t *game_handler, sfRectangleShape *square)
 {
     double count = 0;
-    
+
     for (double i = -45; i < 45; i += 0.0625){
         draw_wall(game_handler, square, i, count);
         count += 0.0625;
