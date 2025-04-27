@@ -18,7 +18,12 @@ void init_player(player_t *player)
         .sprite = sfSprite_create(),
         .life = 100,
         .speed = 0,
+        .sound_buff = sfSoundBuffer_createFromFile("sound/player_step.ogg"),
+        .step = sfSound_create(),
+        .clock_sound = init_clock(),
         .hb_2d = (sfVector2f){10, 10}};
+    sfSound_setBuffer(player->property.step, player->property.sound_buff);
+    sfSound_setVolume(player->property.step, 30.0f);
     sfSprite_setTexture(player->property.sprite, player->property.texture,
         sfTrue);
     sfSprite_setOrigin(player->property.sprite, (sfVector2f){2.5, 3});
