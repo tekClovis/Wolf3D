@@ -122,7 +122,7 @@ float get_coord_wall(entities_class_t *entities, float angle, int precision)
     sfVector2f wall_in_map = {0, 0};
     float dist = 0;
 
-    for (double i = precision; i > 0.5; i = i / 2)
+    for (double i = precision; i > 0.5; i = i * 0.5)
         coord_wall = dichotomie(entities, angle, i);
     player_in_map = get_coord(coord_player);
     wall_in_map = get_coord(coord_wall);
