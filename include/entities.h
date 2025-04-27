@@ -26,6 +26,9 @@ typedef struct entities_class_s {
     int speed;
     float angle;
     int life;
+    sfSound *step;
+    sfSoundBuffer *sound_buff;
+    time_management_t clock_sound;
 }entities_class_t;
 
 typedef struct player_s {
