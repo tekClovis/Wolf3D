@@ -18,22 +18,20 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
     sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
 }
 
-static void draw_wall(game_handler_t *gh,
-    sfRectangleShape *square,
-    double i,
-    int iteration)
+static void draw_wall(game_handler_t *gh, sfRectangleShape *square,
+    double i, int iteration)
 {
-    float player_angle = DEG_TO_RAD(gh->entities.player.property.angle);
-    float ray_angle_deg = player_angle + (float)i;
-    float delta_rad = (ray_angle_deg - player_angle) * (M_PI / 180.0f);
-    float ray_corr = get_coord_wall(&gh->entities.player.property,
-        ray_angle_deg, 90.0f) * cosf(delta_rad);
-    float projection = (1 / ray_corr) * ((1980.0f * 0.5f) /
-        tanf((90.0f * 0.5f) * (M_PI / 180.0f)));
+    double player_angle = DEG_TO_RAD(gh->entities.player.property.angle);
+    double ray_angle_deg = player_angle + (double)i;
+    double delta_rad = (ray_angle_deg - player_angle) * (M_PI / 180.0f);
+    double ray_corr = get_coord_wall(&gh->entities.player.property,
+    ray_angle_deg, 90.0f) * cos(delta_rad);
+    double projection = (1 / ray_corr) * ((1980.0f * 0.5f) /
+    tan((90.0f * 0.5f) * (M_PI / 180.0f)));
 
     sfRectangleShape_setSize(square, (sfVector2f){ RAY_SCREEN, projection });
     sfRectangleShape_setPosition(square, (sfVector2f){ RAY_SCREEN * iteration,
-        (1080.0f * 0.5f) - (projection * 0.5f)});
+    (1080.0f * 0.5f) - (projection * 0.5f)});
     sfRectangleShape_setTexture(square, gh->wall, sfTrue);
     sfRenderWindow_drawRectangleShape(gh->window, square, NULL);
 }
@@ -58,7 +56,7 @@ int display_3d_map(game_handler_t *game_handler)
     display_floor(game_handler->window, square);
     draw_ray_casting(game_handler, square);
     move_player(&game_handler->entities.player.property);
-    rotate_player(game_handler);
+    rotate_player(&game_handler->entities.player.property);
     sfRectangleShape_destroy(square);
     return 0;
 }

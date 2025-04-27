@@ -78,23 +78,23 @@ void move_came(entities_class_t *player, sfVector2f *coord, float time)
     return;
 }
 
-void rotate_player(game_handler_t *game_handler)
+void rotate_player(entities_class_t *entities)
 {
     if (sfKeyboard_isKeyPressed(sfKeyRight)){
-        game_handler->entities.player.property.angle += 3;
-        if (game_handler->entities.player.property.angle >= 360)
-            game_handler->entities.player.property.angle = 0;
-        sfSprite_setRotation(game_handler->entities.player.property.sprite, 0);
-        sfSprite_rotate(game_handler->entities.player.property.sprite,
-        game_handler->entities.player.property.angle);
+        entities->angle += 3;
+        if (entities->angle >= 360)
+            entities->angle = 0;
+        sfSprite_setRotation(entities->sprite, 0);
+        sfSprite_rotate(entities->sprite,
+            entities->angle);
     }
     if (sfKeyboard_isKeyPressed(sfKeyLeft)){
-        game_handler->entities.player.property.angle -= 3;
-        if (game_handler->entities.player.property.angle <= 0)
-            game_handler->entities.player.property.angle = 360;
-        sfSprite_setRotation(game_handler->entities.player.property.sprite, 0);
-        sfSprite_rotate(game_handler->entities.player.property.sprite,
-        game_handler->entities.player.property.angle);
+        entities->angle -= 3;
+        if (entities->angle <= 0)
+            entities->angle = 360;
+        sfSprite_setRotation(entities->sprite, 0);
+        sfSprite_rotate(entities->sprite,
+        entities->angle);
     }
 }
 
@@ -118,7 +118,7 @@ void move_player(entities_class_t *entities)
 void manage_player(game_handler_t *game_handler)
 {
     move_player(&game_handler->entities.player.property);
-    rotate_player(game_handler);
+    rotate_player(&game_handler->entities.player.property);
 }
 
 /*
