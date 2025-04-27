@@ -19,6 +19,24 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
     sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
 }
 
+sfColor get_shadow(double distance)
+{
+    double shade = distance / CLOSE_DIST;
+    sfColor color;
+
+    shade *= 10;
+    if (shade < 0.25)
+        shade = 0.25;
+    if (shade > 2)
+        shade = 2;
+    color = (sfColor){
+        .r = (sfUint8)(255.0f * shade),
+        .g = (sfUint8)(255.0f * shade),
+        .b = (sfUint8)(255.0f * shade),
+        .a = 255};
+    return color;
+}
+
 static
 void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     sfTexture *wall, sfRenderWindow *window)
@@ -28,6 +46,8 @@ void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90) *
         (buffer->id + 45.f), 1080 / 2 - (buffer->distance / 2)});
     sfRectangleShape_setTexture(square, wall, sfTrue);
+    sfRectangleShape_setFillColor(square, get_shadow(buffer->distance));
+    //AFFICHE OMBRE 
     sfRenderWindow_drawRectangleShape(window, square, NULL);
 }
 

@@ -8,6 +8,8 @@
 #ifndef RAY_CASTING_H
     #define RAY_CASTING_H
     #include <stddef.h>
+    #include "call_csfml.h"
+    #define CLOSE_DIST 20000.0f
 
 /*
 ** Node contient tous l arbre binaire
@@ -18,6 +20,7 @@ typedef struct buffer_z_s {
     double distance;
     double id;
     size_t type;
+    sfColor shadow;
 }buffer_z_t;
 
 #endif //RAY_CASTING_H

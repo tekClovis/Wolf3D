@@ -107,8 +107,8 @@ void move_player(entities_class_t *entities)
     if (sfKeyboard_isKeyPressed(sfKeyLShift))
         entities->speed = RUN;
     move_came(entities, &coord, time);
-    if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 3,
-        entities->coord.y + coord.y * 3}) == true)
+    if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 5,
+        entities->coord.y + coord.y * 5}) == true)
         return;
     entities->coord.x += coord.x;
     entities->coord.y += coord.y;
