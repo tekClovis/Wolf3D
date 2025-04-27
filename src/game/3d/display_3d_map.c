@@ -11,6 +11,7 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
 {
     sfColor my_color = {69, 200, 69, 255};
 
+    sfRectangleShape_setTexture(square, NULL, sfTrue);
     sfRectangleShape_setSize(square, (sfVector2f){1980, 1082 / 2});
     sfRectangleShape_setPosition(square, (sfVector2f){0, 1080 / 2});
     sfRectangleShape_setFillColor(square, my_color);
@@ -19,41 +20,58 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
 }
 
 static
-void draw_wall(game_handler_t *game_handler,
-    sfRectangleShape *square, double i, double count)
+void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
+    sfTexture *wall, sfRenderWindow *window)
 {
-    float projected_height = 0;
-
-    projected_height = 1000 / (get_coord_wall(
-        &game_handler->entities.player.property, i, 90) * cos(DEG_TO_RAD(i)));
     sfRectangleShape_setSize(square, (sfVector2f)
-    {1980 / 770, projected_height});
-    sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90)
-    * count, 1080 / 2 - (projected_height / 2)});
-    sfRectangleShape_setTexture(square, game_handler->wall, sfTrue);
-    sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
+    {1980 / 180, buffer->distance});
+    sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90) *
+        (buffer->id + 45.f), 1080 / 2 - (buffer->distance / 2)});
+    sfRectangleShape_setTexture(square, wall, sfTrue);
+    sfRenderWindow_drawRectangleShape(window, square, NULL);
+}
+
+static
+void fill_buffer_z(buffer_z_t *buffer_z, entities_class_t *entities,
+    double i, double count)
+{
+    int element = (int)(count * 4.f);
+
+    buffer_z[element].distance = 1000 / (get_coord_wall(entities, i, 90)
+        * cos(DEG_TO_RAD(i)));
+    buffer_z[element].type = 0;
+    buffer_z[element].id = i;
 }
 
 void draw_ray_casting(game_handler_t *game_handler, sfRectangleShape *square)
 {
     double count = 0;
+    int element = 0;
 
-    for (double i = -45; i < 45; i += 0.0625){
-        draw_wall(game_handler, square, i, count);
-        count += 0.0625;
+    for (double i = -45; i < 45; i += 0.25){
+        fill_buffer_z(game_handler->buffer_z,
+            &game_handler->entities.player.property, i, count);
+        count += 0.25;
+        element++;
+    }
+    count = 0;
+    element = 0;
+    for (double i = -45; i < 45; i += 0.25){
+        draw_buffer_z(&game_handler->buffer_z[element], square,
+            game_handler->wall, game_handler->window);
+        count += 0.25;
+        element++;
     }
 }
 
 int display_3d_map(game_handler_t *game_handler)
 {
-    sfRectangleShape *square = sfRectangleShape_create();
     sfColor color = {69, 69, 69, 0};
 
     sfRenderWindow_clear(game_handler->window, color);
-    display_floor(game_handler->window, square);
-    draw_ray_casting(game_handler, square);
+    display_floor(game_handler->window, game_handler->square);
+    draw_ray_casting(game_handler, game_handler->square);
     move_player(&game_handler->entities.player.property);
     rotate_player(&game_handler->entities.player.property);
-    sfRectangleShape_destroy(square);
     return 0;
 }

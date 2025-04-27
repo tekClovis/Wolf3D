@@ -16,6 +16,7 @@
 */
 typedef struct buffer_z_s {
     double distance;
+    double id;
     size_t type;
 }buffer_z_t;
 
