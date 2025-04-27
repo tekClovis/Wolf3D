@@ -25,10 +25,10 @@ sfColor get_shadow(double distance)
     sfColor color;
 
     shade *= 10;
+    if (shade > 1)
+        shade = 1;
     if (shade < 0.25)
         shade = 0.25;
-    if (shade > 2)
-        shade = 2;
     color = (sfColor){
         .r = (sfUint8)(255.0f * shade),
         .g = (sfUint8)(255.0f * shade),
