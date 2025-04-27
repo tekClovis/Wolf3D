@@ -18,38 +18,34 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
     sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
 }
 
-static void draw_wall(game_handler_t *gh, sfRectangleShape *square,
-    double i, int iteration)
+static
+void draw_wall(game_handler_t *game_handler,
+sfRectangleShape *square, double i, double count)
 {
-    double player_angle = DEG_TO_RAD(gh->entities.player.property.angle);
-    double ray_angle_deg = player_angle + (double)i;
-    double delta_rad = (ray_angle_deg - player_angle) * (M_PI / 180.0f);
-    double ray_corr = get_coord_wall(&gh->entities.player.property,
-    ray_angle_deg, 90.0f) * cos(delta_rad);
-    double projection = (1 / ray_corr) * ((1980.0f * 0.5f) /
-    tan((90.0f * 0.5f) * (M_PI / 180.0f)));
-
-    sfRectangleShape_setSize(square, (sfVector2f){ RAY_SCREEN, projection });
-    sfRectangleShape_setPosition(square, (sfVector2f){ RAY_SCREEN * iteration,
-    (1080.0f * 0.5f) - (projection * 0.5f)});
-    sfRectangleShape_setTexture(square, gh->wall, sfTrue);
-    sfRenderWindow_drawRectangleShape(gh->window, square, NULL);
+    float projected_height = 0;
+    
+    projected_height = 1000 / (get_coord_wall(&game_handler->entities.player.property, i, 90) * cos(DEG_TO_RAD(i)));
+    sfRectangleShape_setSize(square, (sfVector2f)
+    {1980 / 770, projected_height});
+    sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90)
+    * count, 1080 / 2 - (projected_height / 2)});
+    sfRectangleShape_setTexture(square, game_handler->wall, sfTrue);
+    sfRenderWindow_drawRectangleShape(game_handler->window, square, NULL);
 }
 
 void draw_ray_casting(game_handler_t *game_handler, sfRectangleShape *square)
 {
-    int iteration = 0;
-
+    double count = 0;
+    
     for (double i = -45; i < 45; i += 0.0625){
-        draw_wall(game_handler, square, i, iteration);
-        iteration++;
+        draw_wall(game_handler, square, i, count);
+        count += 0.0625;
     }
 }
 
 int display_3d_map(game_handler_t *game_handler)
 {
     sfRectangleShape *square = sfRectangleShape_create();
-    int ray = 0;
     sfColor color = {69, 69, 69, 0};
 
     sfRenderWindow_clear(game_handler->window, color);
