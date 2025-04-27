@@ -19,6 +19,10 @@ void display_floor(sfRenderWindow *window, sfRectangleShape *square)
     sfRectangleShape_setFillColor(square, (sfColor){100, 100, 100, 255});
 }
 
+/*
+**Permet d afficher de la lumière a l aide
+**D' un ray casting
+*/
 sfColor get_shadow(double distance)
 {
     double shade = distance / CLOSE_DIST;
@@ -50,12 +54,13 @@ void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     {1980 / 180, buffer->distance});
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90) *
         (buffer->id + 45.f), 1080 / 2 - (buffer->distance / 2)});
-    sfRectangleShape_setTexture(square, wall, sfTrue);
+    sfRectangleShape_setTexture(square, wall, sfFalse);
     if (sfMouse_isButtonPressed(sfTrue) || check_l2() == true)
         sfRectangleShape_setFillColor(square, get_shadow(buffer->distance));
     else
-        sfRectangleShape_setFillColor(square, (sfColor){63.75, 63.75, 63.75, 255});
-    //AFFICHE OMBRE 
+        sfRectangleShape_setFillColor(square, (sfColor)
+        {63.75, 63.75, 63.75, 255});
+    //AFFICHE OMBRE
     sfRenderWindow_drawRectangleShape(window, square, NULL);
 }
 
