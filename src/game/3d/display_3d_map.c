@@ -28,7 +28,7 @@ sfColor get_shadow(double distance)
     double shade = distance / CLOSE_DIST;
     sfColor color;
 
-    shade *= 10;
+    shade *= 15;
     if (shade > 1)
         shade = 1;
     if (shade < 0.25)

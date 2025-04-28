@@ -27,9 +27,11 @@ const game_mode_t tab_func[] = {
 static
 int change_window(game_handler_t *game_handler)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyNumpad1))
+    if (sfKeyboard_isKeyPressed(sfKeyNumpad1)
+    || game_handler->controller.control & UP)
         game_handler->window_mode = 0;
-    if (sfKeyboard_isKeyPressed(sfKeyNumpad2))
+    if (sfKeyboard_isKeyPressed(sfKeyNumpad2)
+    || game_handler->controller.control & UP)
         game_handler->window_mode = 1;
     return 0;
 }

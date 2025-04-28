@@ -29,6 +29,7 @@ typedef struct entities_class_s {
     sfSound *step;
     sfSoundBuffer *sound_buff;
     time_management_t clock_sound;
+    sfVector2f collision;
 }entities_class_t;
 
 typedef struct player_s {

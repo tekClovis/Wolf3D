@@ -17,6 +17,12 @@ int init_binary_tree(buffer_z_t **buffer_z)
     return 0;
 }
 
+int init_controller(controller_t *controller)
+{
+    controller->control = 0;
+    controller->time = init_clock();
+}
+
 int init_game_handler(game_handler_t *game_handler)
 {
     sfTexture *wall = sfTexture_createFromFile("wall.bmp", NULL);
@@ -24,6 +30,7 @@ int init_game_handler(game_handler_t *game_handler)
     game_handler->window = create_window();
     init_player(&game_handler->entities.player);
     init_wall(&game_handler->entities.object);
+    init_controller(&game_handler->controller);
     if (init_binary_tree(&game_handler->buffer_z))
         return 84;
     game_handler->square = sfRectangleShape_create();
