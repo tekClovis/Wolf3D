@@ -33,10 +33,9 @@ int check_l3(void)
 {
     if (!sfJoystick_isConnected(0))
         return false;
-    if (sfJoystick_isButtonPressed(0, 10)) {
-        return 0;
-    }
-    return 1;
+    if (sfJoystick_isButtonPressed(0, 10))
+        return true;
+    return false;
 }
 
 sfUint8 get_left_stick(void)

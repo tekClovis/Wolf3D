@@ -6,12 +6,28 @@
 */
 #include "game.h"
 #include <stdbool.h>
+#include "controller.h"
 
 static
 void applied_event(sfRenderWindow *window, sfEvent event)
 {
     if (event.type == sfEvtClosed)
         sfRenderWindow_close(window);
+}
+
+sfUint8 get_controller_button(void)
+{
+    sfUint8 controller = 0;
+
+    if (check_cross() == true)
+        controller |= DOWN;
+    if (check_triangle() == true)
+        controller |= UP;
+    if (check_square() == true)
+        controller |= LEFT;
+    if (check_circle() == true)
+        controller |= RIGHT;
+    return controller;
 }
 
 /*
@@ -24,6 +40,8 @@ void get_event(game_handler_t *game_handler)
     sfEvent event;
 
     while (sfRenderWindow_pollEvent(game_handler->window, &event)){
+        if (need_refresh_clock(&game_handler->controller.time, 0.5))
+            game_handler->controller.control = get_controller_button();
         game_handler->event = event;
         applied_event(game_handler->window, event);
     }

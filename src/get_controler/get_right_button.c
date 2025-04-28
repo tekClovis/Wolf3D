@@ -35,9 +35,9 @@ int check_r3(void)
     if (!sfJoystick_isConnected(0))
         return false;
     if (sfJoystick_isButtonPressed(0, 11)) {
-        return 0;
+        return true;
     }
-    return 1;
+    return false;
 }
 
 sfUint8 get_right_stick(void)
@@ -46,6 +46,7 @@ sfUint8 get_right_stick(void)
     float u = sfJoystick_getAxisPosition(0, sfJoystickU);
     float v = sfJoystick_getAxisPosition(0, sfJoystickV);
 
+    check_triangle();
     if (!sfJoystick_isConnected(0))
         return 0;
     if (u < -50.0f)

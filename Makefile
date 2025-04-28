@@ -22,7 +22,10 @@ SRC += src/game/map/display_full_map.c
 SRC += src/init/init_game_handler.c
 SRC += src/init/init_player_ennemies.c
 SRC += src/game/3d/display_3d_map.c
-SRC += src/game/free_game.c
+SRC += src/init/free_game.c
+SRC += src/get_controler/get_left_button.c
+SRC += src/get_controler/check_button_right.c
+SRC += src/get_controler/get_right_button.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,7 +39,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C ./lib/
-		gcc -g $(OBJ) $(CFLAGS) -o $(NAME)  $(LDFLAG)
+		gcc -g $(OBJ) $(CFLAGS) -o $(NAME)  $(LDFLAG) -g
 
 clean:
 		make clean -C ./lib/

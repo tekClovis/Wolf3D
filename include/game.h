@@ -11,6 +11,7 @@
     #include "entities.h"
     #include "call_csfml.h"
     #include "ray_casting.h"
+    #include "controller.h"
     #include <stdbool.h>
     #include <math.h>
     #define WINDOW_SIZE_X 1980
@@ -42,6 +43,7 @@ typedef struct game_handler_s {
     sfTexture *wall;
     sfRectangleShape *square;
     buffer_z_t *buffer_z;
+    controller_t controller;
 }game_handler_t;
 
 typedef struct game_mode_s {
@@ -78,5 +80,8 @@ bool check_r3(void);
 bool check_r2(void);
 bool check_r1(void);
 sfUint8 get_right_stick(void);
+
+/*Time and clock*/
+bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
 #endif //GAME_H

@@ -127,9 +127,9 @@ float get_coord_wall(entities_class_t *entities, float angle, int precision)
     player_in_map = get_coord(coord_player);
     wall_in_map = get_coord(coord_wall);
     dist = sqrt(((player_in_map.x - wall_in_map.x) *
-    (player_in_map.x - wall_in_map.x)) +
-    ((player_in_map.y - wall_in_map.y) *
-    (player_in_map.y - wall_in_map.y)));
+    (player_in_map.x - wall_in_map.x))
+    + ((player_in_map.y - wall_in_map.y)
+    * (player_in_map.y - wall_in_map.y)));
     return dist;
 }
 
