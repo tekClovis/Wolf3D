@@ -14,25 +14,20 @@
 */
 
 const game_mode_t tab_func[] = {
+    {&display_menu},
     {&display_full_map},
     {&display_3d_map},
     {NULL}
 };
 
-//display the map in full screen
-//{&start_game}
-//{&mode_menu},//active the menu mode
-//{&display_game}//3d_game with mini maps
-
-static
-int change_window(game_handler_t *game_handler)
+static int change_window(game_handler_t *game_handler)
 {
     if (sfKeyboard_isKeyPressed(sfKeyNumpad1)
     || game_handler->controller.control & UP)
-        game_handler->window_mode = 0;
+        game_handler->window_mode = 1;
     if (sfKeyboard_isKeyPressed(sfKeyNumpad2)
     || game_handler->controller.control & UP)
-        game_handler->window_mode = 1;
+        game_handler->window_mode = 2;
     return 0;
 }
 

@@ -31,6 +31,8 @@ int init_game_handler(game_handler_t *game_handler)
     init_player(&game_handler->entities.player);
     init_wall(&game_handler->entities.object);
     init_controller(&game_handler->controller);
+    game_handler->menu = malloc(sizeof(menu_t));
+    init_menu(game_handler->menu);
     if (init_binary_tree(&game_handler->buffer_z))
         return 84;
     game_handler->square = sfRectangleShape_create();
