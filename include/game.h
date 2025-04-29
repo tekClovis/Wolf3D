@@ -12,6 +12,7 @@
     #include "call_csfml.h"
     #include "ray_casting.h"
     #include "controller.h"
+    #include "menu.h"
     #include <stdbool.h>
     #define WINDOW_SIZE_X 1980
     #define WINDOW_SIZE_y 1080
@@ -43,6 +44,7 @@ typedef struct game_handler_s {
     sfRectangleShape *square;
     buffer_z_t *buffer_z;
     controller_t controller;
+    menu_t *menu;
 }game_handler_t;
 
 typedef struct game_mode_s {
@@ -54,6 +56,7 @@ int launch_game(game_handler_t *game_handler);
 /*Game mode*/
 int choose_window_mode(game_handler_t *game_handler);
 int display_full_map(game_handler_t *game_handler);
+int display_menu(game_handler_t *g_handler);
 
 /*Player*/
 void move_player(entities_class_t *entities);
