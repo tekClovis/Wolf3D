@@ -9,7 +9,12 @@
 #include "my.h"
 
 
-int pistol_shoot(list_t *entities, entities_class_t *shooter)
+int knife_shoot(list_t *entities, entities_class_t *shooter)
+{
+    return 0;
+}
+
+int gun_shoot(list_t *entities, entities_class_t *shooter)
 {
     return 0;
 }

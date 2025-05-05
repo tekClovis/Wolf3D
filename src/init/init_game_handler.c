@@ -23,6 +23,16 @@ int init_controller(controller_t *controller)
     controller->time = init_clock();
 }
 
+list_t *create_list_ennemies(void)
+{
+    list_t *l_ennemies = list_create();
+
+    if (l_ennemies == NULL)
+        return NULL;
+    push_back(l_ennemies, init_enemies((sfVector2f){800.0, 800.0}, SS));
+    return l_ennemies;
+}
+
 int init_game_handler(game_handler_t *game_handler)
 {
     sfTexture *wall = sfTexture_createFromFile("wall.bmp", NULL);
@@ -33,6 +43,7 @@ int init_game_handler(game_handler_t *game_handler)
     init_controller(&game_handler->controller);
     game_handler->menu = malloc(sizeof(menu_t));
     init_menu(game_handler->menu);
+    game_handler->entities.ennemies = create_list_ennemies();
     if (init_binary_tree(&game_handler->buffer_z))
         return 84;
     game_handler->square = sfRectangleShape_create();

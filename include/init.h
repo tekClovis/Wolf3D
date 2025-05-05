@@ -18,5 +18,6 @@ void init_player(player_t *player);
 int init_wall(object_handler_t *wall);
 time_management_t init_clock(void);
 int init_wall(object_handler_t *wall);
+ennemies_t *init_enemies(sfVector2f coord, int id);
 
 #endif //INIT_H

@@ -72,12 +72,17 @@ void set_brut(ennemies_t *ennemi, sfVector2f coord)
     //ennemi->gun_shot = &mini_gun;
 }
 
-void init_enemies(ennemies_t *ennemies, sfVector2f coord, int id)
+ennemies_t *init_enemies(sfVector2f coord, int id)
 {
+    ennemies_t *ennemies = malloc(sizeof(ennemies_t));
+
+    if (ennemies == NULL)
+        return;
     if (id == SS)
         set_ss(ennemies, coord);
     else if (id == MUTANT)
         set_mutant(ennemies, coord);
     else
         set_brut(ennemies, coord);
+    return ennemies;
 }

@@ -5,6 +5,7 @@
 ** launch_game
 */
 #include "game.h"
+#include "entities.h"
 #include <stdbool.h>
 #include "controller.h"
 
@@ -69,6 +70,8 @@ int launch_game(game_handler_t *game_handler)
         get_event(game_handler);
         handle_ent_event(game_handler);
         choose_window_mode(game_handler);
+        sfRenderWindow_drawSprite(game_handler->window, ((ennemies_t *)
+        game_handler->entities.ennemies->head->data)->property.sprite, NULL);
         sfRenderWindow_display(game_handler->window);
     }
     return 0;

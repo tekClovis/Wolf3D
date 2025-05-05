@@ -61,7 +61,7 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 }
 
 //actual node set at the second node because the first is the player
-void handle_ent_env(game_handler_t *game_handler)
+void handle_ent_event(struct game_handler_s *game_handler)
 {
     node_t *actual = game_handler->entities.ennemies->head->next;
     player_t *player = &game_handler->entities.player;

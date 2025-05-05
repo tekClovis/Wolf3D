@@ -10,6 +10,7 @@
     #include "stdbool.h"
     #include "stdbool.h"
     #include "call_csfml.h"
+    #include "game.h"
     #include "time.h"
     #include "my.h"
     #define PLAYER 2
@@ -33,18 +34,18 @@ typedef struct entities_class_s {
     sfVector2f collision;
 }entities_class_t;
 
-typedef struct player_s {
-    entities_class_t property;
-    int (*gun_shot)(player_t *, ennemies_t *);
-    float angle;
-}player_t;
-
 typedef struct ennemies_s {
     entities_class_t property;
     bool can_shoot;
     time_management_t hit_clock;
-    int (*gun_shot)(player_t *, ennemies_t *);
+    int (*gun_shot)(list_t *, struct ennemies_s *);
 }ennemies_t;
+
+typedef struct player_s {
+    entities_class_t property;
+    int (*gun_shot)(list_t *, struct ennemies_s *);
+    float angle;
+}player_t;
 
 typedef struct object_s {
     entities_class_t property;
@@ -57,5 +58,5 @@ typedef struct {
     int sprite_coef;
 } angle_sprite_t;
 
-void handle_ent_env(game_handler_t *game_handler);
+void handle_ent_event(struct game_handler_s *game_handler);
 #endif //ENTITIES_H
