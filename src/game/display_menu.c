@@ -37,7 +37,7 @@ void handle_menu_event(game_handler_t *handler)
             handler->menu->act = 1;
     }
     if (sfKeyboard_isKeyPressed(sfKeyEnter) ||
-        handler->controller.control & DOWN){
+        check_cross() == true){
             handler->window_mode = handler->menu->act;
     }
 }
