@@ -86,5 +86,5 @@ sfUint8 get_right_stick(void);
 
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
-
+void handle_ent_event(game_handler_t *game_handler);
 #endif //GAME_H

@@ -77,7 +77,7 @@ ennemies_t *init_enemies(sfVector2f coord, int id)
     ennemies_t *ennemies = malloc(sizeof(ennemies_t));
 
     if (ennemies == NULL)
-        return;
+        return NULL;
     if (id == SS)
         set_ss(ennemies, coord);
     else if (id == MUTANT)

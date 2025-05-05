@@ -28,6 +28,7 @@ SRC += src/game/display_menu.c
 SRC += src/get_controler/get_left_button.c
 SRC += src/get_controler/check_button_right.c
 SRC += src/get_controler/get_right_button.c
+SRC += src/entities/handle_ent_event.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -34,18 +34,21 @@ typedef struct entities_class_s {
     sfVector2f collision;
 }entities_class_t;
 
-typedef struct ennemies_s {
+typedef struct ennemies_s ennemies_t;
+typedef struct player_s player_t;
+
+struct ennemies_s {
     entities_class_t property;
     bool can_shoot;
     time_management_t hit_clock;
-    int (*gun_shot)(list_t *, struct ennemies_s *);
-}ennemies_t;
+    int (*gun_shot)(list_t *, ennemies_t *, player_t *);
+};
 
-typedef struct player_s {
+struct player_s {
     entities_class_t property;
-    int (*gun_shot)(list_t *, struct ennemies_s *);
+    int (*gun_shot)(list_t *,  ennemies_t *, player_t *);
     float angle;
-}player_t;
+};
 
 typedef struct object_s {
     entities_class_t property;
@@ -58,5 +61,4 @@ typedef struct {
     int sprite_coef;
 } angle_sprite_t;
 
-void handle_ent_event(struct game_handler_s *game_handler);
 #endif //ENTITIES_H

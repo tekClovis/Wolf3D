@@ -6,6 +6,7 @@
         "call_csfml.h": "c",
         "stdbool.h": "c",
         "my.h": "c",
-        "entities.h": "c"
+        "entities.h": "c",
+        "controller.h": "c"
     }
 }

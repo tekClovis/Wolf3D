@@ -61,7 +61,7 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 }
 
 //actual node set at the second node because the first is the player
-void handle_ent_event(struct game_handler_s *game_handler)
+void handle_ent_event(game_handler_t *game_handler)
 {
     node_t *actual = game_handler->entities.ennemies->head->next;
     player_t *player = &game_handler->entities.player;
@@ -69,14 +69,15 @@ void handle_ent_event(struct game_handler_s *game_handler)
     for (; actual; actual = actual->next){
         if (((ennemies_t *)actual->data)->property.life < 0)
             continue;
-        detect_player(actual->data, player);
+        //detect_player(actual->data, player);
         if (((ennemies_t *)actual->data)->can_shoot
             && ((ennemies_t *)actual->data)->hit_clock.time_as_micro_second){
             aim_player(player, actual->data);
-            ((ennemies_t *)actual->data)->gun_shot(player, actual->data);
+            ((ennemies_t *)actual->data)->
+                gun_shot(NULL, actual->data, player);
             continue;
         }
-        move_ennemies(actual->data);
+        //move_ennemies(actual->data);
         rotate_sprite(player, actual->data);
     }
 }
