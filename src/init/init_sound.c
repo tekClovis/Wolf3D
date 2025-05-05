@@ -5,3 +5,7 @@
 ** init_sound
 */
 
+void init_sound(void)
+{
+    return;
+}
