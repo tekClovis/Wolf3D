@@ -55,11 +55,14 @@ void draw_buffer_z(buffer_z_t *buffer, sfRectangleShape *square,
     sfRectangleShape_setPosition(square, (sfVector2f){(1980 / 90) *
         (buffer->id + 45.f), 1080 / 2 - (buffer->distance / 2)});
     sfRectangleShape_setTexture(square, wall, sfFalse);
-    if (sfMouse_isButtonPressed(sfTrue) || check_l2() == true)
+    float norm = (float)(buffer->id + 45.0f) / 90.f;
+    sfIntRect rect = {0, 0,  (int)(norm * 500.f) , 277};//Normalise la valeur buffer->id a un intervalle [0 ; 1]
+    sfRectangleShape_setTextureRect(square, rect);
+    if (sfMouse_isButtonPressed(sfMouseRight) || check_l2() == true)
         sfRectangleShape_setFillColor(square, get_shadow(buffer->distance));
     else
         sfRectangleShape_setFillColor(square, (sfColor)
-        {63.75, 63.75, 63.75, 255});
+        {63, 63, 63, 255});
     //AFFICHE OMBRE
     sfRenderWindow_drawRectangleShape(window, square, NULL);
 }
