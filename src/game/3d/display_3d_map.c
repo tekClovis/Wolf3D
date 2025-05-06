@@ -109,5 +109,6 @@ int display_3d_map(game_handler_t *game_handler)
     draw_ray_casting(game_handler, game_handler->square);
     move_player(&game_handler->entities.player.property);
     rotate_player(&game_handler->entities.player.property);
+    check_back_to_menu(game_handler);
     return 0;
 }

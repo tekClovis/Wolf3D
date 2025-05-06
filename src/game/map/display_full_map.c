@@ -143,5 +143,6 @@ int display_full_map(game_handler_t *game_handler)
         display_ray_casting(&game_handler->entities.player.property,
         game_handler->window, i, 60);
     }
+    check_back_to_menu(game_handler);
     return 0;
 }
