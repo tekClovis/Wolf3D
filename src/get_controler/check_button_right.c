@@ -40,7 +40,9 @@ int check_cross(void)
 {
     if (!sfJoystick_isConnected(0))
         return false;
-    if (sfJoystick_isButtonPressed(0, 1))
+    if (sfJoystick_isButtonPressed(0, 0)){
+        printf("cross\n");
         return true;
+    }
     return false;
 }
