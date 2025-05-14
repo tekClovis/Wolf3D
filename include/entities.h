@@ -33,9 +33,21 @@ typedef struct entities_class_s {
     sfVector2f collision;
 }entities_class_t;
 
+typedef struct{
+    ammo;
+    magazine;
+}gun_stat_t;
+
+typedef struct{
+    int (*gun_shot)(list_t *, entities_class_t);
+    int nb_of_gun;
+    int actual_gun;
+    gun_stat_t stat[3];
+} gun_t;
+
 typedef struct player_s {
     entities_class_t property;
-    int (*gun_shot)(list_t *, entities_class_t);
+    gun_t gun;
     float angle;
 }player_t;
 
