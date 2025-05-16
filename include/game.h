@@ -13,6 +13,7 @@
     #include "ray_casting.h"
     #include "controller.h"
     #include "menu.h"
+    #include "level.h"
     #include <stdbool.h>
     #define WINDOW_SIZE_X 1980
     #define WINDOW_SIZE_y 1080
@@ -22,30 +23,69 @@
     #define M_PI 3.14159265358979323846
     #define RAY_SCREEN (1980.0f / 1440.0f)
     #define DEG_TO_RAD(angle) ((angle) * (M_PI / 180.0))
+    #define S_START 0
+    #define S_PAUSE 1
+    #define S_SETTING 2
+    #define S_END 3
+    #define S_LORE 4
+    #define S_GAME 5
+    #define WINM_FSCREEN 0
+    #define WINM_BIG 1
+    #define WINM_LITTLE 2
 int wolf3d(void);
 /*
 ** Entitie handler
 ** contient toute les
 ** entité
 */
-typedef struct entities_handler_s {
-    player_t player;
-    object_handler_t object;
-    ennemies_t *ennemies;
-}entities_handler_t;
+
+typedef struct score_s {
+    int score;
+    time_management_t time_to_end;
+} score_t;
+
+typedef struct uid_s {
+    img_t bg_player_info;
+    sfText *time;
+    sfText *ammo;
+    inventory_t *inventory;
+} uid_t;
+
+typedef struct game_s {
+    entities_handler_t ent;
+    level_t level;
+    uid_t *uid;
+    score_t score;
+} game_t;
+
+typedef struct setting_s {
+    float music_volume;
+    float sound_volume;
+    size_t win_mode;
+    sfVector2f win_size[2];
+} setting_t;
+
+typedef struct screen_s {
+    menu_t *menu;
+    sfRenderWindow *win;
+    sfVideoMode win_mode;
+} screen_t;
 
 typedef struct game_handler_s {
     sfEvent event;
     time_management_t general_clock;
-    entities_handler_t entities;
-    sfRenderWindow *window;
-    int window_mode;
+    setting_t settings;
+    int screen_mode;
+    screen_t screen;
+    tab_texture_t *texture;
+    game_t *game;
     sfTexture *wall;
     sfRectangleShape *square;
     buffer_z_t *buffer_z;
     controller_t controller;
-    menu_t *menu;
 }game_handler_t;
+
+typedef struct entities_class_s entities_class_t;
 
 typedef struct game_mode_s {
     int (*funct)(game_handler_t *);

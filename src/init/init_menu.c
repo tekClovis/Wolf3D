@@ -7,33 +7,51 @@
 
 #include "game.h"
 
-void init_rectangle(menu_t *menu)
+static
+bouton_t *set_buttons(img_t *released, void (*action)(game_handler_t *))
 {
-    menu->chose_rectangle = sfRectangleShape_create();
-    sfRectangleShape_setPosition(menu->chose_rectangle,
-        (sfVector2f){100, 300});
-    sfRectangleShape_setFillColor(menu->chose_rectangle, sfTransparent);
-    sfRectangleShape_setOutlineThickness(menu->chose_rectangle, 2);
-    sfRectangleShape_setOutlineColor(menu->chose_rectangle, sfRed);
-    sfRectangleShape_setSize(menu->chose_rectangle, (sfVector2f){200, 60});
+    bouton_t *bouton = malloc(sizeof(bouton_t));
+
+    bouton->action = action;
+    bouton->released = released;
+    bouton->press = sfRectangleShape_create();
+    sfRectangleShape_setPosition(bouton->press,
+        bouton->released->pos);
+    sfRectangleShape_setSize(bouton->press,
+        (sfVector2f){bouton->released->rect.width,
+            bouton->released->rect.top});
+    return bouton;
 }
 
-void init_menu(menu_t *menu)
+menu_t *init_menu(menu_t *menu, game_handler_t *game_h, char *title)
 {
-    menu->act = 1;
-    menu->sprite = sfSprite_create();
-    menu->texture = sfTexture_createFromFile("menu_bg.jpg", NULL);
-    menu->sprite_threed = sfSprite_create();
-    menu->sprite_twod = sfSprite_create();
-    menu->text_threed = sfTexture_createFromFile("mode_3D.png", NULL);
-    menu->text_twod = sfTexture_createFromFile("mode_2D.png", NULL);
-    sfSprite_setTexture(menu->sprite_threed, menu->text_threed, sfTrue);
-    sfSprite_setTexture(menu->sprite_twod, menu->text_twod, sfTrue);
-    sfSprite_setTexture(menu->sprite, menu->texture, sfTrue);
-    sfSprite_setPosition(menu->sprite_threed, (sfVector2f){100, 400});
-    sfSprite_setPosition(menu->sprite_twod, (sfVector2f){100, 300});
-    sfSprite_setScale(menu->sprite, (sfVector2f){1.25, 1.055});
-    sfSprite_setScale(menu->sprite_threed, (sfVector2f){0.25, 0.25});
-    sfSprite_setScale(menu->sprite_twod, (sfVector2f){0.25, 0.25});
-    init_rectangle(menu);
+    menu->boutons = list_create();
+    if (menu->boutons == NULL)
+        return NULL;
+    menu->background = malloc(sizeof(img_t));
+    if (menu->background == NULL)
+        return free(menu->boutons), NULL;
+    menu->background = set_img(T_M_BG, (sfIntRect){0, 0, 0, 0},
+    (sfVector2f){0, 0}, game_h);
+    menu->text = set_txt(80, sfRed, (sfVector2f){87, 87}, title);
+    return menu;
+}
+
+bool init_start_menu(menu_t *menu, game_handler_t *game_h)
+{
+    menu = init_menu(menu, game_h, "WOLF3D");
+    if (menu == NULL)
+        return false;
+    push_back(menu->boutons,
+        set_buttons(set_img(T_SAVE1, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){400, 700}, game_h), &handle_save1));
+    push_back(menu->boutons,
+        set_buttons(set_img(T_SAVE2, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){500, 700}, game_h), &handle_save2));
+    push_back(menu->boutons,
+        set_buttons(set_img(T_SAVE3, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){500, 700}, game_h), &handle_save3));
+    push_back(menu->boutons,
+        set_buttons(set_img(T_SETTING, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){500, 700}, game_h), &go_to_setting));
 }

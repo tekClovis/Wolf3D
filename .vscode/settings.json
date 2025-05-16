@@ -6,6 +6,11 @@
         "call_csfml.h": "c",
         "stdbool.h": "c",
         "my.h": "c",
-        "entities.h": "c"
+        "entities.h": "c",
+        "utils.h": "c",
+        "deque": "c",
+        "string": "c",
+        "vector": "c",
+        "rope": "c"
     }
 }

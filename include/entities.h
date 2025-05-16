@@ -10,57 +10,72 @@
     #include "call_csfml.h"
     #include "time.h"
     #include "my.h"
-    #define SS 2
-    #define MUTANT 3
-    #define BRUT 4
-    #define PLAYER_MOVE 0
-    #define ENNEMIE_MOVE 1
-    #define OBJECT_MOVE 2
+    #define ID_WALL 1
+    #define ID_PLAYER 2
+    #define ID_SS 3
+    #define ID_MUTANT 4
+    #define ID_BRUT 5
+    #define ID_PLAYER_MOVE 0
+    #define ID_ENNEMIE_MOVE 1
+    #define ID_OBJECT_MOVE 2
+    #define W_ID_KNIFE 0
+    #define W_ID_GUN 1
+    #define W_ID_SHOTGUN 2
+    #define W_ID_MINIGUN 3
 
-typedef struct entities_class_s {
+typedef struct entities_s {
     sfVector2f coord;
-    sfSprite *sprite;
-    sfTexture *texture;
+    img_t img;
     time_management_t clock;
     sfVector2f hb_2d;
     int id;
+}entities_t;
+
+typedef struct gun_s{
+    int ammo;
+    int magazine;
+    int (*gun_shot)(game_t *, entities_t *);
+    time_management_t clock;
+    img_t img;
+    sfSound *shoot_sound;
+} gun_t;
+
+typedef struct inventory{
+    int nb_of_gun;
+    int actual_gun;
+    gun_t gun[4];
+} inventory_t;
+
+typedef struct player_s {
+    entities_t *property;
+    inventory_t *inventory;
     int speed;
-    float angle;
     int life;
     sfSound *step;
     sfSoundBuffer *sound_buff;
     time_management_t clock_sound;
-    sfVector2f collision;
-}entities_class_t;
-
-typedef struct{
-    ammo;
-    magazine;
-}gun_stat_t;
-
-typedef struct{
-    int (*gun_shot)(list_t *, entities_class_t);
-    int nb_of_gun;
-    int actual_gun;
-    gun_stat_t stat[3];
-} gun_t;
-
-typedef struct player_s {
-    entities_class_t property;
-    gun_t gun;
-    float angle;
 }player_t;
 
 typedef struct ennemies_s {
-    entities_class_t property;
-    int (*gun_shot)(list_t *, entities_class_t);
+    entities_t *property;
+    int (*gun_shot)(list_t *, player_t *, ennemies_t *);
+    int speed;
+    int life;
+    sfSound *step;
+    sfSoundBuffer *sound_buff;
+    time_management_t clock_sound;
 }ennemies_t;
 
 typedef struct object_s {
-    entities_class_t property;
-    size_t size;
-    size_t alloc;
-}object_handler_t;
+    entities_t property;
+    int (*effect)(game_handler_t *)
+}object_t;
 
+typedef struct entities_handler_s {
+    player_t *player;
+    list_t *object;
+    list_t *ennemies;
+    list_t *entities;
+}entities_handler_t;
 
 #endif //ENTITIES_H
