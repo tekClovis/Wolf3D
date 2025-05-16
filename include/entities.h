@@ -9,6 +9,7 @@
     #define ENTITIES_H
     #include "call_csfml.h"
     #include "time.h"
+    #include "utils.h"
     #include "my.h"
     #define ID_WALL 1
     #define ID_PLAYER 2
@@ -22,6 +23,10 @@
     #define W_ID_GUN 1
     #define W_ID_SHOTGUN 2
     #define W_ID_MINIGUN 3
+
+typedef struct game_s game_t;
+typedef struct ennemies_s ennemies_t;
+typedef struct game_handler_s game_handler_t;
 
 typedef struct entities_s {
     sfVector2f coord;
@@ -68,7 +73,7 @@ typedef struct ennemies_s {
 
 typedef struct object_s {
     entities_t property;
-    int (*effect)(game_handler_t *)
+    int (*effect)(game_handler_t *);
 }object_t;
 
 typedef struct entities_handler_s {

@@ -15,8 +15,16 @@
     #define T_M2D 5
     #define T_M3D 6
     #define T_P_2D 7
+    #define T_B_S1 8
+    #define T_B_S2 9
+    #define T_B_S3 10
+    #define T_B_EXIT 11
+    #define T_B_SETTINGS 12
+    #define T_ARR_L 13
+    #define T_ARR_R 14
+    #define T_B_HOME 15
 
-
+typedef struct game_handler_s game_handler_t;
 
 typedef struct img_s {
     sfVector2f pos;

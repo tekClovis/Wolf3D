@@ -15,8 +15,8 @@
 sfRenderWindow *create_window(void);
 int init_game_handler(game_handler_t *game_handler);
 void init_player(player_t *player);
-int init_wall(object_handler_t *wall);
+int init_wall(object_t *wall);
 time_management_t init_clock(void);
-int init_wall(object_handler_t *wall);
+int init_wall(object_t *wall);
 
 #endif //INIT_H

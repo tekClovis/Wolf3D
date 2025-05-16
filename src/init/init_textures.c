@@ -16,6 +16,14 @@ const tab_texture_t tab_textures[] = {
     {NULL, T_M2D, "./img/mode_2D.png"},
     {NULL, T_M3D, "./img/mode_3D.png"},
     {NULL, T_P_2D, "./img/player_2d.png"},
+    {NULL, T_B_S1, "./img/menu/s1_bouton.png"},
+    {NULL, T_B_S2, "./img/menu/s2_bouton.png"},
+    {NULL, T_B_S3, "./img/menu/s3_bouton.png"},
+    {NULL, T_B_EXIT, "./img/menu/exit.png"},
+    {NULL, T_B_SETTINGS, "./img/menu/settings.png"},
+    {NULL, T_ARR_L, "./img/menu/arrow_l.png"},
+    {NULL, T_ARR_R, "./img/menu/arrow_r.png"},
+    {NULL, T_B_HOME, "img/menu/home_bouton.png"},
     {NULL, 0, NULL}
 };
 

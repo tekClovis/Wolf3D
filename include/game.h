@@ -14,6 +14,7 @@
     #include "controller.h"
     #include "menu.h"
     #include "level.h"
+    #include "in_game.h"
     #include <stdbool.h>
     #define WINDOW_SIZE_X 1980
     #define WINDOW_SIZE_y 1080
@@ -39,25 +40,6 @@ int wolf3d(void);
 ** entité
 */
 
-typedef struct score_s {
-    int score;
-    time_management_t time_to_end;
-} score_t;
-
-typedef struct uid_s {
-    img_t bg_player_info;
-    sfText *time;
-    sfText *ammo;
-    inventory_t *inventory;
-} uid_t;
-
-typedef struct game_s {
-    entities_handler_t ent;
-    level_t level;
-    uid_t *uid;
-    score_t score;
-} game_t;
-
 typedef struct setting_s {
     float music_volume;
     float sound_volume;
@@ -67,6 +49,7 @@ typedef struct setting_s {
 
 typedef struct screen_s {
     menu_t *menu;
+    size_t last_menu;
     sfRenderWindow *win;
     sfVideoMode win_mode;
 } screen_t;

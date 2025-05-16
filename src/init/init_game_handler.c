@@ -65,6 +65,7 @@ int init_game_handler(game_handler_t *game_handler)
     sfTexture *wall = sfTexture_createFromFile("wall.bmp", NULL);
 
     game_handler->screen_mode = S_START;
+    game_handler->game = NULL;
     if (!init_texture(game_handler->texture))
         return 84;
     if (!init_screen(&game_handler->screen, game_handler))
