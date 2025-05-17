@@ -54,7 +54,7 @@ typedef struct screen_s {
 } screen_t;
 
 typedef struct game_handler_s {
-    sfEvent event;
+    sfEvent *event;
     time_management_t general_clock;
     setting_t settings;
     int screen_mode;
@@ -110,7 +110,5 @@ sfUint8 get_right_stick(void);
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
-/*global event*/
-void applied_event(sfRenderWindow *window, sfEvent event);
 
 #endif //GAME_H

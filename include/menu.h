@@ -47,5 +47,6 @@ void go_to_home(game_handler_t *g_h);
 void handle_save1(game_handler_t *g_h);
 void handle_save2(game_handler_t *g_h);
 void handle_save3(game_handler_t *g_h);
+void handle_menu_event(menu_t *menu, game_handler_t *g_h);
 
 #endif /* !MENU_H_ */

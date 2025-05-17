@@ -8,12 +8,6 @@
 #include <stdbool.h>
 #include "controller.h"
 
-void applied_event(sfRenderWindow *window, sfEvent event)
-{
-    if (event.type == sfEvtClosed)
-        sfRenderWindow_close(window);
-}
-
 sfUint8 get_controller_button(void)
 {
     sfUint8 controller = 0;
@@ -47,13 +41,28 @@ bool need_refresh(game_handler_t *game_handler)
     return false;
 }
 
+void handle_event(game_handler_t *g_h)
+{
+    sfEvent e;
+
+    while (sfRenderWindow_pollEvent(g_h->screen->win, &e)){ 
+        if (need_refresh_clock(&g_h->controller.time, 0.5))
+            g_h->controller.control = get_controller_button();
+        if (e.type == sfEvtClosed)
+            sfRenderWindow_close(g_h->screen->win);
+        if (g_h->screen_mode == S_MENU)
+            handle_menu_event(&g_h->screen->menu[g_h->screen->act_menu], g_h);
+    }
+}
+
 int launch_game(game_handler_t *game_handler)
 {
     sfRenderWindow_setFramerateLimit(game_handler->screen->win, 60);
     while (sfRenderWindow_isOpen(game_handler->screen->win)){
-        sfRenderWindow_clear(game_handler->screen->win, sfBlack);
+        handle_event(game_handler);
         if (need_refresh(game_handler) == false)
             continue;
+        sfRenderWindow_clear(game_handler->screen->win, sfBlack);
         //handle_ent_event(game_handler);
         choose_window_mode(game_handler);
         sfRenderWindow_display(game_handler->screen->win);

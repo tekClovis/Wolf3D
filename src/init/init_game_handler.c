@@ -72,7 +72,6 @@ int init_game_handler(game_handler_t *game_handler)
     game_handler->texture = init_textures();
     game_handler->sound = init_sound();
     game_handler->screen = init_screen(game_handler);
-    game_handler->event;
     if (!game_handler->sound || !game_handler->texture ||
         !game_handler->screen)
         return 84;
