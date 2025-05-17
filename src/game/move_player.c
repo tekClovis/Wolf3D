@@ -8,24 +8,12 @@
 #include "game.h"
 #include "controller.h"
 
-bool need_refresh_clock(time_management_t *sound_clock, float sec_reset)
-{
-    sound_clock->time = sfClock_getElapsedTime(sound_clock->clock);
-    sound_clock->time_as_second = sfTime_asSeconds(sound_clock->time);
-    if (sound_clock->time_as_second > sec_reset){
-        sfClock_restart(sound_clock->clock);
-        return true;
-    }
-    return false;
-}
-
 static
-void moove_up(entities_class_t *entities, sfVector2f *coord, float time)
+void moove_up(entities_t *entities, sfVector2f *coord)
 {
     sfVector2f tmp = {0, 0};
+    float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
 
-    if (need_refresh_clock(&entities->clock_sound, 0.8) == true)
-        sfSound_play(entities->step);
     tmp = (sfVector2f){(sin(DEG_TO_RAD(-1 *
         entities->angle)))
         * (entities->speed * time),
@@ -37,12 +25,11 @@ void moove_up(entities_class_t *entities, sfVector2f *coord, float time)
 }
 
 static
-void moove_down(entities_class_t *entities, sfVector2f *coord, float time)
+void moove_down(entities_t *entities, sfVector2f *coord)
 {
     sfVector2f tmp = {0, 0};
+    float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
 
-    if (need_refresh_clock(&entities->clock_sound, 0.8) == true)
-    sfSound_play(entities->step);
     tmp = (sfVector2f){-1 * (sin(DEG_TO_RAD(-1 * entities->angle)))
         * (entities->speed * time), -1 *
         cos(DEG_TO_RAD(-1 * entities->angle))
@@ -53,12 +40,11 @@ void moove_down(entities_class_t *entities, sfVector2f *coord, float time)
 }
 
 static
-void moove_right(entities_class_t *entities, sfVector2f *coord, float time)
+void moove_right(entities_t *entities, sfVector2f *coord)
 {
     sfVector2f tmp = {0, 0};
+    float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
 
-    if (need_refresh_clock(&entities->clock_sound, 0.8) == true)
-    sfSound_play(entities->step);
     tmp = (sfVector2f){(sin((DEG_TO_RAD(-1 * entities->angle)) - M_PI / 2)) *
         (entities->speed * time),
         cos((DEG_TO_RAD(-1 * entities->angle))
@@ -69,12 +55,11 @@ void moove_right(entities_class_t *entities, sfVector2f *coord, float time)
 }
 
 static
-void moove_left(entities_class_t *entities, sfVector2f *coord, float time)
+void moove_left(entities_t *entities, sfVector2f *coord)
 {
     sfVector2f tmp = {0, 0};
+    float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
 
-    if (need_refresh_clock(&entities->clock_sound, 0.8f) == true)
-    sfSound_play(entities->step);
     tmp = (sfVector2f){(sin((DEG_TO_RAD(-1 * entities->angle)) + M_PI / 2)) *
         (entities->speed * time),
         cos((DEG_TO_RAD(-1 * entities->angle)) + M_PI / 2) *
@@ -85,26 +70,34 @@ void moove_left(entities_class_t *entities, sfVector2f *coord, float time)
 }
 
 static
-void move_came(entities_class_t *player, sfVector2f *coord, float time)
+bool move_came(entities_t *player, sfVector2f *coord)
 {
     sfUint8 controller = get_left_stick();
 
-    if (sfKeyboard_isKeyPressed(sfKeyZ) || controller & UP)
-        moove_up(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyS) || controller & DOWN)
-        moove_down(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyD) || controller & RIGHT)
-        moove_right(player, coord, time);
-    if (sfKeyboard_isKeyPressed(sfKeyQ) || controller & LEFT)
-        moove_left(player, coord, time);
-    return;
+    if (sfKeyboard_isKeyPressed(sfKeyZ) || controller & UP){
+        moove_up(player, coord);
+        return true;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyS) || controller & DOWN){
+        moove_down(player, coord);
+        return true;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyD) || controller & RIGHT){
+        moove_right(player, coord);
+        return true;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyQ) || controller & LEFT){
+        moove_left(player, coord);
+        return true;
+    }
+    return false;
 }
 
 /*
 **Permet la gestion de rotation
 **d' une entitée
 */
-void rotate_player(entities_class_t *entities)
+void rotate_player(entities_t *entities)
 {
     sfUint8 controller = get_right_stick();
 
@@ -112,17 +105,15 @@ void rotate_player(entities_class_t *entities)
         entities->angle += 3;
         if (entities->angle >= 360)
             entities->angle = 0;
-        sfSprite_setRotation(entities->sprite, 0);
-        sfSprite_rotate(entities->sprite,
-            entities->angle);
+        sfSprite_setRotation(entities->img.sprite, 0);
+        sfSprite_rotate(entities->img.sprite, entities->angle);
     }
     if (sfKeyboard_isKeyPressed(sfKeyLeft) || controller & LEFT){
         entities->angle -= 3;
         if (entities->angle <= 0)
             entities->angle = 360;
-        sfSprite_setRotation(entities->sprite, 0);
-        sfSprite_rotate(entities->sprite,
-        entities->angle);
+        sfSprite_setRotation(entities->img.sprite, 0);
+        sfSprite_rotate(entities->img.sprite, entities->angle);
     }
 }
 
@@ -130,25 +121,27 @@ void rotate_player(entities_class_t *entities)
 **Permet la gestion de mouvement
 **du jouers et seulement le joueur
 */
-void move_player(entities_class_t *entities)
+void move_player(player_t *player)
 {
-    float time = sfTime_asSeconds(sfClock_restart(entities->clock.clock));
+    float time = sfTime_asSeconds(sfClock_restart(player->property->clock.clock));
     sfVector2f coord = {0, 0};
 
-    entities->clock.time_as_second = time;
+    player->property->clock.time_as_second = time;
     if (sfKeyboard_isKeyPressed(sfKeyLShift) || check_l3() == true)
-        entities->speed = RUN;
-    move_came(entities, &coord, time);
-    if (is_in_real_wall((sfVector2f){entities->coord.x + coord.x * 5,
-        entities->coord.y + coord.y * 5}) == true)
+        player->property->speed = RUN;
+    if (move_came(player->property, &coord) &&
+        need_refresh_clock(&player->clock_sound, 0.8f) == true)
+        sfSound_play(player->step);
+    if (is_in_real_wall((sfVector2f){player->property->coord.x + coord.x * 5,
+        player->property->coord.y + coord.y * 5}) == true)
         return;
-    entities->coord.x += coord.x;
-    entities->coord.y += coord.y;
-    entities->speed = WALK;
+    player->property->coord.x += coord.x;
+    player->property->coord.y += coord.y;
+    player->property->speed = WALK;
 }
 
 void manage_player(game_handler_t *game_handler)
 {
-    move_player(&game_handler->entities.player.property);
-    rotate_player(&game_handler->entities.player.property);
+    move_player(game_handler->game->ent.player);
+    rotate_player(game_handler->game->ent.player->property);
 }

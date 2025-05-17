@@ -33,14 +33,26 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
         img->rect = sfSprite_getTextureRect(img->sprite);
     }
     sfSprite_setTextureRect(img->sprite, img->rect);
+    sfSprite_setPosition(img->sprite, img->pos);
     return img;
 }
 
-sfTexture *get_texture(tab_texture_t *tab, int token)
+sfTexture *get_texture(tab_texture_t **tab, size_t token)
 {
-    for (int i = 0; tab[i].texture; i++)
-        if (tab[i].id == token)
-            return tab[i].texture;
-    fprintf(2, "no texture token");
+    for (int i = 0; tab[i]; i++){
+        printf("%ld\n", i);
+        if (tab[i]->id == token)
+            return tab[i]->texture;
+    }
+    fprintf(stderr, "no texture token");
+    return NULL;
+}
+
+sfSound *get_sound(tab_sound_t **tab, size_t token)
+{
+    for (int i = 0; tab[i]->sound; i++)
+        if (tab[i]->id == token)
+            return tab[i]->sound;
+    fprintf(stderr, "no sound token");
     return NULL;
 }

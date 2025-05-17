@@ -17,7 +17,7 @@ int init_binary_tree(buffer_z_t **buffer_z)
     return 0;
 }
 
-int init_controller(controller_t *controller)
+void init_controller(controller_t *controller)
 {
     controller->control = 0;
     controller->time = init_clock();
@@ -27,23 +27,28 @@ int init_controller(controller_t *controller)
 
 
 static
-bool init_screen(screen_t *screen, game_handler_t *game_handler)
+screen_t *init_screen(game_handler_t *game_handler)
 {
+    screen_t *screen = malloc(sizeof(screen_t));
+
     screen->win_mode = (sfVideoMode){1920, 1080, 32};
     screen->win = sfRenderWindow_create(screen->win_mode, "Wolf3d",
         sfFullscreen | sfClose, NULL);
     screen->menu = malloc(sizeof(menu_t) * NB_MENU);
+    screen->act_menu = M_START;
     if (screen->menu == NULL)
-        return false;
+        return NULL;
     if (!init_start_menu(&screen->menu[M_START], game_handler))
-        return free(screen->menu), false;
+        return free(screen->menu), NULL;
     if (!init_pause_menu(&screen->menu[M_PAUSE], game_handler))
-        return free(screen->menu), false;
+        return free(screen->menu), NULL;
     if (!init_settings_menu(&screen->menu[M_SETTING], game_handler))
-        return free(screen->menu), false;
+        return free(screen->menu), NULL;
     if (!init_end_menu(&screen->menu[M_END], game_handler))
-        return free(screen->menu), false;
-    return true;
+        return free(screen->menu), NULL;
+    screen->menu_music = sfMusic_createFromFile("sound/menu_music.mp3");
+    sfMusic_play(screen->menu_music);
+    return screen;
 }
 
 static
@@ -52,30 +57,25 @@ void init_settings(setting_t *settings)
     settings->music_volume = 50.0;
     settings->sound_volume = 50.0;
     settings->win_mode = WINM_FSCREEN;
-    settings->win_size[0] = {(sfVector2f){1920, 1080}, (sfVector2f){800, 600}}
-}
-
-bool init_texture(tab_texture_t *textures)
-{
-
+    settings->win_size[0] = (sfVideoMode){1920, 1080, 32};
+    settings->win_size[1] = (sfVideoMode){800, 600, 32};
 }
 
 int init_game_handler(game_handler_t *game_handler)
 {
-    sfTexture *wall = sfTexture_createFromFile("wall.bmp", NULL);
-
-    game_handler->screen_mode = S_START;
+    game_handler->screen_mode = S_MENU;
     game_handler->game = NULL;
-    if (!init_texture(game_handler->texture))
-        return 84;
-    if (!init_screen(&game_handler->screen, game_handler))
-        return 84;
-    if (init_binary_tree(&game_handler->buffer_z))
+    game_handler->texture = init_textures();
+    game_handler->sound = init_sound();
+    game_handler->screen = init_screen(game_handler);
+    game_handler->event;
+    if (!game_handler->sound || !game_handler->texture ||
+        !game_handler->screen)
         return 84;
     init_controller(&game_handler->controller);
-    init_setting(&game_handler->settings);
-    if (game_handler->general_clock.clock == NULL
-        || game_handler->window == NULL)
+    init_settings(&game_handler->settings);
+    game_handler->general_clock = init_clock();
+    if (game_handler->general_clock.clock == NULL)
         return 84;
     return 0;
 }

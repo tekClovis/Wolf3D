@@ -28,6 +28,7 @@ typedef struct game_s {
     level_t level;
     p_uid_t *uid;
     score_t score;
+    sfMusic *game_music;
 } game_t;
 
 #endif

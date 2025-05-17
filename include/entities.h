@@ -33,6 +33,8 @@ typedef struct entities_s {
     img_t img;
     time_management_t clock;
     sfVector2f hb_2d;
+    float angle;
+    int speed;
     int id;
 }entities_t;
 
@@ -57,7 +59,6 @@ typedef struct player_s {
     int speed;
     int life;
     sfSound *step;
-    sfSoundBuffer *sound_buff;
     time_management_t clock_sound;
 }player_t;
 

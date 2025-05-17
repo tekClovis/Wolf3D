@@ -11,6 +11,9 @@
         "deque": "c",
         "string": "c",
         "vector": "c",
-        "rope": "c"
+        "rope": "c",
+        "in_game.h": "c",
+        "cstdlib": "c",
+        "menu.h": "c"
     }
 }

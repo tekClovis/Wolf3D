@@ -52,7 +52,7 @@ et dessine un mur
 si il y a un mur
 */
 static
-void display_one_2dwall(entities_class_t *wall, sfRenderWindow *window, int y)
+void display_one_2dwall(entities_t *wall, sfRenderWindow *window, int y)
 {
     for (int x = 0; x < MAP_WIDTH; x++)
         if (is_wall(y, x) == true){
@@ -64,14 +64,14 @@ void display_one_2dwall(entities_class_t *wall, sfRenderWindow *window, int y)
 }
 
 static
-void display_2dwalls(entities_class_t *wall, sfRenderWindow *window)
+void display_2dwalls(entities_t *wall, sfRenderWindow *window)
 {
     for (int y = 0; y < MAP_HEIGHT; y++)
         display_one_2dwall(wall, window, y);
 }
 
 static
-sfVector2f dichotomie(entities_class_t *property,
+sfVector2f dichotomie(entities_t *property,
     float angle_option, double precision)
 {
     sfVector2f tmp_coord;
@@ -89,7 +89,7 @@ sfVector2f dichotomie(entities_class_t *property,
 }
 
 static
-void display_ray_casting(entities_class_t *entities, sfRenderWindow *window,
+void display_ray_casting(entities_t *entities, sfRenderWindow *window,
     float angle_option, int precision)
 {
     sfVertexArray* line = sfVertexArray_create();
@@ -114,7 +114,7 @@ void display_ray_casting(entities_class_t *entities, sfRenderWindow *window,
 ** FAUT CHANGER precision
 **
 */
-float get_coord_wall(entities_class_t *entities, float angle, int precision)
+float get_coord_wall(entities_t *entities, float angle, int precision)
 {
     sfVector2f coord_player = entities->coord;
     sfVector2f coord_wall = entities->coord;
@@ -135,13 +135,13 @@ float get_coord_wall(entities_class_t *entities, float angle, int precision)
 
 int display_full_map(game_handler_t *game_handler)
 {
-    sfRenderWindow_clear(game_handler->window, sfBlack);
+    sfRenderWindow_clear(game_handler->screen->win, sfBlack);
     display_2dplayer(game_handler);
-    display_2dwalls(&game_handler->entities.object.property,
-        game_handler->window);
+    display_2dwalls(game_handler->game->ent.player->property,
+        game_handler->screen->win);
     for (float i = -45; i < 45; i += 1){
-        display_ray_casting(&game_handler->entities.player.property,
-        game_handler->window, i, 60);
+        display_ray_casting(game_handler->game->ent.player->property,
+        game_handler->win, i, 60);
     }
     check_back_to_menu(game_handler);
     return 0;

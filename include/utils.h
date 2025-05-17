@@ -23,6 +23,9 @@
     #define T_ARR_L 13
     #define T_ARR_R 14
     #define T_B_HOME 15
+    #define SO_B_MOVE 0
+    #define SO_B_CLICK 1
+    #define SO_B_P_STEP 2
 
 typedef struct game_handler_s game_handler_t;
 
@@ -41,8 +44,16 @@ typedef struct tab_texture_s {
     char *file;
 } tab_texture_t;
 
-sfTexture *get_texture(tab_texture_t *tab, int token);
+typedef struct tab_sound_s {
+    sfSound *sound;
+    sfSoundBuffer *buffer;
+    size_t id;
+    char *file;
+} tab_sound_t;
+
 img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
     game_handler_t *g_h);
 sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str);
+sfTexture *get_texture(tab_texture_t **tab, size_t token);
+sfSound *get_sound(tab_sound_t **tab, size_t token);
 #endif

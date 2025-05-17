@@ -7,6 +7,17 @@
 #include "game.h"
 #include "entities.h"
 
+bool need_refresh_clock(time_management_t *sound_clock, float sec_reset)
+{
+    sound_clock->time = sfClock_getElapsedTime(sound_clock->clock);
+    sound_clock->time_as_second = sfTime_asSeconds(sound_clock->time);
+    if (sound_clock->time_as_second > sec_reset){
+        sfClock_restart(sound_clock->clock);
+        return true;
+    }
+    return false;
+}
+
 time_management_t init_clock(void)
 {
     time_management_t time = {

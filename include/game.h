@@ -24,12 +24,9 @@
     #define M_PI 3.14159265358979323846
     #define RAY_SCREEN (1980.0f / 1440.0f)
     #define DEG_TO_RAD(angle) ((angle) * (M_PI / 180.0))
-    #define S_START 0
-    #define S_PAUSE 1
-    #define S_SETTING 2
-    #define S_END 3
-    #define S_LORE 4
-    #define S_GAME 5
+    #define S_MENU 0
+    #define S_LORE 1
+    #define S_GAME 2
     #define WINM_FSCREEN 0
     #define WINM_BIG 1
     #define WINM_LITTLE 2
@@ -44,11 +41,13 @@ typedef struct setting_s {
     float music_volume;
     float sound_volume;
     size_t win_mode;
-    sfVector2f win_size[2];
+    sfVideoMode win_size[2];
 } setting_t;
 
 typedef struct screen_s {
     menu_t *menu;
+    sfMusic *menu_music;
+    size_t act_menu;
     size_t last_menu;
     sfRenderWindow *win;
     sfVideoMode win_mode;
@@ -59,8 +58,9 @@ typedef struct game_handler_s {
     time_management_t general_clock;
     setting_t settings;
     int screen_mode;
-    screen_t screen;
-    tab_texture_t *texture;
+    screen_t *screen;
+    tab_texture_t **texture;
+    tab_sound_t **sound;
     game_t *game;
     sfTexture *wall;
     sfRectangleShape *square;
@@ -82,12 +82,12 @@ int display_full_map(game_handler_t *game_handler);
 int display_menu(game_handler_t *g_handler);
 
 /*Player*/
-void move_player(entities_class_t *entities);
-void rotate_player(entities_class_t *entities);
+void move_player(player_t *entities);
+void rotate_player(entities_t *entities);
 void manage_player(game_handler_t *game_handler);
 
 /*3D*/
-float get_coord_wall(entities_class_t *entities, float angle, int precision);
+float get_coord_wall(entities_t *entities, float angle, int precision);
 int display_3d_map(game_handler_t *game_handler);
 void free_game(game_handler_t *game_handler);
 void check_back_to_menu(game_handler_t *handler);
@@ -109,5 +109,8 @@ sfUint8 get_right_stick(void);
 
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
+
+/*global event*/
+void applied_event(sfRenderWindow *window, sfEvent event);
 
 #endif //GAME_H

@@ -8,11 +8,11 @@
 #include "init.h"
 #include "call_csfml.h"
 
-const tab_texture_t tab_textures[] = {
+tab_texture_t const TAB_TEXTURE[] = {
     {NULL, T_BRUT, "./img/ent/Brut.png"},
     {NULL, T_MUTANT, "./img/ent/Mutant.png"},
     {NULL, T_SS, "./img/ent/SS_ennemies.png"},
-    {NULL, T_M_BG, "./img/menu/menu_bg.png"},
+    {NULL, T_M_BG, "./img/menu/menu_bg.jpg"},
     {NULL, T_M2D, "./img/mode_2D.png"},
     {NULL, T_M3D, "./img/mode_3D.png"},
     {NULL, T_P_2D, "./img/player_2d.png"},
@@ -27,17 +27,39 @@ const tab_texture_t tab_textures[] = {
     {NULL, 0, NULL}
 };
 
-const size_tab_textures = sizeof(tab_textures) / sizeof(*tab_textures);
+const size_t SZ_TAB_TEXTURE = sizeof(TAB_TEXTURE) / sizeof(*TAB_TEXTURE);
 
-bool init_textures(tab_texture_t *textures)
+tab_texture_t *dup_texture(const tab_texture_t texture)
 {
-    textures = malloc(sizeof(tab_texture_t) * size_tab_textures);
+    tab_texture_t *new_tab = malloc(sizeof(tab_texture_t));
+
+    if (new_tab == NULL)
+        return NULL;
+    new_tab->id = texture.id;
+    new_tab->file = NULL;
+    new_tab->texture = NULL;
+    if (texture.id == 0)
+        return new_tab;
+    new_tab->file = my_strdup(texture.file);
+    if (new_tab->file == NULL)
+        return free(new_tab), NULL;
+    new_tab->texture = sfTexture_createFromFile(new_tab->file, NULL);
+    printf("%d\n", new_tab->id);
+    return new_tab;
+}
+
+tab_texture_t **init_textures(void)
+{
+    tab_texture_t **textures =
+            malloc(sizeof(tab_texture_t *) * SZ_TAB_TEXTURE);
 
     if (textures == NULL)
         return false;
-    for (int i = 0; i < size_tab_textures; i++){
-        textures[i] = tab_textures[i];
-        textures[i].texture = sfFont_createFromFile(textures[i].file);
+    for (size_t i = 0; i < SZ_TAB_TEXTURE; i++){
+        textures[i] = dup_texture(TAB_TEXTURE[i]);
+        if (textures[i] == NULL)
+            return NULL;
     }
-    return true;
+    textures[SZ_TAB_TEXTURE - 1] = NULL;
+    return textures;
 }

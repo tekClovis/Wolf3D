@@ -9,6 +9,7 @@
     #define MENU_H_
     #include "call_csfml.h"
     #include "utils.h"
+    #include <stdbool.h>
     #define M_START 0
     #define M_PAUSE 1
     #define M_SETTING 2
@@ -26,8 +27,25 @@ typedef struct menu_s {
     img_t *background;
     sfText *text;
     list_t *boutons;
-    bouton_t *actual_bouton;
+    node_t *actual_bouton;
 } menu_t;
 
-void init_menu(menu_t *menu);
+bool init_start_menu(menu_t *menu, game_handler_t *game_h);
+bool init_pause_menu(menu_t *menu, game_handler_t *game_h);
+bool init_settings_menu(menu_t *menu, game_handler_t *game_h);
+bool init_end_menu(menu_t *menu, game_handler_t *game_h);
+void min_sound(game_handler_t *g_h);
+void max_sound(game_handler_t *g_h);
+void max_music(game_handler_t *g_h);
+void min_music(game_handler_t *g_h);
+void max_win(game_handler_t *g_h);
+void min_win(game_handler_t *g_h);
+void escape_set(game_handler_t *g_h);
+void go_to_settings(game_handler_t *g_h);
+void exit_game(game_handler_t *game_handler);
+void go_to_home(game_handler_t *g_h);
+void handle_save1(game_handler_t *g_h);
+void handle_save2(game_handler_t *g_h);
+void handle_save3(game_handler_t *g_h);
+
 #endif /* !MENU_H_ */

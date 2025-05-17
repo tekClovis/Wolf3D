@@ -6,7 +6,7 @@
 */
 #include "call_csfml.h"
 #include "init.h"
-#include "map.h"
+#include "level.h"
 #include <time.h>
 #include "game.h"
 

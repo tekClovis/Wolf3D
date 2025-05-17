@@ -18,5 +18,7 @@ void init_player(player_t *player);
 int init_wall(object_t *wall);
 time_management_t init_clock(void);
 int init_wall(object_t *wall);
+tab_texture_t **init_textures(void);
+tab_sound_t **init_sound(void);
 
 #endif //INIT_H
