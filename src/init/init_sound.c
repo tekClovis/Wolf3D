@@ -50,7 +50,6 @@ tab_sound_t **init_sound(void)
         sound[i] = dup_sound(TAB_SOUND[i]);
         if (sound[i] == NULL)
             return NULL;
-        if (sound[i]->sound)
     }
     sound[SZ_TAB_SOUND - 1] = NULL;
     return sound;

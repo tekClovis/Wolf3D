@@ -38,7 +38,6 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
     if (rect.width == 0){
         img->rect = sfSprite_getTextureRect(img->sprite);
     }
-    printf("%d\n", img->rect.width);
     sfSprite_setTextureRect(img->sprite, img->rect);
     sfSprite_setPosition(img->sprite, img->pos);
     return img;
@@ -47,7 +46,6 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
 sfTexture *get_texture(tab_texture_t **tab, size_t token)
 {
     for (int i = 0; tab[i]; i++){
-        printf("%ld\n", i);
         if (tab[i]->id == token)
             return tab[i]->texture;
     }
