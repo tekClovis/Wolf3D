@@ -20,7 +20,7 @@ bouton_t *set_buttons(img_t *released, void (*action)(game_handler_t *))
     sfRectangleShape_setSize(bouton->press,
         (sfVector2f){bouton->released->rect.width,
             bouton->released->rect.top});
-    sfRectangleShape_setOutlineThickness(bouton->press, 2.0);
+    sfRectangleShape_setOutlineThickness(bouton->press, 8.0);
     sfRectangleShape_setOutlineColor(bouton->press,
         sfColor_fromRGB(96, 96, 96));
     return bouton;
