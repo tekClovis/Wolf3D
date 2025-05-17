@@ -23,8 +23,14 @@ void init_controller(controller_t *controller)
     controller->time = init_clock();
 }
 
+sfMusic *init_music(char *file, game_handler_t *g_h)
+{
+    sfMusic *music = sfMusic_createFromFile("sound/menu_music.mp3");
 
-
+    sfMusic_play(music);
+    sfMusic_setLoop(music, sfTrue);
+    sfMusic_setVolume(music, g_h->settings.music_volume);
+}
 
 static
 screen_t *init_screen(game_handler_t *game_handler)
@@ -46,10 +52,7 @@ screen_t *init_screen(game_handler_t *game_handler)
         return free(screen->menu), NULL;
     if (!init_end_menu(&screen->menu[M_END], game_handler))
         return free(screen->menu), NULL;
-    screen->menu_music = sfMusic_createFromFile("sound/menu_music.mp3");
-    sfMusic_play(screen->menu_music);
-    sfMusic_setLoop(screen->menu_music, sfTrue);
-    sfMusic_setVolume(screen->menu_music, game_handler->settings.music_volume);
+    screen->menu_music = init_music("sound/menu_music.mp3", game_handler);
     return screen;
 }
 

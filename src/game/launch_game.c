@@ -27,7 +27,6 @@ sfUint8 get_controller_button(void)
 ** Récupère l evenement du jeu actuel
 ** et set la clock de fram rate
 */
-
 bool need_refresh(game_handler_t *game_handler)
 {
     game_handler->general_clock.time
@@ -45,13 +44,14 @@ void handle_event(game_handler_t *g_h)
 {
     sfEvent e;
 
-    while (sfRenderWindow_pollEvent(g_h->screen->win, &e)){ 
+    while (sfRenderWindow_pollEvent(g_h->screen->win, &e)){
         if (need_refresh_clock(&g_h->controller.time, 0.5))
             g_h->controller.control = get_controller_button();
+        g_h->event = &e;
+        if (g_h->screen_mode == S_MENU && g_h->event->type == sfEvtKeyPressed)
+            handle_menu_event(&g_h->screen->menu[g_h->screen->act_menu], g_h);
         if (e.type == sfEvtClosed)
             sfRenderWindow_close(g_h->screen->win);
-        if (g_h->screen_mode == S_MENU)
-            handle_menu_event(&g_h->screen->menu[g_h->screen->act_menu], g_h);
     }
 }
 
@@ -59,11 +59,10 @@ int launch_game(game_handler_t *game_handler)
 {
     sfRenderWindow_setFramerateLimit(game_handler->screen->win, 60);
     while (sfRenderWindow_isOpen(game_handler->screen->win)){
-        handle_event(game_handler);
         if (need_refresh(game_handler) == false)
             continue;
+        handle_event(game_handler);
         sfRenderWindow_clear(game_handler->screen->win, sfBlack);
-        //handle_ent_event(game_handler);
         choose_window_mode(game_handler);
         sfRenderWindow_display(game_handler->screen->win);
     }

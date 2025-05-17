@@ -44,7 +44,6 @@ tab_texture_t *dup_texture(const tab_texture_t texture)
     if (new_tab->file == NULL)
         return free(new_tab), NULL;
     new_tab->texture = sfTexture_createFromFile(new_tab->file, NULL);
-    printf("%d\n", new_tab->id);
     return new_tab;
 }
 

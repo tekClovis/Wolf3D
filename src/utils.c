@@ -10,12 +10,18 @@
 sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str)
 {
     sfText *txt = sfText_create();
+    sfFloatRect bounds;
     
     sfText_setFont(txt, sfFont_createFromFile("./font/alagard.ttf"));
     sfText_setCharacterSize(txt, size);
     sfText_setColor(txt, color);
     sfText_setPosition(txt, position);
     sfText_setString(txt, str);
+    sfText_setOutlineColor(txt, sfBlack);
+    bounds = sfText_getLocalBounds(txt);
+    sfText_setOrigin(txt, (sfVector2f){bounds.width / 2.0f,
+        bounds.height / 2.0f});
+    sfText_setOutlineThickness(txt, size / 10);
     return txt;
 }
 
@@ -29,9 +35,10 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
     img->sprite = sfSprite_create();
     img->texture = get_texture(g_h->texture, texture_token);
     sfSprite_setTexture(img->sprite, img->texture, false);
-    if (rect.top == 0){
+    if (rect.width == 0){
         img->rect = sfSprite_getTextureRect(img->sprite);
     }
+    printf("%d\n", img->rect.width);
     sfSprite_setTextureRect(img->sprite, img->rect);
     sfSprite_setPosition(img->sprite, img->pos);
     return img;
@@ -50,7 +57,7 @@ sfTexture *get_texture(tab_texture_t **tab, size_t token)
 
 sfSound *get_sound(tab_sound_t **tab, size_t token)
 {
-    for (int i = 0; tab[i]->sound; i++)
+    for (int i = 0; tab[i]; i++)
         if (tab[i]->id == token)
             return tab[i]->sound;
     fprintf(stderr, "no sound token");

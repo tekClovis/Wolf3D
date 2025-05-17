@@ -38,7 +38,7 @@ typedef struct entities_s {
     int id;
 }entities_t;
 
-typedef struct gun_s{
+typedef struct gun_s {
     int ammo;
     int magazine;
     int (*gun_shot)(game_t *, entities_t *);
@@ -47,7 +47,7 @@ typedef struct gun_s{
     sfSound *shoot_sound;
 } gun_t;
 
-typedef struct inventory{
+typedef struct inventory {
     int nb_of_gun;
     int actual_gun;
     gun_t gun[4];

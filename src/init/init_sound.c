@@ -11,8 +11,8 @@
 #include "utils.h"
 
 const tab_sound_t TAB_SOUND[] = {
-    {NULL, NULL, SO_B_MOVE, "./sound/menu/button_click.mp3"},
-    {NULL, NULL, SO_B_CLICK, "./sound/menu/button_move.mp3"},
+    {NULL, NULL, SO_B_MOVE, "./sound/menu/button_click.ogg"},
+    {NULL, NULL, SO_B_CLICK, "./sound/menu/button_move.ogg"},
     {NULL, NULL, SO_B_P_STEP, "./sound/player_step.ogg"},
     {NULL, NULL, 0, NULL}
 };
@@ -29,12 +29,12 @@ tab_sound_t *dup_sound(const tab_sound_t sound)
     new_tab->buffer = NULL;
     new_tab->sound = NULL;
     new_tab->file = NULL;
-    if (sound.buffer == NULL)
+    if (sound.file == NULL)
         return new_tab;
     new_tab->file = my_strdup(sound.file);
     if (new_tab->file == NULL)
         return free(new_tab), NULL;
-    new_tab->buffer = sfSoundBuffer_createFromFile(sound.file);
+    new_tab->buffer = sfSoundBuffer_createFromFile(new_tab->file);
     new_tab->sound = sfSound_create();
     sfSound_setBuffer(new_tab->sound, new_tab->buffer);
     return new_tab;
@@ -47,9 +47,10 @@ tab_sound_t **init_sound(void)
     if (sound == NULL)
         return NULL;
     for (size_t i = 0; i < SZ_TAB_SOUND; i++){
-        sound[i] = dup_sound(TAB_SOUND[i]); 
+        sound[i] = dup_sound(TAB_SOUND[i]);
         if (sound[i] == NULL)
             return NULL;
+        if (sound[i]->sound)
     }
     sound[SZ_TAB_SOUND - 1] = NULL;
     return sound;
