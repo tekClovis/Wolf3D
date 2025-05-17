@@ -25,11 +25,12 @@ void init_controller(controller_t *controller)
 
 sfMusic *init_music(char *file, game_handler_t *g_h)
 {
-    sfMusic *music = sfMusic_createFromFile("sound/menu_music.mp3");
+    sfMusic *music = sfMusic_createFromFile(file);
 
     sfMusic_play(music);
     sfMusic_setLoop(music, sfTrue);
     sfMusic_setVolume(music, g_h->settings.music_volume);
+    return music;
 }
 
 static
