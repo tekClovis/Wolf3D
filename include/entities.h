@@ -35,6 +35,7 @@ typedef struct entities_s {
     time_management_t clock;
     sfVector2f hb_2d;
     float angle;
+    double distance;
     int speed;
     int id;
     sfVector2f dir;

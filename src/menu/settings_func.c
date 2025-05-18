@@ -39,7 +39,7 @@ void max_win(game_handler_t *g_h)
 void min_win(game_handler_t *g_h)
 {
     g_h->settings.win_mode -= 1;
-    if (g_h->settings.win_mode < 0)
+    if (g_h->settings.win_mode > 2)
         g_h->settings.win_mode = 2;
     sfRenderWindow_close(g_h->screen->win);
     sfRenderWindow_destroy(g_h->screen->win);

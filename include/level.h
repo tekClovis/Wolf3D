@@ -13,6 +13,7 @@
     # define MAP_HEIGHT 20
     #include <stdbool.h>
 
+typedef struct game_handler_s game_handler_t;
 
 /* define 3 map 100 x 100 will be set in config file or
  set in the .h if no cofig file */
@@ -21,5 +22,5 @@ typedef struct level_s {
     int map[3][MAP_HEIGHT][MAP_WIDTH];
 } level_t;
 bool is_wall(int x, int y);
-bool load_map(game_handler_t *g_h , char *file);
+bool load_map(game_handler_t *g_h);
 #endif //MAP_H

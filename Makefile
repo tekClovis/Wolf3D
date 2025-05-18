@@ -21,9 +21,12 @@ SRC += src/game/launch_game.c
 SRC += src/game/choose_window_mode.c
 ##SRC += src/game/map/display_full_map.c
 SRC += src/init/init_game_handler.c
-##SRC += src/init/init_player_ennemies.c
 ##SRC += src/game/3d/display_3d_map.c
 ##SRC += src/init/free_game.c
+SRC += src/init/init_game.c
+SRC += src/init/init_weapons.c
+SRC += src/init/init_player_ennemies.c
+SRC += src/map.c
 SRC += src/init/init_menu.c
 SRC += src/init/init_sound.c
 SRC += src/init/init_textures.c
@@ -35,6 +38,7 @@ SRC += src/menu/display_menu.c
 SRC += src/menu/settings_func.c
 SRC += src/menu/sound_settings.c
 SRC += src/save/handle_save1.c
+SRC += src/save/load_file.c
 
 
 OBJ = $(SRC:.c=.o)

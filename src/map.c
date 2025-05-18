@@ -94,7 +94,7 @@ bool init_level(game_handler_t *g_h)
     return true;
 }
 
-bool load_map(game_handler_t *g_h, char *file)
+bool load_map(game_handler_t *g_h)
 {
     if (!load_from_file(g_h, "nb_level.bin", &g_h->game->level.actual_level,
         sizeof(g_h->game->level.actual_level)))

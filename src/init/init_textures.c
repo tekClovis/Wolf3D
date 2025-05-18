@@ -9,26 +9,26 @@
 #include "call_csfml.h"
 
 tab_texture_t const TAB_TEXTURE[] = {
-    {NULL, T_BRUT, "./img/ent/Brut.png"},
-    {NULL, T_MUTANT, "./img/ent/Mutant.png"},
-    {NULL, T_SS, "./img/ent/SS_ennemies.png"},
-    {NULL, T_M_BG, "./img/menu/menu_bg.jpg"},
-    {NULL, T_M2D, "./img/mode_2D.png"},
-    {NULL, T_M3D, "./img/mode_3D.png"},
-    {NULL, T_P_2D, "./img/player_2d.png"},
-    {NULL, T_B_S1, "./img/menu/s1_bouton.png"},
-    {NULL, T_B_S2, "./img/menu/s2_bouton.png"},
-    {NULL, T_B_S3, "./img/menu/s3_bouton.png"},
-    {NULL, T_B_EXIT, "./img/menu/exit.png"},
-    {NULL, T_B_SETTINGS, "./img/menu/settings.png"},
-    {NULL, T_ARR_L, "./img/menu/arrow_l.png"},
-    {NULL, T_ARR_R, "./img/menu/arrow_r.png"},
-    {NULL, T_B_HOME, "img/menu/home_bouton.png"},
-    {NULL, T_3D_KNIFE, "./img/weapons/knife_3D.png"},
-    {NULL, T_3D_GUN, "./img/weapons/gun_3D.png"},
-    {NULL, T_3D_SHOTGUN, "./img/weapons/shotgun_3D.png"},
-    {NULL, T_3D_MINIGUN, "./img/weapons/minigun_3D.png"},
-    {NULL, 0, NULL}
+    {NULL, NULL, T_BRUT, "./img/ent/Brut.png"},
+    {NULL, NULL, T_MUTANT, "./img/ent/Mutant.png"},
+    {NULL, NULL, T_SS, "./img/ent/SS_ennemies.png"},
+    {NULL, NULL, T_M_BG, "./img/menu/menu_bg.jpg"},
+    {NULL, NULL, T_M2D, "./img/mode_2D.png"},
+    {NULL, NULL, T_M3D, "./img/mode_3D.png"},
+    {NULL, NULL, T_P_2D, "./img/player_2d.png"},
+    {NULL, NULL, T_B_S1, "./img/menu/s1_bouton.png"},
+    {NULL, NULL, T_B_S2, "./img/menu/s2_bouton.png"},
+    {NULL, NULL, T_B_S3, "./img/menu/s3_bouton.png"},
+    {NULL, NULL, T_B_EXIT, "./img/menu/exit.png"},
+    {NULL, NULL, T_B_SETTINGS, "./img/menu/settings.png"},
+    {NULL, NULL, T_ARR_L, "./img/menu/arrow_l.png"},
+    {NULL, NULL, T_ARR_R, "./img/menu/arrow_r.png"},
+    {NULL, NULL, T_B_HOME, "img/menu/home_bouton.png"},
+    {NULL, NULL, T_3D_KNIFE, "./img/weapons/knife_3D.png"},
+    {NULL, NULL, T_3D_GUN, "./img/weapons/gun_3D.png"},
+    {NULL, NULL, T_3D_SHOTGUN, "./img/weapons/shotgun_3D.png"},
+    {NULL, NULL, T_3D_MINIGUN, "./img/weapons/minigun_3D.png"},
+    {NULL, NULL, 0, NULL}
 };
 
 const size_t SZ_TAB_TEXTURE = sizeof(TAB_TEXTURE) / sizeof(*TAB_TEXTURE);
@@ -48,6 +48,7 @@ tab_texture_t *dup_texture(const tab_texture_t texture)
     if (new_tab->file == NULL)
         return free(new_tab), NULL;
     new_tab->texture = sfTexture_createFromFile(new_tab->file, NULL);
+    new_tab->img = sfTexture_copyToImage(new_tab->texture);
     return new_tab;
 }
 

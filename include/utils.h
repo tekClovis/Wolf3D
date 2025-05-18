@@ -44,11 +44,13 @@ typedef struct img_s {
     sfTexture *texture;
     sfSprite *sprite;
     size_t texture_id;
+    sfImage *img;
 } img_t;
 
 //tab where texture are malloc;
 typedef struct tab_texture_s {
     sfTexture *texture;
+    sfImage *img;
     size_t id;
     char *file;
 } tab_texture_t;
@@ -65,6 +67,6 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
 sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str);
 sfTexture *get_texture(tab_texture_t **tab, size_t token);
 sfSound *get_sound(tab_sound_t **tab, size_t token);
-bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, size_t sz);
+bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, ssize_t sz);
 
 #endif

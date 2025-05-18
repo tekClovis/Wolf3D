@@ -7,7 +7,7 @@
 
 #include "game.h"
 
-bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, size_t sz)
+bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, ssize_t sz)
 {
     FILE *fd = NULL;
     ssize_t count_rd = 0;

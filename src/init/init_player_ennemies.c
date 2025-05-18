@@ -12,7 +12,7 @@ static
 entities_t *init_entities(sfVector2f coord, sfVector2f h_b, size_t id,
     img_t *img)
 {
-    entities_t *entities = malloc(sizeof(entities));
+    entities_t *entities = malloc(sizeof(entities_t));
 
     if (entities == NULL)
         return NULL;
@@ -20,6 +20,7 @@ entities_t *init_entities(sfVector2f coord, sfVector2f h_b, size_t id,
     entities->id = id;
     entities->angle = 0;
     entities->speed = WALK;
+    entities->coord = coord;
     entities->hb_2d = h_b;
     entities->clock = init_clock();
     entities->dir = (sfVector2f){-1.0, 0.0};
@@ -49,7 +50,7 @@ bool init_player(game_handler_t *g_h)
 {
     g_h->game->ent->player->property = init_entities((sfVector2f){5, 5},
         (sfVector2f){10, 10}, ID_PLAYER, set_img(T_P_2D,
-            (sfIntRect){0, 0, 0, 0}, (sfVector2f){0, 0}, g_h));
+            (sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));
     g_h->game->ent->player->clock_sound = init_clock();
     g_h->game->ent->player->inventory = init_inventory(g_h);
     if (g_h->game->ent->player->inventory == NULL)
@@ -65,7 +66,7 @@ static
 ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){20, 20}, ID_SS,
+    ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_SS,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->life = 100;
@@ -78,7 +79,7 @@ static
 ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){20, 20}, ID_MUTANT,
+    ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_MUTANT,
         set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->life = 150;
@@ -91,7 +92,7 @@ static
 ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){20, 20}, ID_BRUT,
+    ennemi->property = init_entities(coord, (sfVector2f){-0.4, 0.4}, ID_BRUT,
         set_img(T_BRUT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->life = 200;
@@ -101,12 +102,12 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     return ennemi;
 }
 
-bool init_enemies(game_handler_t *g_h, sfVector2f coord, int id)
+bool init_ennemies(game_handler_t *g_h, sfVector2f coord, int id)
 {
     ennemies_t *ennemies = malloc(sizeof(ennemies_t));
     
     if (ennemies == NULL)
-        return fprintf(2, "malloc error"), false;
+        return fprintf(stderr, "malloc error"), false;
     if (id == ID_SS)
         ennemies = set_ss(g_h, ennemies, coord);
     if (id == ID_MUTANT)
@@ -114,8 +115,29 @@ bool init_enemies(game_handler_t *g_h, sfVector2f coord, int id)
     if (id == ID_BRUT)
         ennemies = set_brut(g_h, ennemies, coord);
     if (ennemies == NULL)
-        return fprintf(2, "no ennemi id"), false;
+        return fprintf(stderr, "no ennemi id"), false;
     push_back(g_h->game->ent->entities, ennemies->property);
     push_back(g_h->game->ent->ennemies, ennemies);
+    return true;
+}
+
+static
+void choose_parsing(game_handler_t *g_h, int x, int y)
+{
+    if (g_h->game->level.map[g_h->game->level.actual_level][y][x] >= ID_SS &&
+        g_h->game->level.map[g_h->game->level.actual_level][y][x] <= ID_BRUT)
+        if (!init_ennemies(g_h, (sfVector2f){x, y},
+            g_h->game->level.map[g_h->game->level.actual_level][y][x]))
+            return;
+    if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
+        ID_PLAYER)
+        g_h->game->ent->player->property->coord = (sfVector2f){x, y};
+}
+
+bool parsing_map(game_handler_t *g_h)
+{
+    for (int y = 0; y < MAP_HEIGHT; y++)
+        for (int x = 0; x < MAP_WIDTH; x++)
+            choose_parsing(g_h, x, y);
     return true;
 }

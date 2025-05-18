@@ -14,6 +14,7 @@
 typedef struct score_s {
     int score;
     time_management_t time_to_end;
+    sfInt32 score_mili_s;
 } score_t;
 
 typedef struct p_uid_s {

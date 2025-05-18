@@ -11,7 +11,7 @@ sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str)
 {
     sfText *txt = sfText_create();
     sfFloatRect bounds;
-    
+
     sfText_setFont(txt, sfFont_createFromFile("./font/alagard.ttf"));
     sfText_setCharacterSize(txt, size);
     sfText_setColor(txt, color);
@@ -39,6 +39,7 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
         img->rect = sfSprite_getTextureRect(img->sprite);
     }
     sfSprite_setTextureRect(img->sprite, img->rect);
+    img->img = sfTexture_copyToImage(img->texture);
     sfSprite_setPosition(img->sprite, img->pos);
     return img;
 }
