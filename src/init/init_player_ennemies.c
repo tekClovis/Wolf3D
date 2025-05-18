@@ -48,6 +48,9 @@ inventory_t *init_inventory(game_handler_t *g_h)
 
 bool init_player(game_handler_t *g_h)
 {
+    g_h->game->ent->player = malloc(sizeof(player_t));
+    if (g_h->game->ent->player == NULL)
+        return false;
     g_h->game->ent->player->property = init_entities((sfVector2f){5, 5},
         (sfVector2f){10, 10}, ID_PLAYER, set_img(T_P_2D,
             (sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));

@@ -28,6 +28,11 @@
     #define T_3D_GUN 17
     #define T_3D_SHOTGUN 18
     #define T_3D_MINIGUN 19
+    #define T_2D_KNIFE 20
+    #define T_2D_GUN 21
+    #define T_2D_SHOTGUN 22
+    #define T_2D_MINIGUN 23
+    #define T_HUD 24
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
     #define SO_B_P_STEP 2

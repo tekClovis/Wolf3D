@@ -25,16 +25,53 @@ score_t init_score(game_handler_t *g_h)
     return score;
 }
 
+static
+img_t **init_weapons_two_d(game_handler_t *g_h)
+{
+    img_t **wp_two_d = malloc(sizeof(img_t *) * NB_GUN);
+
+    if (wp_two_d == NULL)
+        return NULL;
+    wp_two_d[0] = set_img(T_2D_KNIFE, (sfIntRect){0, 0, 0, 0}
+        , (sfVector2f){1800, 400}, g_h);
+    wp_two_d[1] = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0}
+        , (sfVector2f){1800, 400}, g_h);
+    wp_two_d[2] = set_img(T_2D_SHOTGUN, (sfIntRect){0, 0, 0, 0}
+        , (sfVector2f){1800, 400}, g_h);
+    wp_two_d[3] = set_img(T_2D_MINIGUN, (sfIntRect){0, 0, 0, 0}
+        , (sfVector2f){1800, 400}, g_h);
+    if (wp_two_d[0] || wp_two_d[1] || wp_two_d[2] || wp_two_d[3])
+        return free(wp_two_d) ,NULL;
+    return wp_two_d;
+}
+
+static
+bool init_hud(game_handler_t *g_h)
+{
+    g_h->game->hud = malloc(sizeof(hud_t));
+    if (g_h->game->hud == NULL)
+        return false;
+    g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){300, 800}, g_h);
+    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105,105,105), 
+        (sfVector2f){10, 10}, "MAGAZINE: ");
+    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105,105,105), 
+        (sfVector2f){100, 10}, "CHRONO: ");
+    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
+    g_h->game->hud->actual_weapon = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0},
+        (sfVector2f){800, 820}, g_h);
+    return true;
+}
+
 bool init_game(game_handler_t *g_h, char *save_dir)
 {
     g_h->game = malloc(sizeof(game_t));
     if (g_h->game == NULL)
         return false;
     g_h->game->ent = malloc(sizeof(entities_handler_t));
-    g_h->game->uid = malloc(sizeof(p_uid_t));
     g_h->game->actual_save = strdup(save_dir);
     g_h->game->score = init_score(g_h);
-    if (g_h->game->ent == NULL || g_h->game->uid == NULL)
+    if (g_h->game->ent == NULL)
         return false;
     g_h->game->game_music = init_music("sound/game_music.ogg", g_h);
     if (!load_map(g_h))
@@ -42,6 +79,8 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     if (!init_player(g_h))
         return false;
     if (!parsing_map(g_h))
+        return false;
+    if (!init_hud(g_h))
         return false;
     return true;
 }

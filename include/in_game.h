@@ -17,17 +17,21 @@ typedef struct score_s {
     sfInt32 score_mili_s;
 } score_t;
 
-typedef struct p_uid_s {
-    img_t bg_player_info;
+//weapon 2 d fois 4 img_t
+typedef struct hud_s {
+    img_t *bg_player_info;
+    img_t **weapon_two_d;
     sfText *time;
+    sfText *magazine;
     sfText *ammo;
-    inventory_t *inventory;
-} p_uid_t;
+    sfText *score;
+    img_t *actual_weapon;
+} hud_t;
 
 typedef struct game_s {
     entities_handler_t *ent;
     level_t level;
-    p_uid_t *uid;
+    hud_t *hud;
     score_t score;
     sfMusic *game_music;
     char *actual_save;
