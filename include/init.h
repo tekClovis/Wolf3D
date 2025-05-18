@@ -20,5 +20,6 @@ time_management_t init_clock(void);
 int init_wall(object_t *wall);
 tab_texture_t **init_textures(void);
 tab_sound_t **init_sound(void);
+sfMusic *init_music(char *file, game_handler_t *g_h);
 
 #endif //INIT_H

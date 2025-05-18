@@ -24,6 +24,10 @@ tab_texture_t const TAB_TEXTURE[] = {
     {NULL, T_ARR_L, "./img/menu/arrow_l.png"},
     {NULL, T_ARR_R, "./img/menu/arrow_r.png"},
     {NULL, T_B_HOME, "img/menu/home_bouton.png"},
+    {NULL, T_3D_KNIFE, "./img/weapons/knife_3D.png"},
+    {NULL, T_3D_GUN, "./img/weapons/gun_3D.png"},
+    {NULL, T_3D_SHOTGUN, "./img/weapons/shotgun_3D.png"},
+    {NULL, T_3D_MINIGUN, "./img/weapons/minigun_3D.png"},
     {NULL, 0, NULL}
 };
 

@@ -16,10 +16,10 @@ bouton_t *set_buttons(img_t *released, void (*action)(game_handler_t *))
     bouton->released = released;
     bouton->press = sfRectangleShape_create();
     sfRectangleShape_setPosition(bouton->press, (sfVector2f)
-        {bouton->released->pos.x + 10.0, bouton->released->pos.y + 10.0});
+        {bouton->released->pos.x + 20.0, bouton->released->pos.y + 20.0});
     sfRectangleShape_setSize(bouton->press,
-        (sfVector2f){bouton->released->rect.width - 20.0,
-            bouton->released->rect.height - 20.0});
+        (sfVector2f){bouton->released->rect.width - 35.0,
+            bouton->released->rect.height - 30.0});
     sfRectangleShape_setOutlineThickness(bouton->press, 11.0);
     sfRectangleShape_setFillColor(bouton->press, sfRed);
     sfRectangleShape_setOutlineColor(bouton->press,

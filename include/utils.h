@@ -8,6 +8,7 @@
 #ifndef INCLUDED_UTILS_H
     #define INCLUDED_UTILS_H
     #include "call_csfml.h"
+    #include <stdbool.h>
     #define T_BRUT 1
     #define T_MUTANT 2
     #define T_SS 3
@@ -23,6 +24,10 @@
     #define T_ARR_L 13
     #define T_ARR_R 14
     #define T_B_HOME 15
+    #define T_3D_KNIFE 16
+    #define T_3D_GUN 17
+    #define T_3D_SHOTGUN 18
+    #define T_3D_MINIGUN 19
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
     #define SO_B_P_STEP 2
@@ -56,4 +61,6 @@ img_t *set_img(size_t texture_token, sfIntRect rect, sfVector2f pos,
 sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str);
 sfTexture *get_texture(tab_texture_t **tab, size_t token);
 sfSound *get_sound(tab_sound_t **tab, size_t token);
+bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, size_t sz);
+
 #endif

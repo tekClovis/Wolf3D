@@ -24,11 +24,12 @@ typedef struct p_uid_s {
 } p_uid_t;
 
 typedef struct game_s {
-    entities_handler_t ent;
+    entities_handler_t *ent;
     level_t level;
     p_uid_t *uid;
     score_t score;
     sfMusic *game_music;
+    char *actual_save;
 } game_t;
 
 #endif

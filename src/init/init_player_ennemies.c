@@ -8,26 +8,53 @@
 #include "entities.h"
 #include "init.h"
 
-void init_player(player_t *player)
+static
+entities_t *init_entities(sfVector2f coord, sfVector2f h_b, size_t id,
+    img_t *img)
 {
-    player->angle = 0;
-    player->property = (entities_class_t){
-        .clock = init_clock(),
-        .coord = (sfVector2f){1920 / 2, 1080 / 2},
-        .texture = sfTexture_createFromFile("player_2d.png", NULL),
-        .sprite = sfSprite_create(),
-        .life = 100,
-        .speed = 0,
-        .sound_buff = sfSoundBuffer_createFromFile("sound/player_step.ogg"),
-        .step = sfSound_create(),
-        .clock_sound = init_clock(),
-        .hb_2d = (sfVector2f){10, 10}};
-    sfSound_setBuffer(player->property.step, player->property.sound_buff);
-    sfSound_setVolume(player->property.step, 30.0f);
-    sfSprite_setTexture(player->property.sprite, player->property.texture,
-        sfTrue);
-    sfSprite_setOrigin(player->property.sprite, (sfVector2f){2.5, 3});
-    sfSprite_setScale(player->property.sprite, (sfVector2f){6, 6});
+    entities_t *entities = malloc(sizeof(entities));
+
+    if (entities == NULL)
+        return NULL;
+    entities->img = img;
+    entities->id = id;
+    entities->angle = 0;
+    entities->speed = WALK;
+    entities->hb_2d = h_b;
+    entities->clock = init_clock();
+    return entities;
+}
+
+static
+inventory_t *init_inventory(game_handler_t *g_h)
+{
+    inventory_t *inventory = malloc(sizeof(inventory_t));
+
+    if (inventory == NULL)
+        return NULL;
+    inventory->gun = malloc(sizeof(gun_t) * NB_GUN);
+    if (!load_from_file(g_h, "nb_gun.bin",
+        &inventory->nb_of_gun, sizeof(inventory->nb_of_gun)))
+        inventory->nb_of_gun = 1;
+    inventory->actual_gun = W_ID_KNIFE;
+    inventory->gun = init_guns();
+    return inventory;
+}
+
+bool init_player(game_handler_t *g_h)
+{
+    g_h->game->ent->player->property = init_entities((sfVector2f){0, 0},
+        (sfVector2f){10, 10}, ID_PLAYER, set_img(T_P_2D,
+            (sfIntRect){0, 0, 0, 0}, (sfVector2f){0, 0}, g_h));
+    g_h->game->ent->player->clock_sound = init_clock();
+    g_h->game->ent->player->inventory = init_inventory(g_h);
+    if (g_h->game->ent->player->inventory == NULL)
+        return false;
+    g_h->game->ent->player->life = 100;
+    if (!load_from_file(g_h, "life.bin",
+        &g_h->game->ent->player->life, sizeof(int)))
+        g_h->game->ent->player->life = 100;
+    return true;
 }
 
 void set_ss(ennemies_t *ennemi, sfVector2f coord)

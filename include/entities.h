@@ -23,6 +23,7 @@
     #define W_ID_GUN 1
     #define W_ID_SHOTGUN 2
     #define W_ID_MINIGUN 3
+    #define NB_GUN 4
 
 typedef struct game_s game_t;
 typedef struct ennemies_s ennemies_t;
@@ -30,7 +31,7 @@ typedef struct game_handler_s game_handler_t;
 
 typedef struct entities_s {
     sfVector2f coord;
-    img_t img;
+    img_t *img;
     time_management_t clock;
     sfVector2f hb_2d;
     float angle;
@@ -42,23 +43,22 @@ typedef struct gun_s {
     int ammo;
     int magazine;
     int (*gun_shot)(game_t *, entities_t *);
-    time_management_t clock;
-    img_t img;
-    sfSound *shoot_sound;
+    sfSound *shoot_so;
+    img_t *img;
 } gun_t;
 
-typedef struct inventory {
+typedef struct inventory_s {
     int nb_of_gun;
     int actual_gun;
-    gun_t gun[4];
+    time_management_t clock_shoot;
+    time_management_t clock_refill;
+    gun_t **gun;
 } inventory_t;
 
 typedef struct player_s {
     entities_t *property;
     inventory_t *inventory;
-    int speed;
     int life;
-    sfSound *step;
     time_management_t clock_sound;
 }player_t;
 
@@ -67,8 +67,6 @@ typedef struct ennemies_s {
     int (*gun_shot)(list_t *, player_t *, ennemies_t *);
     int speed;
     int life;
-    sfSound *step;
-    sfSoundBuffer *sound_buff;
     time_management_t clock_sound;
 }ennemies_t;
 
