@@ -74,13 +74,13 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     if (g_h->game->ent == NULL)
         return false;
     g_h->game->game_music = init_music("sound/game_music.ogg", g_h);
-    if (!load_map(g_h))
+    if (!load_map(g_h, ""))
         return false;
     if (!init_player(g_h))
         return false;
     if (!parsing_map(g_h))
         return false;
-    if (!init_hud(g_h))
+    if (!init_hud(g_h) || !init_ray_buffer(&g_h->ray_cast))
         return false;
     return true;
 }

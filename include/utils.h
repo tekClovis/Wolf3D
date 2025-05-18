@@ -9,30 +9,32 @@
     #define INCLUDED_UTILS_H
     #include "call_csfml.h"
     #include <stdbool.h>
-    #define T_BRUT 1
-    #define T_MUTANT 2
-    #define T_SS 3
-    #define T_M_BG 4
-    #define T_M2D 5
-    #define T_M3D 6
-    #define T_P_2D 7
-    #define T_B_S1 8
-    #define T_B_S2 9
-    #define T_B_S3 10
-    #define T_B_EXIT 11
-    #define T_B_SETTINGS 12
-    #define T_ARR_L 13
-    #define T_ARR_R 14
-    #define T_B_HOME 15
-    #define T_3D_KNIFE 16
-    #define T_3D_GUN 17
-    #define T_3D_SHOTGUN 18
-    #define T_3D_MINIGUN 19
-    #define T_2D_KNIFE 20
-    #define T_2D_GUN 21
-    #define T_2D_SHOTGUN 22
-    #define T_2D_MINIGUN 23
-    #define T_HUD 24
+    #define WALL_IRON 1
+    #define T_BRUT WALL_IRON + 1
+    #define T_MUTANT T_BRUT + 1
+    #define T_SS T_MUTANT + 1
+    #define T_M_BG T_SS + 1
+    #define T_M2D T_M_BG + 1
+    #define T_M3D T_M2D + 1
+    #define T_P_2D T_M3D + 1
+    #define T_B_S1 T_P_2D + 1
+    #define T_B_S2 T_B_S1 + 1
+    #define T_B_S3 T_B_S2 + 1 
+    #define T_B_EXIT T_B_S3 + 1
+    #define T_B_SETTINGS T_B_EXIT + 1
+    #define T_ARR_L T_B_SETTINGS + 1
+    #define T_ARR_R T_ARR_L + 1
+    #define T_B_HOME T_ARR_R + 1
+    #define T_3D_KNIFE T_B_HOME + 1
+    #define T_3D_GUN T_3D_KNIFE + 1
+    #define T_3D_SHOTGUN T_3D_GUN + 1
+    #define T_3D_MINIGUN T_3D_SHOTGUN + 1
+    #define T_2D_KNIFE T_3D_MINIGUN + 1
+    #define T_2D_GUN T_2D_KNIFE + 1
+    #define T_2D_SHOTGUN T_2D_GUN + 1
+    #define T_2D_MINIGUN T_2D_SHOTGUN + 1
+    #define T_HUD T_2D_MINIGUN + 1
+   
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
     #define SO_B_P_STEP 2

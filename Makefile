@@ -40,6 +40,16 @@ SRC += src/menu/sound_settings.c
 SRC += src/save/handle_save1.c
 SRC += src/save/load_file.c
 
+SRC += src/game/ray_casting/cancel_fisheye.c
+SRC += src/game/ray_casting/init_ray_casting.c
+SRC += src/game/ray_casting/dda_managment.c
+SRC += src/game/ray_casting/execute_ray.c
+SRC += src/game/ray_casting/wall_text_managment.c
+SRC += src/game/ray_casting/draw_screen.c
+
+SRC += src/game/run_game.c
+
+SRC += src/init/init_ray_buffer.c
 
 OBJ = $(SRC:.c=.o)
 

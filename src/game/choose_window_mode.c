@@ -16,7 +16,8 @@
 
 const game_mode_t tab_func[] = {
     {&display_menu},
-    //{&display_full_map},
+    {NULL},
+    {&run_game},
     //{&display_3d_map},
     {NULL}
 };

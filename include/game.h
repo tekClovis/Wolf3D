@@ -56,6 +56,7 @@ typedef struct screen_s {
 typedef struct game_handler_s {
     sfEvent *event;
     time_management_t general_clock;
+    ray_cast_t ray_cast;
     setting_t settings;
     int screen_mode;
     screen_t *screen;
@@ -80,6 +81,7 @@ int launch_game(game_handler_t *game_handler);
 int choose_window_mode(game_handler_t *game_handler);
 int display_full_map(game_handler_t *game_handler);
 int display_menu(game_handler_t *g_handler);
+int run_game(game_handler_t *g_h);
 
 /*Player*/
 void move_player(player_t *entities);
@@ -109,6 +111,5 @@ sfUint8 get_right_stick(void);
 
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
-
 
 #endif //GAME_H

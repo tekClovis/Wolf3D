@@ -9,6 +9,7 @@
 #include "call_csfml.h"
 
 tab_texture_t const TAB_TEXTURE[] = {
+    {NULL, NULL, WALL_IRON, "./img/wall/libdoor.png"},
     {NULL, NULL, T_BRUT, "./img/ent/Brut.png"},
     {NULL, NULL, T_MUTANT, "./img/ent/Mutant.png"},
     {NULL, NULL, T_SS, "./img/ent/SS_ennemies.png"},
@@ -27,11 +28,11 @@ tab_texture_t const TAB_TEXTURE[] = {
     {NULL, NULL, T_3D_KNIFE, "./img/weapons/knife_3D.png"},
     {NULL, NULL, T_3D_GUN, "./img/weapons/gun_3D.png"},
     {NULL, NULL, T_3D_SHOTGUN, "./img/weapons/shotgun_3D.png"},
-    {NULL, NULL, T_2D_KNIFE, "./img/hud/kinfe_2D.png"},
+    {NULL, NULL, T_2D_KNIFE, "./img/hud/knife_2D.png"},
     {NULL, NULL, T_2D_GUN, "./img/hud/gun_2D.png"},
     {NULL, NULL, T_2D_SHOTGUN, "./img/hud/shotgun_2D.png"},
     {NULL, NULL, T_2D_MINIGUN, "./img/hud/minigun_2D.png"},
-    {NULL, NULL, T_HUD, "./img/hub/hud_base.png"},
+    //{NULL, NULL, T_HUD, ".img/hud/hud_base.png"},
     {NULL, NULL, 0, NULL}
 };
 
