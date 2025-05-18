@@ -31,6 +31,10 @@
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
     #define SO_B_P_STEP 2
+    #define SO_KNIFE 3
+    #define SO_GUN 4
+    #define SO_SHOTGUN 5
+    #define SO_MINIGUN 6
 
 typedef struct game_handler_s game_handler_t;
 

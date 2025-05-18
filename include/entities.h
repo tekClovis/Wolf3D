@@ -37,11 +37,14 @@ typedef struct entities_s {
     float angle;
     int speed;
     int id;
+    sfVector2f dir;
+    sfVector2f plan;
 }entities_t;
 
 typedef struct gun_s {
     int ammo;
     int magazine;
+    int mag_cap;
     int (*gun_shot)(game_t *, entities_t *);
     sfSound *shoot_so;
     img_t *img;
@@ -71,7 +74,7 @@ typedef struct ennemies_s {
 }ennemies_t;
 
 typedef struct object_s {
-    entities_t property;
+    entities_t *property;
     int (*effect)(game_handler_t *);
 }object_t;
 

@@ -14,6 +14,10 @@ const tab_sound_t TAB_SOUND[] = {
     {NULL, NULL, SO_B_MOVE, "./sound/menu/button_click.ogg"},
     {NULL, NULL, SO_B_CLICK, "./sound/menu/button_move.ogg"},
     {NULL, NULL, SO_B_P_STEP, "./sound/player_step.ogg"},
+    {NULL, NULL, SO_KNIFE, "./sound/weapons/knife_sound.ogg"},
+    {NULL, NULL, SO_GUN, "./sound/weapons/gun_sound.ogg"},
+    {NULL, NULL, SO_SHOTGUN, "./sound/weapons/shotgun_sound.ogg"},
+    {NULL, NULL, SO_MINIGUN, "./sound/weapons/minigun_sound.ogg"},
     {NULL, NULL, 0, NULL}
 };
 

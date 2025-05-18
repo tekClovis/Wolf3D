@@ -21,7 +21,8 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     if (g_h->game->ent == NULL || g_h->game->uid == NULL)
         return false;
     g_h->game->game_music = init_music("game_music.ogg", g_h);
-    if (!load_map(g_h->game->game_music, strcat(save_dir, "level.bin")));
+    if (!load_map(g_h->game->game_music, strcat(save_dir, "level.bin")))
+        return false;
     if (!init_player(g_h, save_dir))
         return false;
 }
