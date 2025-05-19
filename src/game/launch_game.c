@@ -43,7 +43,7 @@ bool need_refresh(game_handler_t *game_handler)
 void handle_event(game_handler_t *g_h)
 {
     sfEvent e;
-
+    
     while (sfRenderWindow_pollEvent(g_h->screen->win, &e)){
         if (need_refresh_clock(&g_h->controller.time, 0.5))
             g_h->controller.control = get_controller_button();

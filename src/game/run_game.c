@@ -44,15 +44,27 @@ void new_moove_up(entities_t *entities)
 }
 
 static
-void new_moove_player(entities_t *player)
+void new_moove_down(entities_t *entities)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ))
+    entities->coord.x -= entities->dir.x / 10;
+    entities->coord.y -= entities->dir.y / 10;
+}
+
+static
+void new_moove_player(entities_t *player, sfEvent *event)
+{
+    if (event->type != sfEvtKeyPressed)
+    return;
+
+    if (event->key.code == sfKeyZ)
         new_moove_up(player);
+    if (event->key.code == sfKeyS)
+        new_moove_down(player);
 }
 
 int run_game(game_handler_t *g_h)
 {
     new_rotate_player(g_h->game->ent->player->property, 0.03);
-    new_moove_player(g_h->game->ent->player->property);
+    new_moove_player(g_h->game->ent->player->property, g_h->event);
     execute_ray(g_h, g_h->game->ent->player->property);
 }
