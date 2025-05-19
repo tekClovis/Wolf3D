@@ -22,7 +22,8 @@
     #define T_B_S3 T_B_S2 + 1
     #define T_B_EXIT T_B_S3 + 1
     #define T_B_SETTINGS T_B_EXIT + 1
-    #define T_ARR_L T_B_SETTINGS + 1
+    #define T_B_BACK T_B_SETTINGS + 1
+    #define T_ARR_L T_B_BACK + 1
     #define T_ARR_R T_ARR_L + 1
     #define T_B_HOME T_ARR_R + 1
     #define T_3D_KNIFE T_B_HOME + 1
@@ -54,7 +55,6 @@ typedef struct img_s {
     sfImage *img;
 } img_t;
 
-//tab where texture are malloc;
 typedef struct tab_texture_s {
     sfTexture *texture;
     sfImage *img;

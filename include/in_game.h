@@ -37,4 +37,6 @@ typedef struct game_s {
     char *actual_save;
 } game_t;
 
+void handle_game_event(game_handler_t *g_h);
+
 #endif

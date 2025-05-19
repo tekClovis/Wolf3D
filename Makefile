@@ -38,7 +38,7 @@ SRC += src/menu/settings_func.c
 SRC += src/menu/sound_settings.c
 SRC += src/save/handle_save1.c
 SRC += src/save/load_file.c
-
+SRC += src/game/handle_game_event.c
 SRC += src/game/ray_casting/cancel_fisheye.c
 SRC += src/game/ray_casting/init_ray_casting.c
 SRC += src/game/ray_casting/dda_managment.c
