@@ -45,6 +45,7 @@ SRC += src/game/ray_casting/dda_managment.c
 SRC += src/game/ray_casting/execute_ray.c
 SRC += src/game/ray_casting/wall_text_managment.c
 SRC += src/game/ray_casting/draw_screen.c
+SRC += src/game/hud/hud.c
 
 SRC += src/game/run_game.c
 

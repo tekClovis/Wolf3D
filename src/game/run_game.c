@@ -55,5 +55,6 @@ int run_game(game_handler_t *g_h)
     new_rotate_player(g_h->game->ent->player->property, 0.03);
     new_moove_player(g_h->game->ent->player->property);
     execute_ray(g_h, g_h->game->ent->player->property);
+    draw_hud(g_h->game->hud, g_h);
     return 0;
 }

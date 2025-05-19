@@ -52,14 +52,18 @@ bool init_hud(game_handler_t *g_h)
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){300, 800}, g_h);
+        (sfVector2f){375, 800}, g_h);
     g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){10, 10}, "MAGAZINE: ");
+        (sfVector2f){495, 820}, "6");
+    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(105,105,105), 
+            (sfVector2f){715, 820}, "0");
     g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){100, 10}, "CHRONO: ");
+        (sfVector2f){150, 10}, "SCORE : ");
+    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105,105,105), 
+        (sfVector2f){400, 5}, "0");
     g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
     g_h->game->hud->actual_weapon = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){800, 820}, g_h);
+        (sfVector2f){1325, 780}, g_h);
     return true;
 }
 

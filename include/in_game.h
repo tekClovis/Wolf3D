@@ -25,6 +25,7 @@ typedef struct hud_s {
     sfText *magazine;
     sfText *ammo;
     sfText *score;
+    sfText *life;
     img_t *actual_weapon;
 } hud_t;
 
