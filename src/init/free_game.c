@@ -1,44 +1,33 @@
 /*
 ** EPITECH PROJECT, 2025
-** G-ING-210-REN-2-1-wolf3d-clovis.nedelec
+** wolf3d
 ** File description:
 ** free_game
 */
+
 #include "game.h"
 
 static
-void free_window(sfRenderWindow *window)
+void save_game(game_t *game, game_handler_t *g_h)
 {
-    sfRenderWindow_destroy(window);
+    save_to_file(g_h, "score_nb.bin", &game->score.score,
+        sizeof(game->score.score));
+    save_to_file(g_h, "score_time.bin", &game->score.score,
+        sizeof(game->score.score));
+    save_to_file(g_h, "actual_level.bin", &game->level.actual_level,
+        sizeof(game->level.actual_level));
+    save_to_file(g_h, "life.bin", &game->ent->player->life,
+        sizeof(game->ent->player->life));
+    save_to_file(g_h, "nb_gun.bin", &game->ent->player->inventory->nb_of_gun,
+        sizeof(game->ent->player->inventory->nb_of_gun));
+    for (int i = W_ID_GUN; i < NB_GUN; i++)
+        save_to_file(g_h, g_h->game->ent->player->inventory->gun[i]->save_file
+            , &g_h->game->ent->player->inventory->gun[i]->ammo,
+            sizeof(g_h->game->ent->player->inventory->gun[i]->ammo));
+    
 }
 
-static
-void free_entities(entities_class_t *entities)
+void free_game(game_handler_t *g_h)
 {
-    sfSprite_destroy(entities->sprite);
-    sfTexture_destroy(entities->texture);
-}
-
-static
-void free_player(player_t *player)
-{
-    free_entities(&player->property);
-}
-
-static
-void free_entity(entities_handler_t *entities)
-{
-    free_player(&entities->player);
-}
-
-static
-void free_time_manage(time_management_t *time_manage)
-{
-    sfClock_destroy(time_manage->clock);
-}
-
-void free_game(game_handler_t *game_handler)
-{
-    free_window(game_handler->window);
-    free_entity(&game_handler->entities);
+    save_game(g_h->game, g_h);
 }

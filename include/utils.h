@@ -75,5 +75,7 @@ sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str);
 sfTexture *get_texture(tab_texture_t **tab, size_t token);
 sfSound *get_sound(tab_sound_t **tab, size_t token);
 bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, ssize_t sz);
+bool save_to_file(game_handler_t *g_h, char *file, void *to_rd, ssize_t sz);
+void free_game_handler(game_handler_t *game_handler);
 
 #endif
