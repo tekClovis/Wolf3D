@@ -32,7 +32,7 @@ tab_texture_t const TAB_TEXTURE[] = {
     {NULL, NULL, T_2D_GUN, "./img/hud/gun_2D.png"},
     {NULL, NULL, T_2D_SHOTGUN, "./img/hud/shotgun_2D.png"},
     {NULL, NULL, T_2D_MINIGUN, "./img/hud/minigun_2D.png"},
-    //{NULL, NULL, T_HUD, ".img/hud/hud_base.png"},
+    {NULL, NULL, T_HUD, "./img/hud/hud_base.png"},
     {NULL, NULL, 0, NULL}
 };
 
