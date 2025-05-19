@@ -63,8 +63,6 @@ void init_settings(setting_t *settings)
     settings->music_volume = 50.0;
     settings->sound_volume = 50.0;
     settings->win_mode = WINM_FSCREEN;
-    settings->win_size[0] = (sfVideoMode){1920, 1080, 32};
-    settings->win_size[1] = (sfVideoMode){800, 600, 32};
 }
 
 int init_game_handler(game_handler_t *game_handler)

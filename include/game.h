@@ -29,7 +29,6 @@
     #define S_GAME 2
     #define WINM_FSCREEN 0
     #define WINM_BIG 1
-    #define WINM_LITTLE 2
 int wolf3d(void);
 /*
 ** Entitie handler
@@ -41,7 +40,6 @@ typedef struct setting_s {
     float music_volume;
     float sound_volume;
     size_t win_mode;
-    sfVideoMode win_size[2];
 } setting_t;
 
 typedef struct screen_s {
