@@ -28,6 +28,7 @@ tab_texture_t const TAB_TEXTURE[] = {
     {NULL, NULL, T_3D_KNIFE, "./img/weapons/knife_3D.png"},
     {NULL, NULL, T_3D_GUN, "./img/weapons/gun_3D.png"},
     {NULL, NULL, T_3D_SHOTGUN, "./img/weapons/shotgun_3D.png"},
+    {NULL, NULL, T_3D_MINIGUN, "./img/weapons/minigun_3D.png"},
     {NULL, NULL, T_2D_KNIFE, "./img/hud/knife_2D.png"},
     {NULL, NULL, T_2D_GUN, "./img/hud/gun_2D.png"},
     {NULL, NULL, T_2D_SHOTGUN, "./img/hud/shotgun_2D.png"},
@@ -53,6 +54,8 @@ tab_texture_t *dup_texture(const tab_texture_t texture)
     if (new_tab->file == NULL)
         return free(new_tab), NULL;
     new_tab->texture = sfTexture_createFromFile(new_tab->file, NULL);
+    if (!new_tab->texture)
+        fprintf(stderr, "failed to load texture:%s\n", new_tab->file);
     new_tab->img = sfTexture_copyToImage(new_tab->texture);
     return new_tab;
 }

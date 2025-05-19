@@ -51,7 +51,9 @@ bool init_player(game_handler_t *g_h)
     g_h->game->ent->player = malloc(sizeof(player_t));
     if (g_h->game->ent->player == NULL)
         return false;
-    g_h->game->ent->player->property = init_entities((sfVector2f){5, 5}, (sfVector2f){10, 10}, ID_PLAYER, set_img(T_P_2D,(sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));
+    g_h->game->ent->player->property = init_entities((sfVector2f){5, 5},
+        (sfVector2f){10, 10}, ID_PLAYER, set_img(T_P_2D,
+        (sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));
     g_h->game->ent->player->clock_sound = init_clock();
     g_h->game->ent->player->inventory = init_inventory(g_h);
     if (g_h->game->ent->player->inventory == NULL)
@@ -80,8 +82,8 @@ static
 ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_MUTANT,
-        set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
+    ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_MUTANT
+        , set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->life = 150;
     ennemi->speed = RUN;
@@ -106,7 +108,7 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
 bool init_ennemies(game_handler_t *g_h, sfVector2f coord, int id)
 {
     ennemies_t *ennemies = malloc(sizeof(ennemies_t));
-    
+
     if (ennemies == NULL)
         return fprintf(stderr, "malloc error"), false;
     if (id == ID_SS)

@@ -9,7 +9,6 @@ NAME = wolf3d
 
 
 SRC += main.c
-##SRC += src/map.c
 SRC += src/wolf3d.c
 SRC += src/utils.c
 SRC += src/init/create_window.c

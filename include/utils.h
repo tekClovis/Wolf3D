@@ -19,7 +19,7 @@
     #define T_P_2D T_M3D + 1
     #define T_B_S1 T_P_2D + 1
     #define T_B_S2 T_B_S1 + 1
-    #define T_B_S3 T_B_S2 + 1 
+    #define T_B_S3 T_B_S2 + 1
     #define T_B_EXIT T_B_S3 + 1
     #define T_B_SETTINGS T_B_EXIT + 1
     #define T_ARR_L T_B_SETTINGS + 1
@@ -34,7 +34,7 @@
     #define T_2D_SHOTGUN T_2D_GUN + 1
     #define T_2D_MINIGUN T_2D_SHOTGUN + 1
     #define T_HUD T_2D_MINIGUN + 1
-   
+
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
     #define SO_B_P_STEP 2

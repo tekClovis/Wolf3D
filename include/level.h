@@ -22,5 +22,4 @@ typedef struct level_s {
     int map[3][MAP_HEIGHT][MAP_WIDTH];
 } level_t;
 bool is_wall(int x, int y);
-bool load_map(game_handler_t *g_h , char *file);
 #endif //MAP_H
