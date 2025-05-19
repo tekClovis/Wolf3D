@@ -34,7 +34,12 @@ void new_rotate_player(entities_t *player, float rot_speed)
     }
 }
 
-
+static
+sfInt32 get_milisc_clock(time_management_t time_manage)
+{
+    sfclokc sfClock_getElapsedTime(entities->clock.clock);
+    sfTime_asMilliseconds(entities->clock.clock);
+}
 
 static
 void new_moove_up(entities_t *entities)
@@ -51,15 +56,34 @@ void new_moove_down(entities_t *entities)
 }
 
 static
+void new_moove_right(entities_t *entities)
+{
+    entities->coord.x += entities->dir.y / 10;
+    entities->coord.y += -entities->dir.x / 10;
+}
+
+static
+void new_moove_left(entities_t *entities)
+{
+    entities->coord.x -= entities->dir.y / 10;
+    entities->coord.y -= -entities->dir.x / 10;
+}
+
+
+static
 void new_moove_player(entities_t *player, sfEvent *event)
 {
-    if (event->type != sfEvtKeyPressed)
-    return;
+    //if (event->type != sfEvtKeyPressed)
+    //return;
 
-    if (event->key.code == sfKeyZ)
+    if (sfKeyboard_isKeyPressed(sfKeyZ))
         new_moove_up(player);
-    if (event->key.code == sfKeyS)
+    if (sfKeyboard_isKeyPressed(sfKeyS))
         new_moove_down(player);
+    if (sfKeyboard_isKeyPressed(sfKeyQ))
+        new_moove_left(player);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        new_moove_right(player);
 }
 
 int run_game(game_handler_t *g_h)
