@@ -22,20 +22,8 @@ const game_mode_t tab_func[] = {
     {NULL}
 };
 
-static int change_window(game_handler_t *game_handler)
-{
-    //if (sfKeyboard_isKeyPressed(sfKeyNumpad1)
-    //|| game_handler->controller.control & UP)
-    //    game_handler->screen_mode = 1;
-    //if (sfKeyboard_isKeyPressed(sfKeyNumpad2)
-    //|| game_handler->controller.control & UP)
-    //    game_handler->screen_mode = 2;
-    return 0;
-}
-
 int choose_window_mode(game_handler_t *game_handler)
 {
-    change_window(game_handler);
     return tab_func[game_handler->screen_mode].funct(game_handler);
 }
 

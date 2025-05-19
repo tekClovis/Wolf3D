@@ -22,7 +22,7 @@ tab_texture_t **init_textures(void);
 tab_sound_t **init_sound(void);
 sfMusic *init_music(char *file, game_handler_t *g_h);
 gun_t **init_weapons(game_handler_t *g_h);
-bool load_map(game_handler_t *g_h , char *file);
+bool load_map(game_handler_t *g_h);
 bool parsing_map(game_handler_t *g_h);
 bool init_game(game_handler_t *g_h, char *save_dir);
 bool init_ray_buffer(ray_cast_t *ray_cast);
