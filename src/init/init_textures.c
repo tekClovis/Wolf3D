@@ -24,6 +24,7 @@ tab_texture_t const TAB_TEXTURE[] = {
     {NULL, NULL, T_B_S3, "./img/menu/s3_bouton.png"},
     {NULL, NULL, T_B_EXIT, "./img/menu/exit.png"},
     {NULL, NULL, T_B_SETTINGS, "./img/menu/settings.png"},
+    {NULL, NULL, T_B_BACK, "./img/menu/back_bouton.png"},
     {NULL, NULL, T_ARR_L, "./img/menu/arrow_l.png"},
     {NULL, NULL, T_ARR_R, "./img/menu/arrow_r.png"},
     {NULL, NULL, T_B_HOME, "img/menu/home_bouton.png"},

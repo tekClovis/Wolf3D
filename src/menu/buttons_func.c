@@ -19,3 +19,10 @@ void go_to_home(game_handler_t *g_h)
     //free(g_h->game)
     g_h->game = NULL;
 }
+
+void back_to_game(game_handler_t *g_h)
+{
+    g_h->screen_mode = S_GAME;
+    sfMusic_stop(g_h->screen->menu_music);
+    sfMusic_play(g_h->game->game_music);
+}

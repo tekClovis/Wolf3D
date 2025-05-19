@@ -14,6 +14,7 @@ typedef struct time_management_s {
     sfTime time;
     sfInt32 time_as_milli_sc;
     sfInt64 time_as_micro_second;
+    sfInt32 time_as_mili;
     float time_as_second;
 }time_management_t;
 

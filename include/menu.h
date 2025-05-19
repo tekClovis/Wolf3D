@@ -43,6 +43,7 @@ void min_win(game_handler_t *g_h);
 void escape_set(game_handler_t *g_h);
 void go_to_settings(game_handler_t *g_h);
 void exit_game(game_handler_t *game_handler);
+void back_to_game(game_handler_t *g_h);
 void go_to_home(game_handler_t *g_h);
 void handle_save1(game_handler_t *g_h);
 void handle_save2(game_handler_t *g_h);

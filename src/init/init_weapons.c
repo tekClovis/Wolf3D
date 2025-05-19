@@ -6,6 +6,7 @@
 */
 
 #include "game.h"
+#include "string.h"
 
 gun_t *init_knife(game_handler_t *g_h)
 {
@@ -25,9 +26,14 @@ gun_t *init_gun(game_handler_t *g_h)
 {
     gun_t *gun = malloc(sizeof(gun_t));
 
+    if (gun == NULL)
+        return NULL;
     gun->img = set_img(T_3D_GUN, (sfIntRect){0, 0, 64, 64},
         (sfVector2f){0, 0}, g_h);
-    if (!load_from_file(g_h, "gun_ammo.bin", &gun->ammo, sizeof(gun->ammo)))
+    gun->save_file = strdup("gun_ammo.bin");
+    if (gun->save_file == NULL || gun->img == NULL)
+        return NULL;
+    if (!load_from_file(g_h, gun->save_file, &gun->ammo, sizeof(gun->ammo)))
         gun->ammo = 60;
     gun->mag_cap = 8;
     gun->magazine = gun->mag_cap;
@@ -40,9 +46,14 @@ gun_t *init_shotgun(game_handler_t *g_h)
 {
     gun_t *shotgun = malloc(sizeof(gun_t));
 
+    if (shotgun == NULL)
+        return NULL;
     shotgun->img = set_img(T_3D_SHOTGUN, (sfIntRect){0, 0, 64, 64},
         (sfVector2f){0, 0}, g_h);
-    if (!load_from_file(g_h, "shotgun_ammo.bin", &shotgun->ammo,
+    shotgun->save_file = strdup("shotgun_ammo.bin");
+    if (shotgun->save_file == NULL || shotgun->img == NULL)
+        return NULL;
+    if (!load_from_file(g_h, shotgun->save_file, &shotgun->ammo,
         sizeof(shotgun->ammo)))
         shotgun->ammo = 20;
     shotgun->mag_cap = 5;
@@ -56,9 +67,14 @@ gun_t *init_minigun(game_handler_t *g_h)
 {
     gun_t *minigun = malloc(sizeof(gun_t));
 
+    if (minigun == NULL)
+        return NULL;
     minigun->img = set_img(T_3D_MINIGUN, (sfIntRect){0, 0, 81, 75},
         (sfVector2f){0, 0}, g_h);
-    if (!load_from_file(g_h, "minigun_ammo.bin", &minigun->ammo,
+    minigun->save_file = strdup("minigun_ammo.bin");
+    if (minigun->save_file == NULL || minigun->img == NULL)
+        return NULL;
+    if (!load_from_file(g_h, minigun->save_file, &minigun->ammo,
         sizeof(minigun->ammo)))
         minigun->ammo = 200;
     minigun->mag_cap = 100;
