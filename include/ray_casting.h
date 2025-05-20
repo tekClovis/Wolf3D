@@ -11,7 +11,8 @@
     #include "call_csfml.h"
     #define CLOSE_DIST 20000.0f
     #define H 1080
-    #define W 1920 
+    #define W 1920
+    
 typedef struct game_handler_s game_handler_t;
 typedef struct entities_s entities_t;
 typedef struct tab_texture_s tab_texture_t;
@@ -59,7 +60,9 @@ typedef struct ray_cast_s{
     int height_line;
     int draw_start;
     int draw_end;
-    double ZBuffer[W];
+
+    /**/
+    double z_buffer[W];
 }ray_cast_t;
 
 /*Ray casting*/

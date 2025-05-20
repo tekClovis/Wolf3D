@@ -20,7 +20,7 @@ int execute_ray(game_handler_t *game, entities_t *player)
         det_line(&game->ray_cast);
         get_text_pixel(&game->ray_cast, player);
         fill_line(&game->ray_cast, x, game->texture);
-        game->ray_cast.ZBuffer[x] = game->ray_cast.perp_wall_dist;
+        game->ray_cast.z_buffer[x] = game->ray_cast.perp_wall_dist; 
     }
     return 0;
 }
