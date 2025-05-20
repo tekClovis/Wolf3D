@@ -110,5 +110,6 @@ int run_game(game_handler_t *g_h)
     new_moove_player(g_h->game->ent->player->property, g_h->event);
     execute_ray(g_h, g_h->game->ent->player->property);
     draw_screen(&g_h->ray_cast, g_h->screen->win);
+    draw_hud(g_h->game->hud, g_h);
     return 0;
 }
