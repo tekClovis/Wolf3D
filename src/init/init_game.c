@@ -33,33 +33,62 @@ img_t **init_weapons_two_d(game_handler_t *g_h)
     if (wp_two_d == NULL)
         return NULL;
     wp_two_d[0] = set_img(T_2D_KNIFE, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1620, 855}, g_h);
     wp_two_d[1] = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1640, 868}, g_h);
     wp_two_d[2] = set_img(T_2D_SHOTGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1605, 920}, g_h);
     wp_two_d[3] = set_img(T_2D_MINIGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
-    if (wp_two_d[0] || wp_two_d[1] || wp_two_d[2] || wp_two_d[3])
-        return free(wp_two_d) ,NULL;
+        , (sfVector2f){1580, 920}, g_h);
+    sfSprite_setScale(wp_two_d[0]->sprite, (sfVector2f){11.5, 11.5});
+    sfSprite_setScale(wp_two_d[1]->sprite, (sfVector2f){11.5, 11.5});
+    sfSprite_setScale(wp_two_d[2]->sprite, (sfVector2f){8, 8});
+    sfSprite_setScale(wp_two_d[3]->sprite, (sfVector2f){7.25, 7.25});
+    if (!wp_two_d[0] || !wp_two_d[1] || !wp_two_d[2] || !wp_two_d[3])
+        return free(wp_two_d), NULL;
     return wp_two_d;
+}
+
+void scale_hud(hud_t *hud)
+{
+    sfSprite_setScale(hud->bg_player_info->sprite, (sfVector2f){9, 5.5});
+    sfText_setScale(hud->life, (sfVector2f){1.5, 1.5});
+    sfText_setScale(hud->score, (sfVector2f){1.5, 1.5});
+    sfText_setScale(hud->magazine, (sfVector2f){1.5, 1.5});
+    sfText_setScale(hud->ammo, (sfVector2f){1.5, 1.5});
+    sfText_setScale(hud->score, (sfVector2f){0.75, 0.75});
+    sfText_setScale(hud->time, (sfVector2f){0.75, 0.75});
+}
+
+void init_text_base_hud(game_handler_t *g_h)
+{
+    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(255, 255, 255),
+        (sfVector2f){1040, 990}, "6");
+    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(255, 0, 0),
+            (sfVector2f){670, 970}, "0");
+    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){146, 100}, "0.0");
+    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){160, 40}, "0");
+    g_h->game->hud->ammo = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){230, 970}, "6");
 }
 
 static
 bool init_hud(game_handler_t *g_h)
 {
+    player_t *player = g_h->game->ent->player;
+
     g_h->game->hud = malloc(sizeof(hud_t));
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){300, 800}, g_h);
-    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){10, 10}, "MAGAZINE: ");
-    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){100, 10}, "CHRONO: ");
-    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
-    g_h->game->hud->actual_weapon = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){800, 820}, g_h);
+        (sfVector2f){0, 910}, g_h);
+        g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
+        g_h->game->hud->actual_weapon =
+        g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
+    init_text_base_hud(g_h);
+    scale_hud(g_h->game->hud);
     return true;
 }
 
