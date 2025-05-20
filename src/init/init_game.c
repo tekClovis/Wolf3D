@@ -33,37 +33,43 @@ img_t **init_weapons_two_d(game_handler_t *g_h)
     if (wp_two_d == NULL)
         return NULL;
     wp_two_d[0] = set_img(T_2D_KNIFE, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1315, 770}, g_h);
     wp_two_d[1] = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1325, 780}, g_h);
     wp_two_d[2] = set_img(T_2D_SHOTGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
+        , (sfVector2f){1300, 820}, g_h);
     wp_two_d[3] = set_img(T_2D_MINIGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1800, 400}, g_h);
-    if (wp_two_d[0] || wp_two_d[1] || wp_two_d[2] || wp_two_d[3])
-        return free(wp_two_d) ,NULL;
+        , (sfVector2f){1280, 820}, g_h);
+    sfSprite_setScale(wp_two_d[0]->sprite, (sfVector2f){9, 9});
+    sfSprite_setScale(wp_two_d[1]->sprite, (sfVector2f){9, 9});
+    sfSprite_setScale(wp_two_d[2]->sprite, (sfVector2f){6, 6});
+    sfSprite_setScale(wp_two_d[3]->sprite, (sfVector2f){5.5, 5.5});
+    if (!wp_two_d[0] || !wp_two_d[1] || !wp_two_d[2] || !wp_two_d[3])
+        return free(wp_two_d), NULL;
     return wp_two_d;
 }
 
 static
 bool init_hud(game_handler_t *g_h)
 {
+    player_t *player = g_h->game->ent->player;
+
     g_h->game->hud = malloc(sizeof(hud_t));
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
         (sfVector2f){375, 800}, g_h);
-    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){495, 820}, "6");
-    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(105,105,105), 
-            (sfVector2f){715, 820}, "0");
-    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){150, 10}, "SCORE : ");
-    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105,105,105), 
-        (sfVector2f){400, 5}, "0");
+    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){498, 820}, "6");
+    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(105, 105, 105),
+            (sfVector2f){717, 820}, "0");
+    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){100, 10}, "0.0");
+    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){100, 100}, "0");
     g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
-    g_h->game->hud->actual_weapon = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){1325, 780}, g_h);
+    g_h->game->hud->actual_weapon =
+        g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
     return true;
 }
 
