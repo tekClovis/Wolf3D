@@ -22,7 +22,8 @@ void handle_player(game_handler_t *g_h, player_t *player)
 static
 void handle_menu(game_handler_t *g_h)
 {
-    if (g_h->event->key.code == sfKeyEscape){
+    if (g_h->event->key.code == sfKeyEscape &&
+            g_h->event->type == sfEvtKeyPressed){
             g_h->screen_mode = S_MENU;
             g_h->screen->act_menu = M_PAUSE;
             sfMusic_stop(g_h->game->game_music);

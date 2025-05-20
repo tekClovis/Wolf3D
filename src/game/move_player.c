@@ -105,15 +105,15 @@ void rotate_player(entities_t *entities)
         entities->angle += 3;
         if (entities->angle >= 360)
             entities->angle = 0;
-        sfSprite_setRotation(entities->img.sprite, 0);
-        sfSprite_rotate(entities->img.sprite, entities->angle);
+        sfSprite_setRotation(entities->img->sprite, 0);
+        sfSprite_rotate(entities->img->sprite, entities->angle);
     }
     if (sfKeyboard_isKeyPressed(sfKeyLeft) || controller & LEFT){
         entities->angle -= 3;
         if (entities->angle <= 0)
             entities->angle = 360;
-        sfSprite_setRotation(entities->img.sprite, 0);
-        sfSprite_rotate(entities->img.sprite, entities->angle);
+        sfSprite_setRotation(entities->img->sprite, 0);
+        sfSprite_rotate(entities->img->sprite, entities->angle);
     }
 }
 
