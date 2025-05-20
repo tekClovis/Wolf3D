@@ -7,6 +7,7 @@
 
 #include "game.h"
 
-int draw_sprite(game_handler_t game)
+int draw_sprite(game_handler_t *game)
 {
+    return 0;
 }

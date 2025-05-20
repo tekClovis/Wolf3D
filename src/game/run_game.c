@@ -44,10 +44,37 @@ void new_moove_up(entities_t *entities)
 }
 
 static
+void new_moove_down(entities_t *entities)
+{
+    entities->coord.x -= entities->dir.x / 10;
+    entities->coord.y -= entities->dir.y / 10;
+}
+
+static
+void new_moove_right(entities_t *entities)
+{
+    entities->coord.x += entities->dir.y / 10;
+    entities->coord.y += -entities->dir.x / 10;
+}
+
+static
+void new_moove_left(entities_t *entities)
+{
+    entities->coord.x -= entities->dir.y / 10;
+    entities->coord.y -= -entities->dir.x / 10;
+}
+
+static
 void new_moove_player(entities_t *player)
 {
     if (sfKeyboard_isKeyPressed(sfKeyZ))
         new_moove_up(player);
+    if (sfKeyboard_isKeyPressed(sfKeyS))
+        new_moove_down(player);
+    if (sfKeyboard_isKeyPressed(sfKeyQ))
+        new_moove_left(player);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        new_moove_right(player);
 }
 
 int run_game(game_handler_t *g_h)
