@@ -51,7 +51,7 @@ img_t **init_weapons_two_d(game_handler_t *g_h)
 
 void scale_hud(hud_t *hud)
 {
-    sfSprite_setScale(hud->bg_player_info->sprite, (sfVector2f){9, 5.25});
+    sfSprite_setScale(hud->bg_player_info->sprite, (sfVector2f){9, 5.5});
     sfText_setScale(hud->life, (sfVector2f){1.5, 1.5});
     sfText_setScale(hud->score, (sfVector2f){1.5, 1.5});
     sfText_setScale(hud->magazine, (sfVector2f){1.5, 1.5});
@@ -62,7 +62,7 @@ void scale_hud(hud_t *hud)
 
 void init_text_base_hud(game_handler_t *g_h)
 {
-    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(0, 0, 255),
+    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(255, 255, 255),
         (sfVector2f){1040, 990}, "6");
     g_h->game->hud->life = set_txt(80, sfColor_fromRGB(255, 0, 0),
             (sfVector2f){670, 970}, "0");

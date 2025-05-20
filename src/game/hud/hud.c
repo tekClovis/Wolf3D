@@ -55,6 +55,8 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
 
 void draw_hud(hud_t *hud, game_handler_t *g_h)
 {
+    inventory_t *inv = g_h->game->ent->player->inventory;
+
     if (sfKeyboard_isKeyPressed(sfKeyA)) {
         g_h->game->score.score++;
         g_h->game->ent->player->property->life--;
@@ -62,6 +64,8 @@ void draw_hud(hud_t *hud, game_handler_t *g_h)
         if (g_h->game->ent->player->inventory->actual_gun > 3)
             g_h->game->ent->player->inventory->actual_gun = 0;
     }
+    sfRenderWindow_drawSprite(g_h->screen->win,
+        inv->gun[inv->actual_gun]->img->sprite, NULL);
     sfRenderWindow_drawSprite(g_h->screen->win, hud->bg_player_info->sprite,
         NULL);
     update_assets(hud, g_h);
