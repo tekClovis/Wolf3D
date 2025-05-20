@@ -69,7 +69,7 @@ static
 ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){0.3, 0.3}, ID_SS,
+    ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_SS,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->property->life = 100;
@@ -85,7 +85,7 @@ static
 ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){0.3, 0.3}, ID_MUTANT
+    ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_MUTANT
         , set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->property->life = 150;
@@ -101,7 +101,7 @@ static
 ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     sfVector2f coord)
 {
-    ennemi->property = init_entities(coord, (sfVector2f){0.4, 0.4}, ID_BRUT,
+    ennemi->property = init_entities(coord, (sfVector2f){0.7, 0.7}, ID_BRUT,
         set_img(T_BRUT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->property->life = 200;
