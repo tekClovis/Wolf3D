@@ -12,10 +12,10 @@
     #include "utils.h"
     #include "my.h"
     #define ID_WALL 1
-    #define ID_PLAYER 2
-    #define ID_SS 3
-    #define ID_MUTANT 4
-    #define ID_BRUT 5
+    #define ID_PLAYER ID_WALL + 1
+    #define ID_SS ID_PLAYER + 1
+    #define ID_MUTANT ID_SS + 1
+    #define ID_BRUT ID_MUTANT + 1
     #define ID_PLAYER_MOVE 0
     #define ID_ENNEMIE_MOVE 1
     #define ID_OBJECT_MOVE 2
