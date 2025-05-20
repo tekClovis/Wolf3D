@@ -44,10 +44,37 @@ void new_moove_up(entities_t *entities)
 }
 
 static
+void new_moove_down(entities_t *entities)
+{
+    entities->coord.x -= entities->dir.x / 10;
+    entities->coord.y -= entities->dir.y / 10;
+}
+
+static
+void new_moove_right(entities_t *entities)
+{
+    entities->coord.x += entities->dir.y / 10;
+    entities->coord.y += -entities->dir.x / 10;
+}
+
+static
+void new_moove_left(entities_t *entities)
+{
+    entities->coord.x -= entities->dir.y / 10;
+    entities->coord.y -= -entities->dir.x / 10;
+}
+
+static
 void new_moove_player(entities_t *player)
 {
     if (sfKeyboard_isKeyPressed(sfKeyZ))
         new_moove_up(player);
+    if (sfKeyboard_isKeyPressed(sfKeyS))
+        new_moove_down(player);
+    if (sfKeyboard_isKeyPressed(sfKeyQ))
+        new_moove_left(player);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        new_moove_right(player);
 }
 
 int run_game(game_handler_t *g_h)
@@ -55,6 +82,9 @@ int run_game(game_handler_t *g_h)
     new_rotate_player(g_h->game->ent->player->property, 0.03);
     new_moove_player(g_h->game->ent->player->property);
     execute_ray(g_h, g_h->game->ent->player->property);
+    draw_sprite(g_h);
+    draw_screen(&g_h->ray_cast, g_h->screen->win);
     draw_hud(g_h->game->hud, g_h);
+>>>>>>> daf98ab691fe25069e52f3e67959fbd02f098bfd
     return 0;
 }

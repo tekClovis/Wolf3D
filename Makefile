@@ -51,6 +51,7 @@ SRC += src/game/hud/hud.c
 
 SRC += src/game/run_game.c
 SRC += src/init/init_ray_buffer.c
+SRC += src/game/draw_sprite/draw_sprite.c
 
 OBJ = $(SRC:.c=.o)
 

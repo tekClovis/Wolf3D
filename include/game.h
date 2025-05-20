@@ -93,6 +93,9 @@ void free_game(game_handler_t *game_handler);
 void check_back_to_menu(game_handler_t *handler);
 void draw_hud(hud_t *hud, game_handler_t *g_h);
 
+/*Draw sprite*/
+int draw_sprite(game_handler_t *game);
+
 /*get*/
 sfVector2f get_coord(sfVector2f coord_window);
 bool is_in_real_wall(sfVector2f coord);
