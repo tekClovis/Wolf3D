@@ -89,6 +89,8 @@ bool init_hud(game_handler_t *g_h)
         g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
     init_text_base_hud(g_h);
     scale_hud(g_h->game->hud);
+    g_h->game->hud->animation = sfClock_create();
+    g_h->game->hud->anim = false;
     return true;
 }
 

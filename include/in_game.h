@@ -17,6 +17,10 @@ typedef struct score_s {
     sfInt32 score_mili_s;
 } score_t;
 
+typedef struct anim_s {
+    void(*func)(game_handler_t *, gun_t *);
+} anim_t;   
+
 //weapon 2 d fois 4 img_t
 typedef struct hud_s {
     img_t *bg_player_info;
@@ -27,6 +31,8 @@ typedef struct hud_s {
     sfText *score;
     sfText *life;
     img_t *actual_weapon;
+    sfClock *animation;
+    bool anim;
 } hud_t;
 
 typedef struct game_s {
