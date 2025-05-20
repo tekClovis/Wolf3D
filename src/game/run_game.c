@@ -70,27 +70,6 @@ void new_moove_left(entities_t *entities)
     entities->coord.y -= -entities->dir.x / 10;
 }
 
-static
-void new_moove_down(entities_t *entities)
-{
-    entities->coord.x -= entities->dir.x / 10;
-    entities->coord.y -= entities->dir.y / 10;
-}
-
-static
-void new_moove_right(entities_t *entities)
-{
-    entities->coord.x += entities->dir.y / 10;
-    entities->coord.y += -entities->dir.x / 10;
-}
-
-static
-void new_moove_left(entities_t *entities)
-{
-    entities->coord.x -= entities->dir.y / 10;
-    entities->coord.y -= -entities->dir.x / 10;
-}
-
 
 static
 void new_moove_player(entities_t *player, sfEvent *event)
@@ -113,5 +92,6 @@ int run_game(game_handler_t *g_h)
     new_rotate_player(g_h->game->ent->player->property, 0.03);
     new_moove_player(g_h->game->ent->player->property, g_h->event);
     execute_ray(g_h, g_h->game->ent->player->property);
+    draw_screen(&g_h->ray_cast, g_h->screen->win);
     return 0;
 }
