@@ -47,14 +47,10 @@ SRC += src/game/ray_casting/dda_managment.c
 SRC += src/game/ray_casting/execute_ray.c
 SRC += src/game/ray_casting/wall_text_managment.c
 SRC += src/game/ray_casting/draw_screen.c
-<<<<<<<<< Temporary merge branch 1
 SRC += src/game/hud/hud.c
-
-=========
 SRC += src/game/weapons/launch_shoot.c
 SRC += src/game/weapons/search_entity.c
 SRC += src/game/weapons/weapons.c
->>>>>>>>> Temporary merge branch 2
 SRC += src/game/run_game.c
 SRC += src/init/init_ray_buffer.c
 
