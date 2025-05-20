@@ -8,6 +8,14 @@
 #include "game.h"
 #include "stdio.h"
 
+anim_t const TAB_ANIM[] = {
+    {&animate_gun},
+    {&animate_gun},
+    {&animate_shgun},
+    {&animate_minigun},
+    {NULL}
+};
+
 static void set_int_in_text(int value, sfText *text)
 {
     char buffer[12];
@@ -34,6 +42,15 @@ static void set_catint_in_text(int value, sfText *text, char *str)
         bounds.left + bounds.width / 2.0f,
         bounds.top + bounds.height / 2.0f
     });
+}
+
+static void check_anim_gun(game_handler_t *g_h)
+{
+    inventory_t *inv = g_h->game->ent->player->inventory;
+
+    if (g_h->game->hud->anim){
+        TAB_ANIM[inv->actual_gun].func(g_h, inv->gun[inv->actual_gun]);
+    }
 }
 
 void update_assets(hud_t *hud, game_handler_t *g_h)
@@ -64,6 +81,7 @@ void draw_hud(hud_t *hud, game_handler_t *g_h)
         if (g_h->game->ent->player->inventory->actual_gun > 3)
             g_h->game->ent->player->inventory->actual_gun = 0;
     }
+    check_anim_gun(g_h);
     sfRenderWindow_drawSprite(g_h->screen->win,
         inv->gun[inv->actual_gun]->img->sprite, NULL);
     sfRenderWindow_drawSprite(g_h->screen->win, hud->bg_player_info->sprite,

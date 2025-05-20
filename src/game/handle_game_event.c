@@ -10,6 +10,8 @@
 static
 void handle_player(game_handler_t *g_h)
 {
+    if (g_h->event->key.code == sfKeyT)
+        gun_shoot(g_h->game->ent->ennemies, g_h->game->ent->player, NULL, g_h);
     return;
 }
 

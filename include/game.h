@@ -85,6 +85,11 @@ int run_game(game_handler_t *g_h);
 void move_player(player_t *entities);
 void rotate_player(entities_t *entities);
 void manage_player(game_handler_t *game_handler);
+void animate_shgun(game_handler_t *g_h, gun_t *shotgun);
+void animate_gun(game_handler_t *g_h, gun_t *gun);
+int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
+    game_handler_t *g_h);
+void animate_minigun(game_handler_t *g_h, gun_t *gun);
 
 /*3D*/
 float get_coord_wall(entities_t *entities, float angle, int precision);
