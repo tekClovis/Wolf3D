@@ -11,8 +11,11 @@ sfText *set_txt(size_t size, sfColor color, sfVector2f position, char *str)
 {
     sfText *txt = sfText_create();
     sfFloatRect bounds;
+    sfFont *font = sfFont_createFromFile("font/alagard.ttf");
 
-    sfText_setFont(txt, sfFont_createFromFile("./font/alagard.ttf"));
+    if (!txt || !font)
+        exit(84);
+    sfText_setFont(txt, font);
     sfText_setCharacterSize(txt, size);
     sfText_setColor(txt, color);
     sfText_setPosition(txt, position);

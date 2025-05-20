@@ -31,8 +31,8 @@ ennemies_t *search_entity(list_t *ennemies, player_t *player,
         cos(DEG_TO_RAD(-1 * player->property->angle))
         * 1.1 + player->property->coord.y};
 
-    while (g_h->game->level.map[g_h->game->level.actual_level][(int)tmp.y][(int)tmp.x]
-        != WALL_IRON){
+    while (g_h->game->level.map[g_h->game->level.actual_level]
+        [(int)tmp.y][(int)tmp.x] != WALL_IRON){
         touch = verif_touch(ennemies, tmp);
         if (touch)
             break;
