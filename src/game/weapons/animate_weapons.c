@@ -9,7 +9,6 @@
 
 void animate_gun(game_handler_t *g_h, gun_t *gun)
 {
-    inventory_t *inv = g_h->game->ent->player->inventory;
     sfTime time = sfClock_getElapsedTime(g_h->game->hud->animation);
     float second = time.microseconds / 1000000.0;
 
@@ -49,7 +48,6 @@ void animate_shgun(game_handler_t *g_h, gun_t *shotgun)
 
 void animate_minigun(game_handler_t *g_h, gun_t *gun)
 {
-    inventory_t *inv = g_h->game->ent->player->inventory;
     sfTime time = sfClock_getElapsedTime(g_h->game->hud->animation);
     float second = time.microseconds / 1000000.0;
 
