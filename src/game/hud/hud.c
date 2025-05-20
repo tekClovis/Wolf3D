@@ -63,7 +63,6 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
         hud->weapon_two_d[actual_gun]->sprite, NULL);
 }
 
-
 static
 void set_and_draw(sfSprite *sprite, sfVector2f scale, sfVector2f temp,
     game_handler_t *g_h)
@@ -85,7 +84,7 @@ void draw_unlock_w(hud_t *hud, game_handler_t *g_h)
     float x = 10;
     sfVector2f tmp_scale;
 
-    for (int i = 0; i < NB_GUN; i++){
+    for (int i = 0; i < g_h->game->ent->player->inventory->nb_of_gun; i++){
         temp = sfSprite_getPosition(hud->weapon_two_d[i]->sprite);
         sfSprite_setPosition(hud->weapon_two_d[i]->sprite,
             (sfVector2f){x, y_base + y * i});
@@ -97,7 +96,6 @@ void draw_unlock_w(hud_t *hud, game_handler_t *g_h)
                 {x, y_base + y * ((float)i + 0.2)});
         set_and_draw(hud->weapon_two_d[i]->sprite, tmp_scale, temp, g_h);
     }
-
 }
 
 void draw_hud(hud_t *hud, game_handler_t *g_h)

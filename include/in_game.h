@@ -19,7 +19,7 @@ typedef struct score_s {
 
 typedef struct anim_s {
     void(*func)(game_handler_t *, gun_t *);
-} anim_t;   
+} anim_t;
 
 //weapon 2 d fois 4 img_t
 typedef struct hud_s {
