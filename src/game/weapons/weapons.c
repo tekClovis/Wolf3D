@@ -20,6 +20,7 @@ void decrease_life(player_t *player, ennemies_t *ent, size_t damage,
     if (ent == NULL)
         return;
     ent->property->life -= damage;
+    printf("%d", ent->property->life);
 }
 
 int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
