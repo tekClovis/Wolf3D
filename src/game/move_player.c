@@ -123,7 +123,8 @@ void rotate_player(entities_t *entities)
 */
 void move_player(player_t *player)
 {
-    float time = sfTime_asSeconds(sfClock_restart(player->property->clock.clock));
+    float time = sfTime_asSeconds
+        (sfClock_restart(player->property->clock.clock));
     sfVector2f coord = {0, 0};
 
     player->property->clock.time_as_second = time;

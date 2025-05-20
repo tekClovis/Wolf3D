@@ -54,7 +54,7 @@ void handle_event(game_handler_t *g_h)
         if ((g_h->screen_mode == S_GAME && g_h->event->type == sfEvtKeyPressed)
             || g_h->controller.control != 0)
             handle_game_event(g_h);
-        if (e.type == sfEvtClosed && g_h->screen->act_menu != M_PAUSE)  
+        if (e.type == sfEvtClosed && g_h->screen->act_menu != M_PAUSE)
             sfRenderWindow_close(g_h->screen->win);
     }
 }
