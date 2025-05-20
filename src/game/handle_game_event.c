@@ -10,12 +10,6 @@
 static
 void handle_player(game_handler_t *g_h, player_t *player)
 {
-    if (g_h->event->key.code == sfKeySpace &&
-        g_h->event->key.type == sfEvtKeyPressed)
-        player->is_shooting = true;
-    if (g_h->event->key.code == sfKeySpace &&
-        g_h->event->key.type == sfEvtKeyReleased)
-        player->is_shooting = false;
     return;
 }
 
