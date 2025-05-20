@@ -10,7 +10,7 @@
     #include "call_csfml.h"
     #include <stdbool.h>
     #define NB_WALL 4
-    #define IS_WALL(x) (x < NB_WALL) ? true : false
+    #define IS_WALL(x) (x < NB_WALL) ? true : false;
     #define WALL_IRON 1
     #define WALL_FLAG_ARCH WALL_IRON + 1
     #define WALL_BRICK WALL_FLAG_ARCH + 1
