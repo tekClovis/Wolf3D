@@ -8,12 +8,38 @@
 #include "game.h"
 #include "stdio.h"
 
-void set_int_in_text(int to_convert, sfText *txt)
+void set_int_in_text(int value, sfText *text)
 {
     char buffer[12];
+    sfFloatRect bounds;
 
-    snprintf(buffer, sizeof(buffer), "%d", to_convert);
-    sfText_setString(txt, buffer);
+    snprintf(buffer, sizeof(buffer), "%d", value);
+
+    sfText_setString(text, buffer);
+
+    bounds = sfText_getLocalBounds(text);
+    sfText_setOrigin(text, (sfVector2f){
+        bounds.left + bounds.width / 2.0f,
+        bounds.top + bounds.height / 2.0f
+    });
+}
+
+void set_clock_in_text(sfClock *clock, sfText *text)
+{
+    char buffer[12];
+    sfFloatRect bounds;
+    sfTime time = sfClock_getElapsedTime(clock);
+    float seconds = sfTime_asSeconds(time);
+
+    snprintf(buffer, sizeof(buffer), "%.0f", seconds);
+
+    sfText_setString(text, buffer);
+
+    bounds = sfText_getLocalBounds(text);
+    sfText_setOrigin(text, (sfVector2f){
+        bounds.left + bounds.width / 2.0f,
+        bounds.top + bounds.height / 2.0f
+    });
 }
 
 void update_assets(hud_t *hud, game_handler_t *g_h)
@@ -30,6 +56,7 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
     set_int_in_text(game->ent->player->life, hud->life);
     set_int_in_text(game->ent->player->inventory->gun[actual_gun]->magazine,
     hud->magazine);
+    set_clock_in_text(g_h->general_clock.clock, hud->time);
     sfRenderWindow_drawSprite(g_h->screen->win, hud->weapon_two_d[actual_gun]->sprite,
         NULL);
 }

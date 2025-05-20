@@ -60,13 +60,13 @@ bool init_hud(game_handler_t *g_h)
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
         (sfVector2f){375, 800}, g_h);
     g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){498, 820}, "6");
+        (sfVector2f){510, 860}, "6");
     g_h->game->hud->life = set_txt(80, sfColor_fromRGB(105, 105, 105),
-            (sfVector2f){717, 820}, "0");
+            (sfVector2f){767, 860}, "0");
     g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){100, 10}, "0.0");
+        (sfVector2f){100, 80}, "0.0");
     g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){100, 100}, "0");
+        (sfVector2f){1800, 80}, "0");
     g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
     g_h->game->hud->actual_weapon =
         g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
