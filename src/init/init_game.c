@@ -18,8 +18,8 @@ score_t init_score(game_handler_t *g_h)
     if (!load_from_file(g_h, "score_nb.bin", &score.score,
         sizeof(score.score)))
         score.score = 0;
-    if (!load_from_file(g_h, "score_time.bin", &score.score,
-        sizeof(score.score)))
+    if (!load_from_file(g_h, "score_time.bin", &score.score_mili_s,
+        sizeof(score.score_mili_s)))
         score.score_mili_s = 0;
     score.time_to_end = init_clock();
     return score;
@@ -67,9 +67,9 @@ void init_text_base_hud(game_handler_t *g_h)
     g_h->game->hud->life = set_txt(80, sfColor_fromRGB(255, 0, 0),
             (sfVector2f){670, 970}, "0");
     g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){146, 100}, "0.0");
+        (sfVector2f){50, 90}, "0.0");
     g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){160, 40}, "0");
+        (sfVector2f){30, 30}, "0");
     g_h->game->hud->ammo = set_txt(80, sfColor_fromRGB(105, 105, 105),
         (sfVector2f){230, 970}, "6");
 }
