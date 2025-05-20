@@ -10,7 +10,9 @@
     #include "call_csfml.h"
     #include <stdbool.h>
     #define WALL_IRON 1
-    #define T_BRUT WALL_IRON + 1
+    #define WALL_FLAG_ARCH WALL_IRON + 1
+    #define WALL_BRICK WALL_FLAG_ARCH + 1
+    #define T_BRUT WALL_BRICK + 1
     #define T_MUTANT T_BRUT + 1
     #define T_SS T_MUTANT + 1
     #define T_M_BG T_SS + 1

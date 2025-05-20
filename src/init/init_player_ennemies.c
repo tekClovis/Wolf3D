@@ -56,6 +56,7 @@ bool init_player(game_handler_t *g_h)
         (sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));
     g_h->game->ent->player->clock_sound = init_clock();
     g_h->game->ent->player->inventory = init_inventory(g_h);
+    g_h->game->ent->player->is_shooting = false;
     if (g_h->game->ent->player->inventory == NULL)
         return false;
     if (!load_from_file(g_h, "life.bin",
@@ -72,10 +73,11 @@ ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
     ennemi->property->life = 100;
+    ennemi->is_shooting = false;
     ennemi->property->speed = WALK + 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
-    //ennemi->gun_shot = &pistol_gun;
+    ennemi->gun_shot = &gun_shoot;
     return ennemi;
 }
 
@@ -89,8 +91,9 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property->life = 150;
     ennemi->property->speed = RUN;
     ennemi->clock_touch = init_clock();
+    ennemi->is_shooting = false;
     ennemi->clock_shoot = init_clock();
-    //ennemi->gun_shot = &assault_gun;
+    ennemi->gun_shot = &gun_shoot;
     return ennemi;
 }
 
@@ -105,8 +108,8 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property->speed = WALK - 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
-    /*ennemi->gun_shot = &mini_gun; fairre un rand() % dist pour
-    la dispersion des balles*/
+    ennemi->is_shooting = false;
+    ennemi->gun_shot = &minigun_shoot;
     return ennemi;
 }
 

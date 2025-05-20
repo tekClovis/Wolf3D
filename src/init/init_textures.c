@@ -10,6 +10,8 @@
 
 tab_texture_t const TAB_TEXTURE[] = {
     {NULL, NULL, WALL_IRON, "./img/wall/libdoor.png"},
+    {NULL, NULL, WALL_FLAG_ARCH, "./img/wall/flag_wall_arch.png"},
+    {NULL, NULL, WALL_BRICK, "./img/wall/brickstone.png"},
     {NULL, NULL, T_BRUT, "./img/ent/Brut.png"},
     {NULL, NULL, T_MUTANT, "./img/ent/Mutant.png"},
     {NULL, NULL, T_SS, "./img/ent/SS_ennemies.png"},

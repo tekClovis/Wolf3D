@@ -8,10 +8,8 @@
 #include "entities.h"
 
 static
-void handle_player(game_handler_t *g_h)
+void handle_player(game_handler_t *g_h, player_t *player)
 {
-    if (g_h->event->key.code == sfKeyT)
-        gun_shoot(g_h->game->ent->ennemies, g_h->game->ent->player, NULL, g_h);
     return;
 }
 
@@ -28,6 +26,6 @@ void handle_menu(game_handler_t *g_h)
 
 void handle_game_event(game_handler_t *g_h)
 {
-    handle_player(g_h);
+    handle_player(g_h, g_h->game->ent->player);
     handle_menu(g_h);
 }

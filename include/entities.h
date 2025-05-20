@@ -32,6 +32,7 @@
 typedef struct game_s game_t;
 typedef struct ennemies_s ennemies_t;
 typedef struct game_handler_s game_handler_t;
+typedef struct player_s player_t;
 
 typedef struct entities_s {
     sfVector2f coord;
@@ -51,7 +52,7 @@ typedef struct gun_s {
     int ammo;
     int magazine;
     int mag_cap;
-    int (*gun_shot)(game_t *, entities_t *);
+    int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
     sfSound *shoot_so;
     img_t *img;
     char *save_file;
@@ -66,12 +67,14 @@ typedef struct inventory_s {
 } inventory_t;
 
 typedef struct player_s {
+    bool is_shooting;
     entities_t *property;
     inventory_t *inventory;
     time_management_t clock_sound;
 }player_t;
 
 typedef struct ennemies_s {
+    bool is_shooting;
     entities_t *property;
     int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
     time_management_t clock_sound;
@@ -96,5 +99,13 @@ bool launch_e_shoot(ennemies_t *en, float millisec_to_wait,
 bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
 ennemies_t *search_entity(list_t *ennemies, player_t *player,
+    game_handler_t *g_h);
+int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
+    game_handler_t *g_h);
+int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
+    game_handler_t *g_h);
+int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
+    game_handler_t *g_h);
+int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
     game_handler_t *g_h);
 #endif //ENTITIES_H

@@ -19,7 +19,7 @@ gun_t *init_knife(game_handler_t *g_h)
     knife->mag_cap = 10;
     knife->magazine = knife->mag_cap;
     knife->shoot_so = get_sound(g_h->sound, SO_KNIFE);
-    //knife->gun_shot = &knife_shoot;
+    knife->gun_shot = &knife_shoot;
     return knife;
 }
 
@@ -40,7 +40,7 @@ gun_t *init_gun(game_handler_t *g_h)
     gun->mag_cap = 8;
     gun->magazine = gun->mag_cap;
     gun->shoot_so = get_sound(g_h->sound, SO_GUN);
-    //gun->gun_shot = &gun_shoot;
+    gun->gun_shot = &gun_shoot;
     return gun;
 }
 
@@ -62,7 +62,7 @@ gun_t *init_shotgun(game_handler_t *g_h)
     shotgun->mag_cap = 5;
     shotgun->magazine = shotgun->mag_cap;
     shotgun->shoot_so = get_sound(g_h->sound, SO_SHOTGUN);
-    //shotgun->gun_shot = &shotgun_shoot;
+    shotgun->gun_shot = &shotgun_shoot;
     return shotgun;
 }
 
@@ -84,7 +84,7 @@ gun_t *init_minigun(game_handler_t *g_h)
     minigun->mag_cap = 100;
     minigun->magazine = minigun->mag_cap;
     minigun->shoot_so = get_sound(g_h->sound, SO_SHOTGUN);
-    //shotgun->gun_shot = &shotgun_shoot;
+    minigun->gun_shot = &minigun_shoot;
     return minigun;
 }
 

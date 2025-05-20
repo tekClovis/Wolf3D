@@ -9,7 +9,9 @@
 void cancel_fisheye(ray_cast_t *ray_cast)
 {
     if (ray_cast->side == 0)
-        ray_cast->perp_wall_dist = (ray_cast->side_dist_x - ray_cast->delta_dist_x);
-    else 
-        ray_cast->perp_wall_dist = (ray_cast->side_dist_y - ray_cast->delta_dist_y);
+        ray_cast->perp_wall_dist =
+        (ray_cast->side_dist_x - ray_cast->delta_dist_x);
+    else
+        ray_cast->perp_wall_dist =
+        (ray_cast->side_dist_y - ray_cast->delta_dist_y);
 }

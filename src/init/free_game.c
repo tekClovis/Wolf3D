@@ -16,7 +16,8 @@ void save_game(game_t *game, game_handler_t *g_h)
         sizeof(game->score.score));
     save_to_file(g_h, "actual_level.bin", &game->level.actual_level,
         sizeof(game->level.actual_level));
-    save_to_file(g_h, "life.bin", &game->ent->player->property->life,
+    if (game->ent->player->property->life > 0)
+        save_to_file(g_h, "life.bin", &game->ent->player->property->life,
         sizeof(game->ent->player->property->life));
     save_to_file(g_h, "nb_gun.bin", &game->ent->player->inventory->nb_of_gun,
         sizeof(game->ent->player->inventory->nb_of_gun));
