@@ -52,6 +52,7 @@ SRC += src/game/weapons/launch_shoot.c
 SRC += src/game/weapons/search_entity.c
 SRC += src/game/weapons/weapons.c
 SRC += src/game/run_game.c
+SRC+= src/game/weapons/animate_weapons.c
 SRC += src/init/init_ray_buffer.c
 SRC += src/game/weapons/handle_player_shooting.c
 
