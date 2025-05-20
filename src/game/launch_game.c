@@ -65,7 +65,7 @@ int launch_game(game_handler_t *game_handler)
         if (need_refresh(game_handler) == false)
             continue;
         handle_event(game_handler);
-        sfRenderWindow_clear(game_handler->screen->win, sfBlack);
+        sfRenderWindow_clear(game_handler->screen->win, sfBlue);
         choose_window_mode(game_handler);
         sfRenderWindow_display(game_handler->screen->win);
     }
