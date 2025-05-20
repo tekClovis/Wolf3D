@@ -10,9 +10,9 @@
     #include <stddef.h>
     #include "call_csfml.h"
     #define CLOSE_DIST 20000.0f
-    #define H 1080
-    #define W 1920
-    
+    #define HEIGHT 1080
+    #define WIDTH 1920
+
 typedef struct game_handler_s game_handler_t;
 typedef struct entities_s entities_t;
 typedef struct tab_texture_s tab_texture_t;
@@ -30,7 +30,7 @@ typedef struct buffer_z_s {
 }buffer_z_t;
 
 
-typedef struct ray_cast_s{
+typedef struct ray_cast_s {
     /* calcul */
     double camera_x;
     double raydir_x;
@@ -55,14 +55,14 @@ typedef struct ray_cast_s{
     sfImage *image;//pool image
     sfTexture *screen_text;
     sfSprite *sprite_screen;
-    
+
     /* display */
     int height_line;
     int draw_start;
     int draw_end;
 
     /**/
-    double z_buffer[W];
+    double z_buffer[WIDTH];
 }ray_cast_t;
 
 /*Ray casting*/

@@ -30,3 +30,4 @@ void free_game(game_handler_t *g_h)
 {
     save_game(g_h->game, g_h);
 }
+

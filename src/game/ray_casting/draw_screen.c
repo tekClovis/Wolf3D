@@ -8,8 +8,10 @@
 
 int draw_screen(ray_cast_t *ray_cast, sfRenderWindow *window)
 {
-    sfTexture_updateFromPixels(ray_cast->screen_text, ray_cast->pixels, 1920, 1080, 0, 0);
-    sfSprite_setTexture(ray_cast->sprite_screen, ray_cast->screen_text, sfTrue);
+    sfTexture_updateFromPixels(ray_cast->screen_text,
+        ray_cast->pixels, 1920, 1080, 0, 0);
+    sfSprite_setTexture(ray_cast->sprite_screen,
+        ray_cast->screen_text, sfTrue);
     sfRenderWindow_drawSprite(window, ray_cast->sprite_screen, NULL);
     return 0;
 }
