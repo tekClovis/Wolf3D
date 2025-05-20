@@ -33,13 +33,14 @@ void new_rotate_player(entities_t *player, float rot_speed)
         player->plan.y = old_plane_x * sin(rot_speed) + player->plan.y * cos(rot_speed);
     }
 }
-
+/*
 static
 sfInt32 get_milisc_clock(time_management_t time_manage)
 {
     sfclokc sfClock_getElapsedTime(entities->clock.clock);
     sfTime_asMilliseconds(entities->clock.clock);
 }
+*/
 
 static
 void new_moove_up(entities_t *entities)
@@ -91,5 +92,6 @@ int run_game(game_handler_t *g_h)
     new_rotate_player(g_h->game->ent->player->property, 0.03);
     new_moove_player(g_h->game->ent->player->property, g_h->event);
     execute_ray(g_h, g_h->game->ent->player->property);
+    draw_screen(&g_h->ray_cast, g_h->screen->win);
     return 0;
 }

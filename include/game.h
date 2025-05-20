@@ -16,7 +16,7 @@
     #include "level.h"
     #include "in_game.h"
     #include <stdbool.h>
-    #define WINDOW_SIZE_X 1980
+    #define WINDOW_SIZE_X 1920
     #define WINDOW_SIZE_y 1080
     #define FPS_SET_60 16.666
     #define WALK 100
