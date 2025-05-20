@@ -11,7 +11,7 @@
 void handle_save1(game_handler_t *g_h)
 {
     sfMusic_pause(g_h->screen->menu_music);
-    if (!init_game(g_h, "save/save_1/"))
+    if (!init_game(g_h, "./save_f/save_1/"))
         return;
     g_h->screen_mode = S_GAME;
     return;
@@ -20,7 +20,7 @@ void handle_save1(game_handler_t *g_h)
 void handle_save2(game_handler_t *g_h)
 {
     sfMusic_pause(g_h->screen->menu_music);
-    if (!init_game(g_h, "save/save_2/"))
+    if (!init_game(g_h, "./save_f/save_2/"))
         return;
     g_h->screen_mode = S_GAME;
     return;
@@ -29,7 +29,7 @@ void handle_save2(game_handler_t *g_h)
 void handle_save3(game_handler_t *g_h)
 {
     sfMusic_pause(g_h->screen->menu_music);
-    if (!init_game(g_h, "save/save_3/"))
+    if (!init_game(g_h, "./save_f/save_3/"))
         return;
     g_h->screen_mode = S_GAME;
     return;
