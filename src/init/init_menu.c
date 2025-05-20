@@ -81,7 +81,7 @@ bool init_settings_menu(menu_t *menu, game_handler_t *game_h)
         {0, 0, 0, 0}, (sfVector2f){500, 600}, game_h), &min_win));
     push_back(menu->boutons, set_buttons(set_img(T_ARR_R, (sfIntRect)
         {0, 0, 0, 0}, (sfVector2f){1300, 600}, game_h), &max_win));
-    push_back(menu->boutons, set_buttons(set_img(T_B_EXIT, (sfIntRect)
+    push_back(menu->boutons, set_buttons(set_img(T_B_BACK, (sfIntRect)
         {0, 0, 0, 0}, (sfVector2f){650, 850}, game_h), &escape_set));
     menu->boutons->tail->next = menu->boutons->head;
     menu->boutons->head->prev = menu->boutons->tail;
@@ -95,9 +95,11 @@ bool init_pause_menu(menu_t *menu, game_handler_t *game_h)
     if (menu == NULL)
         return false;
     push_back(menu->boutons, set_buttons(set_img(T_B_SETTINGS, (sfIntRect)
-        {0, 0, 0, 0}, (sfVector2f){650, 400}, game_h), &go_to_settings));
+        {0, 0, 0, 0}, (sfVector2f){650, 500}, game_h), &go_to_settings));
+    push_back(menu->boutons, set_buttons(set_img(T_B_BACK, (sfIntRect)
+        {0, 0, 0, 0}, (sfVector2f){650, 650}, game_h), &back_to_game));
     push_back(menu->boutons, set_buttons(set_img(T_B_EXIT, (sfIntRect)
-        {0, 0, 0, 0}, (sfVector2f){650, 750}, game_h), &exit_game));
+        {0, 0, 0, 0}, (sfVector2f){650, 800}, game_h), &exit_game));
     menu->boutons->tail->next = menu->boutons->head;
     menu->boutons->head->prev = menu->boutons->tail;
     menu->actual_bouton = menu->boutons->head;

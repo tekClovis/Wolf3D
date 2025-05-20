@@ -58,10 +58,9 @@ bool init_player(game_handler_t *g_h)
     g_h->game->ent->player->inventory = init_inventory(g_h);
     if (g_h->game->ent->player->inventory == NULL)
         return false;
-    g_h->game->ent->player->life = 100;
     if (!load_from_file(g_h, "life.bin",
-        &g_h->game->ent->player->life, sizeof(int)))
-        g_h->game->ent->player->life = 100;
+        &g_h->game->ent->player->property->life, sizeof(int)))
+        g_h->game->ent->player->property->life = 100;
     return true;
 }
 
@@ -72,8 +71,10 @@ ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_SS,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
-    ennemi->life = 100;
-    ennemi->speed = WALK + 25;
+    ennemi->property->life = 100;
+    ennemi->property->speed = WALK + 25;
+    ennemi->clock_touch = init_clock();
+    ennemi->clock_shoot = init_clock();
     //ennemi->gun_shot = &pistol_gun;
     return ennemi;
 }
@@ -85,8 +86,10 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){-0.3, 0.3}, ID_MUTANT
         , set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
-    ennemi->life = 150;
-    ennemi->speed = RUN;
+    ennemi->property->life = 150;
+    ennemi->property->speed = RUN;
+    ennemi->clock_touch = init_clock();
+    ennemi->clock_shoot = init_clock();
     //ennemi->gun_shot = &assault_gun;
     return ennemi;
 }
@@ -98,8 +101,10 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){-0.4, 0.4}, ID_BRUT,
         set_img(T_BRUT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_sound = init_clock();
-    ennemi->life = 200;
-    ennemi->speed = WALK - 25;
+    ennemi->property->life = 200;
+    ennemi->property->speed = WALK - 25;
+    ennemi->clock_touch = init_clock();
+    ennemi->clock_shoot = init_clock();
     /*ennemi->gun_shot = &mini_gun; fairre un rand() % dist pour
     la dispersion des balles*/
     return ennemi;

@@ -26,9 +26,3 @@ int choose_window_mode(game_handler_t *game_handler)
 {
     return tab_func[game_handler->screen_mode].funct(game_handler);
 }
-
-void check_back_to_menu(game_handler_t *handler)
-{
-    if (sfKeyboard_isKeyPressed(sfKeyEscape) || check_square() == true)
-        handler->screen->win = 0;
-}

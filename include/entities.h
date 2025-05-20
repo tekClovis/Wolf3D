@@ -23,6 +23,10 @@
     #define W_ID_GUN 1
     #define W_ID_SHOTGUN 2
     #define W_ID_MINIGUN 3
+    #define D_KNIFE 50
+    #define D_GUN 15
+    #define D_SHOTGUN 20
+    #define D_MINIGUN 2
     #define NB_GUN 4
 
 typedef struct game_s game_t;
@@ -37,6 +41,7 @@ typedef struct entities_s {
     float angle;
     double distance;
     int speed;
+    int life;
     int id;
     sfVector2f dir;
     sfVector2f plan;
@@ -49,6 +54,7 @@ typedef struct gun_s {
     int (*gun_shot)(game_t *, entities_t *);
     sfSound *shoot_so;
     img_t *img;
+    char *save_file;
 } gun_t;
 
 typedef struct inventory_s {
@@ -62,16 +68,15 @@ typedef struct inventory_s {
 typedef struct player_s {
     entities_t *property;
     inventory_t *inventory;
-    int life;
     time_management_t clock_sound;
 }player_t;
 
 typedef struct ennemies_s {
     entities_t *property;
-    int (*gun_shot)(list_t *, player_t *, ennemies_t *);
-    int speed;
-    int life;
+    int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
     time_management_t clock_sound;
+    time_management_t clock_shoot;
+    time_management_t clock_touch;
 }ennemies_t;
 
 typedef struct object_s {
@@ -86,4 +91,10 @@ typedef struct entities_handler_s {
     list_t *entities;
 }entities_handler_t;
 
+bool launch_e_shoot(ennemies_t *en, float millisec_to_wait,
+    game_handler_t *g_h, size_t token_sound);
+bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
+    game_handler_t *g_h, size_t token_sound);
+ennemies_t *search_entity(list_t *ennemies, player_t *player,
+    game_handler_t *g_h);
 #endif //ENTITIES_H
