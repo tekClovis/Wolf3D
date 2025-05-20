@@ -16,7 +16,7 @@ void exit_game(game_handler_t *game_handler)
 void go_to_home(game_handler_t *g_h)
 {
     g_h->screen->act_menu = M_START;
-    //free(g_h->game)
+    free_game(g_h);
     g_h->game = NULL;
 }
 

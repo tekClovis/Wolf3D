@@ -20,17 +20,6 @@ void free_img(img_t *img)
     free(img);
 }
 
-//static
-//void free_player(player_t *player)
-//{
-    //    free_entities(&player->property);
-//}
-//static
-//void free_entity(entities_handler_t *entities)
-//{
-    //    free_player(&entities->player);
-//}
-
 static
 void free_time_manage(time_management_t *time_manage)
 {
