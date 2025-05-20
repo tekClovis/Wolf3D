@@ -14,6 +14,7 @@ bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
         sfTime_asMilliseconds(inv->clock_shoot.time);
     if (inv->clock_shoot.time_as_mili < millisec_to_wait)
         return false;
+    g_h->game->hud->anim = true;
     sfClock_restart(inv->clock_shoot.clock);
     sfSound_play(get_sound(g_h->sound, token_sound));
     return true;

@@ -11,7 +11,7 @@ static
 bool init_folder(game_handler_t *game)
 {
     if (access("./save_f", F_OK) < 0)
-        if (mkdir("./save", 0755) < 0)
+        if (mkdir("./save_f", 0755) < 0)
             perror("mkdir fail:");
     if (access(game->game->actual_save, F_OK) < 0)
         if (mkdir(game->game->actual_save, 0755) < 0)

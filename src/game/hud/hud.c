@@ -48,9 +48,8 @@ static void check_anim_gun(game_handler_t *g_h)
 {
     inventory_t *inv = g_h->game->ent->player->inventory;
 
-    if (g_h->game->hud->anim){
+    if (g_h->game->hud->anim)
         TAB_ANIM[inv->actual_gun].func(g_h, inv->gun[inv->actual_gun]);
-    }
 }
 
 void update_assets(hud_t *hud, game_handler_t *g_h)
@@ -70,23 +69,24 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
         hud->weapon_two_d[actual_gun]->sprite, NULL);
 }
 
+static
+void draw_unlock_w(hud_t *hud, game_handler_t *g_h)
+{
+    return;
+    for (int i = 0; i < g_h->game->ent->player->inventory->nb_of_gun; i++)
+}
+
 void draw_hud(hud_t *hud, game_handler_t *g_h)
 {
     inventory_t *inv = g_h->game->ent->player->inventory;
 
-    if (sfKeyboard_isKeyPressed(sfKeyA)) {
-        g_h->game->score.score++;
-        g_h->game->ent->player->property->life--;
-        g_h->game->ent->player->inventory->actual_gun++;
-        if (g_h->game->ent->player->inventory->actual_gun > 3)
-            g_h->game->ent->player->inventory->actual_gun = 0;
-    }
     check_anim_gun(g_h);
     sfRenderWindow_drawSprite(g_h->screen->win,
         inv->gun[inv->actual_gun]->img->sprite, NULL);
     sfRenderWindow_drawSprite(g_h->screen->win, hud->bg_player_info->sprite,
         NULL);
     update_assets(hud, g_h);
+    draw_unlock_w(hud, g_h);
     sfRenderWindow_drawText(g_h->screen->win, hud->score, NULL);
     sfRenderWindow_drawText(g_h->screen->win, hud->time, NULL);
     sfRenderWindow_drawText(g_h->screen->win, hud->magazine, NULL);
