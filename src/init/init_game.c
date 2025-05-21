@@ -89,13 +89,14 @@ bool init_hud(game_handler_t *g_h)
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){0, window_size.y - (170.0f * scale_y)}, g_h);
-    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h, scale_x,
-        scale_y, window_size);
-    g_h->game->hud->actual_weapon =
-    g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
-    init_text_base_hud(g_h, scale_x, scale_y, window_size);
-    scale_hud(g_h->game->hud, scale_x, scale_y);
+        (sfVector2f){0, 910}, g_h);
+        g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
+        g_h->game->hud->actual_weapon =
+        g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
+    init_text_base_hud(g_h);
+    scale_hud(g_h->game->hud);
+    g_h->game->hud->y_move = (sfVector2f){950.0, 970.0};
+    g_h->game->hud->to_move = 2.0;
     g_h->game->hud->animation = sfClock_create();
     g_h->game->hud->anim = false;
     return true;

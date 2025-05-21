@@ -61,6 +61,8 @@ typedef struct hud_s {
     sfText *ammo;
     sfText *score;
     sfText *life;
+    sfVector2f y_move;
+    float to_move;
     img_t *actual_weapon;
     sfClock *animation;
     bool anim;
