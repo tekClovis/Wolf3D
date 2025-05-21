@@ -33,8 +33,11 @@ ennemies_t *search_entity(list_t *ennemies, player_t *player,
     while (!IS_WALL(g_h->game->level.map[g_h->game->level.actual_level]
         [(int)floor(tmp.y)][(int)floor(tmp.x)])){
         touch = verif_touch(ennemies, tmp);
-        if (touch)
+        printf("bullet x:%f y: %f\n", tmp.x,tmp.y);
+        if (touch){
+            printf("ent x:%f y: %f\n", tmp.x,tmp.y);
             break;
+        }
         tmp = (sfVector2f){player->property->dir.x / 10 + tmp.x,
             player->property->dir.y / 10 + tmp.y};
     }
