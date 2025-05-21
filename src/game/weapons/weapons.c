@@ -27,7 +27,6 @@ int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 {
     ennemies_t *entities_touch = NULL;
 
-    g_h->game->hud->anim = true;
     if (shooter == NULL && !launch_p_shoot(player->inventory, 700.0, g_h,
         SO_KNIFE))
         return 0;
@@ -45,7 +44,6 @@ int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 {
     ennemies_t *entities_touch = NULL;
 
-    g_h->game->hud->anim = true;
     if (shooter == NULL && !launch_p_shoot(player->inventory, 700.0, g_h,
         SO_GUN))
         return 0;
@@ -63,8 +61,7 @@ int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 {
     ennemies_t *entities_touch = NULL;
 
-    g_h->game->hud->anim = true;
-    if (shooter == NULL && !launch_p_shoot(player->inventory, 700.0, g_h,
+    if (shooter == NULL && !launch_p_shoot(player->inventory, 1100.0, g_h,
         SO_SHOTGUN))
         return 0;
     if (shooter == NULL)
@@ -78,11 +75,10 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 {
     ennemies_t *entities_touch = NULL;
 
-    g_h->game->hud->anim = true;
     if (shooter == NULL && !launch_p_shoot(player->inventory, 100.0, g_h,
         SO_GUN))
         return 0;
-    if (shooter != NULL && !launch_e_shoot(shooter, 10.0, g_h,
+    if (shooter != NULL && !launch_e_shoot(shooter, 100.0, g_h,
         SO_GUN))
         return 0;
     if (shooter == NULL)

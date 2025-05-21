@@ -108,4 +108,5 @@ int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
     game_handler_t *g_h);
 int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
     game_handler_t *g_h);
+void handle_player_shooting(game_handler_t *g_h);
 #endif //ENTITIES_H

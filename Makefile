@@ -56,6 +56,7 @@ SRC+= src/game/weapons/animate_weapons.c
 SRC += src/init/init_ray_buffer.c
 SRC += src/game/draw_screen.c
 SRC += src/game/draw_sprite/draw_sprite.c
+SRC += src/game/weapons/handle_player_shooting.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -50,7 +50,7 @@ gun_t *init_shotgun(game_handler_t *g_h)
 
     if (shotgun == NULL)
         return NULL;
-    shotgun->img = set_img(T_3D_SHOTGUN, (sfIntRect){0, 0, 275, 275},
+    shotgun->img = set_img(T_3D_SHOTGUN, (sfIntRect){0, 0, 466, 412},
         (sfVector2f){990, 600}, g_h);
     sfSprite_setScale(shotgun->img->sprite, (sfVector2f){1.5, 1.5});
     shotgun->save_file = strdup("shotgun_ammo.bin");

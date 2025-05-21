@@ -19,7 +19,7 @@ typedef struct score_s {
 
 typedef struct anim_s {
     void(*func)(game_handler_t *, gun_t *);
-} anim_t;   
+} anim_t;
 
 /*Draw sprite permet de mettre en relation le z buffer
 contenu dans la strut de ray casting et de calculer
