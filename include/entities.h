@@ -12,7 +12,10 @@
     #include "utils.h"
     #include "my.h"
     #define ID_WALL 1
-    #define ID_PLAYER ID_WALL + 1
+    #define ID_WALL_FLAG_ARCH ID_WALL + 1
+    #define ID_WALL_BRICK ID_WALL_FLAG_ARCH + 1
+    #define ID_WALL_BRICK2 ID_WALL_BRICK + 1
+    #define ID_PLAYER ID_WALL_BRICK2 + 1
     #define ID_SS ID_PLAYER + 1
     #define ID_MUTANT ID_SS + 1
     #define ID_BRUT ID_MUTANT + 1
