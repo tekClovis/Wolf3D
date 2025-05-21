@@ -20,7 +20,7 @@ entities_t *init_entities(sfVector2f coord, sfVector2f h_b, size_t id,
     entities->id = id;
     entities->angle = 0;
     entities->speed = WALK;
-    entities->coord = (sfVector2f){coord.x - 0.5, coord.y};
+    entities->coord = (sfVector2f){coord.x + 0.5, coord.y + 0.5};
     entities->hb_2d = h_b;
     entities->clock = init_clock();
     entities->dir = (sfVector2f){-1.0, 0.0};
@@ -78,6 +78,7 @@ ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property->speed = WALK + 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
+    ennemi->anim = 0;
     ennemi->gun_shot = &gun_shoot;
     return ennemi;
 }
@@ -91,9 +92,10 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->clock_sound = init_clock();
     ennemi->property->life = 150;
     ennemi->property->speed = RUN;
-    ennemi->clock_touch = init_clock();
     ennemi->is_shooting = false;
+    ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
+    ennemi->anim = 0;
     ennemi->gun_shot = &gun_shoot;
     return ennemi;
 }
@@ -110,6 +112,7 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
     ennemi->is_shooting = false;
+    ennemi->anim = 0;
     ennemi->gun_shot = &minigun_shoot;
     return ennemi;
 }

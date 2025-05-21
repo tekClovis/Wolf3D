@@ -13,6 +13,8 @@ ennemies_t *verif_touch(list_t *ennemies, sfVector2f bullet)
 
     for (node_t *cur = ennemies->head; cur; cur = cur->next){
         act = cur->data;
+        if (act->property->life < 0)
+            continue;
         if ((act->property->coord.x + act->property->hb_2d.x) > bullet.x &&
             (act->property->coord.x - act->property->hb_2d.x) < bullet.x &&
             (act->property->coord.y + act->property->hb_2d.y) > bullet.y &&
@@ -26,16 +28,13 @@ ennemies_t *search_entity(list_t *ennemies, player_t *player,
     game_handler_t *g_h)
 {
     ennemies_t *touch = NULL;
-    sfVector2f tmp = (sfVector2f){player->property->dir.x / 10
-        + player->property->coord.x, player->property->dir.y / 10
-        + player->property->coord.y};
+    sfVector2f tmp = (sfVector2f){player->property->coord.x,
+        player->property->coord.y};
 
     while (!IS_WALL(g_h->game->level.map[g_h->game->level.actual_level]
         [(int)floor(tmp.y)][(int)floor(tmp.x)])){
         touch = verif_touch(ennemies, tmp);
-        printf("bullet x:%f y: %f\n", tmp.x,tmp.y);
         if (touch){
-            printf("ent x:%f y: %f\n", tmp.x,tmp.y);
             break;
         }
         tmp = (sfVector2f){player->property->dir.x / 10 + tmp.x,

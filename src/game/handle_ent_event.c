@@ -66,6 +66,42 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
         ennemi->property->img->rect);
 }
 
+static
+bool death_anim(ennemies_t *ennemie)
+{
+    if (ennemie->property->life < 0){
+        if (ennemie->clock_touch.time.microseconds / 1000.0 < 250.0)
+            return false;
+        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
+            width * 5 && ennemie->property->id == ID_SS)
+            ennemie->property->img->rect.left +=
+                ennemie->property->img->rect.width;
+        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
+            width * 6 && ennemie->property->id == ID_MUTANT)
+            ennemie->property->img->rect.left +=
+                ennemie->property->img->rect.width;
+        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
+            width * 3 && ennemie->property->id == ID_BRUT)
+            ennemie->property->img->rect.left +=
+                ennemie->property->img->rect.width;
+        sfClock_restart(ennemie->clock_touch.clock);
+        return false;
+    }
+    return true;
+}
+
+static
+bool restart_anim(ennemies_t *ennemie)
+{
+    ennemie->clock_touch.time =
+        sfClock_getElapsedTime(ennemie->clock_touch.clock);
+    if (!death_anim(ennemie))
+        return false;
+    if (ennemie->clock_touch.time.microseconds / 1000.0 < 200.0)
+        return false;
+    return true;
+}
+
 //actual node set at the second node because the first is the player
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
 {
@@ -73,7 +109,7 @@ void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
     player_t *player = ent->player;
 
     for (; actual; actual = actual->next){
-        if (((ennemies_t *)actual->data)->property->life < 0)
+        if (!restart_anim(actual->data))
             continue;
         //detect_player(actual->data, player);
         if (((ennemies_t *)actual->data)->is_shooting){
