@@ -35,7 +35,6 @@ void get_text_pixel(ray_cast_t *ray_cast, entities_t *player)
 /*
 ** prend un sfcolor et le place dans un buffer aplatie 1D
 */
-static
 void put_color_in_buffer(sfUint8 *array_pixel,
     sfColor new_pixel, int index_storage)
 {

@@ -46,6 +46,9 @@ typedef struct draw_sprite_s {
     int sprite_screen_x;
     sfVector2f draw_start;
     sfVector2f draw_end;
+    int sprite_width;
+    int sprite_height;
+    int tex_x;
 } draw_sprite_t;
 
 
