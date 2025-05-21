@@ -29,6 +29,9 @@
     #define S_GAME 2
     #define WINM_FSCREEN 0
     #define WINM_BIG 1
+    #define RST_CLOCK 0
+    #define LET_CLOCK 1
+
 int wolf3d(void);
 /*
 ** Entitie handler

@@ -6,10 +6,6 @@
 */
 
 #include "game.h"
-
-
-#define RST_CLOCK 0
-#define LET_CLOCK 1
 /*
 return the time of clock
 in millisecond

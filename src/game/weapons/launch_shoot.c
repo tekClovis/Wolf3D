@@ -10,7 +10,8 @@ bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound)
 {
     inv->clock_shoot.time = sfClock_getElapsedTime(inv->clock_shoot.clock);
-    inv->clock_shoot.time_as_mili = sfTime_asMilliseconds(inv->clock_shoot.time);
+    inv->clock_shoot.time_as_mili =
+        sfTime_asMilliseconds(inv->clock_shoot.time);
     if (inv->clock_shoot.time_as_mili < millisec_to_wait)
         return false;
     g_h->game->hud->anim = true;
