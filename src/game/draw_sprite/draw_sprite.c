@@ -138,7 +138,6 @@ void draw_sprite(game_handler_t *game, sfRenderWindow *window)
 {
     node_t *node = (node_t *)game->game->ent->entities->head;
     entities_t *player = game->game->ent->player->property;
-
     /*sort_sprite(game->game->ent->entities->head)*/
     draw_lkd_sprite(node, player, window, &game->ray_cast);
     return;
