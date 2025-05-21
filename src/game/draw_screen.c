@@ -12,6 +12,6 @@
 void draw_screen(game_handler_t *game)
 {
     draw_wall(&game->ray_cast, game->screen->win);
-    draw_sprite(game, game->screen->win);
+    //draw_sprite(game, game->screen->win);
     draw_hud(game->game->hud, game);
 }

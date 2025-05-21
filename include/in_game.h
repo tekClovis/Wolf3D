@@ -21,6 +21,32 @@ typedef struct anim_s {
     void(*func)(game_handler_t *, gun_t *);
 } anim_t;
 
+/*Draw sprite permet de mettre en relation le z buffer
+contenu dans la strut de ray casting et de calculer
+comment draw chaque sprite.
+------
+sprite coord correspond a la position relatif de l
+entité par rapport au repert joueur
+------
+inv_mat calcul de la matrice inverse pour calculé 
+transform X et Y
+------
+Transform X correspond a la postion lateral 
+en rapport avec la camera
+Transform Y permet de déterminer si le sprite et 
+derriere ou devant le sprite
+-----
+sprite_screen_x calcul ou on draw le sprite
+0 < sprite_screen_x < 1920
+*/
+typedef struct draw_sprite_s {
+    sfVector2f sprite_coord;
+    double inv_mat;
+    sfVector2f transform;
+    int sprite_screen_x;
+} draw_sprite_t;
+
+
 //weapon 2 d fois 4 img_t
 typedef struct hud_s {
     img_t *bg_player_info;

@@ -82,6 +82,6 @@ void fill_line(ray_cast_t *ray_cast, int x, tab_texture_t **tab_texture);
 void get_text_pixel(ray_cast_t *ray_cast, entities_t *player);
 
 /*Draw buffer how contain screen*/
-int draw_screen(ray_cast_t *ray_cast, sfRenderWindow *window);
+int draw_wall(ray_cast_t *ray_cast, sfRenderWindow *window);
 
 #endif //RAY_CASTING_H
