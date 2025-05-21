@@ -6,6 +6,7 @@
 */
 #include "game.h"
 #include "ray_casting.h"
+#include "utils.h"
 
 void prep_dda(ray_cast_t *ray_cast, entities_t *player)
 {
@@ -44,7 +45,7 @@ void execute_dda(ray_cast_t *ray_cast, int map[20][20])
         ray_cast->map_y += ray_cast->step_y;
         ray_cast->side = 1;
         }
-        if (map[ray_cast->map_x][ray_cast->map_y] > 0)
+        if ((IS_WALL(map[ray_cast->map_x][ray_cast->map_y])) == true)
             ray_cast->hit = 1;
         }
     ray_cast->texture = map[ray_cast->map_x][ray_cast->map_y];
