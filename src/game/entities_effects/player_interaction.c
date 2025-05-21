@@ -20,12 +20,12 @@ sfInt32 get_milisc_clock(time_management_t *time_manage, int restart)
     time_manage->time_as_milli_sc = sfTime_asMilliseconds(time_manage->time);
     if (restart == RST_CLOCK)
         sfClock_restart(time_manage->clock);
-    return time_manage->time_as_mili;
+    return time_manage->time_as_milli_sc;
 }
 
 void player_interaction(entities_t *player, sfEvent *event)
 {
     sfInt32 time = get_milisc_clock(&player->clock, RST_CLOCK);
 
-    new_rotate_player(player, 0.3, time, event);
+    new_rotate_player(player, 0.003, time, event);
 }

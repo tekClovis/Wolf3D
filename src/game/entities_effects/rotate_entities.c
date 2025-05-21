@@ -9,7 +9,7 @@
 #include "ray_casting.h"
 
 static
-void rotate_left(entities_t *player, float rot_speed)
+void rotate_right(entities_t *player, float rot_speed)
 {
     float old_dir_x = 0;
     float old_plane_x = 0;
@@ -28,7 +28,7 @@ void rotate_left(entities_t *player, float rot_speed)
 }
 
 static
-void rotate_right(entities_t *player, float rot_speed)
+void rotate_left(entities_t *player, float rot_speed)
 {
     float old_dir_x = 0;
     float old_plane_x = 0;
