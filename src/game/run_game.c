@@ -46,16 +46,19 @@ void new_moove_left(entities_t *entities)
 }
 
 static
-void new_moove_player(entities_t *player, sfEvent *event)
+void new_moove_player(player_t *player, hud_t *hud)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ))
-        new_moove_up(player);
+    if (sfKeyboard_isKeyPressed(sfKeyZ)){
+        new_moove_up(player->property);
+        player->inventory->gun[player->inventory->actual_gun]->img->pos.y
+        += hud->to_move;
+    }
     if (sfKeyboard_isKeyPressed(sfKeyS))
-        new_moove_down(player);
+        new_moove_down(player->property);
     if (sfKeyboard_isKeyPressed(sfKeyQ))
-        new_moove_left(player);
+        new_moove_left(player->property);
     if (sfKeyboard_isKeyPressed(sfKeyD))
-        new_moove_right(player);
+        new_moove_right(player->property);
 }
 
 int run_game(game_handler_t *g_h)
@@ -63,7 +66,7 @@ int run_game(game_handler_t *g_h)
     handle_ent_event(g_h, g_h->game->ent);
     handle_player_shooting(g_h);
     player_interaction(g_h->game->ent->player->property, NULL);
-    new_moove_player(g_h->game->ent->player->property, g_h->event);
+    new_moove_player(g_h->game->ent->player, g_h->game->hud);
     execute_ray(g_h, g_h->game->ent->player->property);
     draw_screen(g_h);
     return 0;
