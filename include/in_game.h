@@ -72,6 +72,7 @@ typedef struct game_s {
     hud_t *hud;
     score_t score;
     sfMusic *game_music;
+    sfClock *clock_game;
     char *actual_save;
 } game_t;
 
