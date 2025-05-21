@@ -9,7 +9,7 @@
 #include "call_csfml.h"
 
 tab_texture_t const TAB_TEXTURE[] = {
-    {NULL, NULL, WALL_IRON, "./img/wall/brickstone2.png"},
+    {NULL, NULL, WALL_IRON, "./img/wall/brickstone.png"},
     {NULL, NULL, WALL_FLAG_ARCH, "./img/wall/flag_wall_arch.png"},
     {NULL, NULL, WALL_BRICK, "./img/wall/brickstone.png"},
     {NULL, NULL, WALL_BRICK2, "./img/wall/libdoor.png"},

@@ -44,6 +44,8 @@ typedef struct draw_sprite_s {
     double inv_mat;
     sfVector2f transform;
     int sprite_screen_x;
+    sfVector2f draw_start;
+    sfVector2f draw_end;
 } draw_sprite_t;
 
 
