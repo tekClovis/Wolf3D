@@ -18,19 +18,22 @@ camera determiner pas la vecteur direction du joueur
 */
 bool fill_draw_ent(draw_sprite_t *draw_ent, entities_t *entities, entities_t *player)
 {
+    double det = 0;
     draw_ent->sprite_coord.x = entities->coord.x - player->coord.x;
     draw_ent->sprite_coord.y = entities->coord.y - player->coord.y;
-    draw_ent->inv_mat = 1.0f / 
-        (player->plan.x * player->dir.y - player->dir.x * player->plan.y);
+    det = (player->plan.x * player->dir.y - player->dir.x * player->plan.y);
+    if (det == 0)
+        return false;
+    draw_ent->inv_mat = 1.0f / det;
     draw_ent->transform.x = draw_ent->inv_mat * 
         (player->dir.y * draw_ent->sprite_coord.x -
         player->dir.x * draw_ent->sprite_coord.y);
     draw_ent->transform.y = draw_ent->inv_mat *
         (-player->plan.y * draw_ent->sprite_coord.x +
         player->plan.x * draw_ent->sprite_coord.y);
+    draw_ent->sprite_screen_x = (int)((WIDTH / 2) * (1 + draw_ent->transform.x / draw_ent->transform.y));
     if (draw_ent->transform.y > 0)
             return true;
-    draw_ent->sprite_screen_x = (int)((WIDTH / 2) * (1 + draw_ent->transform.x / draw_ent->transform.y));
    return false;
 }
 
@@ -67,9 +70,13 @@ void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ra
     for (int y = draw_ent->draw_start.y; y < draw_ent->draw_end.y; y++){
         texture_pos_y_scaled = y * 256 - HEIGHT * 128 + draw_ent->sprite_height * 128;
         tex_y = ((texture_pos_y_scaled * 64) / draw_ent->sprite_height) / 256;
-        pixel = sfImage_getPixel(entities->img->img, tex_y, draw_ent->tex_x);
-        put_color_in_buffer(ray_cast->pixels, pixel, index);
+        tex_y = (tex_y > 63) ? 63 : tex_y;
+        tex_y = (tex_y < 0) ? 0 : tex_y;
+        draw_ent->tex_x = (draw_ent->tex_x > 63) ? 63 : draw_ent->tex_x;
+        draw_ent->tex_x = (draw_ent->tex_x < 0) ? 0 : draw_ent->tex_x;
+        pixel = sfImage_getPixel(entities->img->img, draw_ent->tex_x, tex_y);
         index = (y * 1920 + x) * 4;
+        put_color_in_buffer(ray_cast->pixels, pixel, index);
     }
 }
 
