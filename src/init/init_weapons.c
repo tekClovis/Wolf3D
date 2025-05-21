@@ -8,7 +8,7 @@
 #include "game.h"
 #include "string.h"
 
-gun_t *init_knife(game_handler_t *g_h)
+gun_t *init_knife(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *knife = malloc(sizeof(gun_t));
 
@@ -25,7 +25,7 @@ gun_t *init_knife(game_handler_t *g_h)
     return knife;
 }
 
-gun_t *init_gun(game_handler_t *g_h)
+gun_t *init_gun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *gun = malloc(sizeof(gun_t));
 
@@ -48,7 +48,7 @@ gun_t *init_gun(game_handler_t *g_h)
     return gun;
 }
 
-gun_t *init_shotgun(game_handler_t *g_h)
+gun_t *init_shotgun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *shotgun = malloc(sizeof(gun_t));
 
@@ -72,7 +72,7 @@ gun_t *init_shotgun(game_handler_t *g_h)
     return shotgun;
 }
 
-gun_t *init_minigun(game_handler_t *g_h)
+gun_t *init_minigun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *minigun = malloc(sizeof(gun_t));
 
@@ -99,12 +99,14 @@ gun_t *init_minigun(game_handler_t *g_h)
 gun_t **init_weapons(game_handler_t *g_h)
 {
     gun_t **guns = malloc(sizeof(gun_t *) * NB_GUN);
+    sfVector2u window_size = sfRenderWindow_getSize(g_h->screen->win);
+    float scale_y = window_size.y / WINDOW_SIZE_y;
 
     if (guns == NULL)
         return NULL;
-    guns[W_ID_KNIFE] = init_knife(g_h);
-    guns[W_ID_GUN] = init_gun(g_h);
-    guns[W_ID_SHOTGUN] = init_shotgun(g_h);
-    guns[W_ID_MINIGUN] = init_minigun(g_h);
+    guns[W_ID_KNIFE] = init_knife(g_h, scale_y, window_size);
+    guns[W_ID_GUN] = init_gun(g_h, scale_y, window_size);
+    guns[W_ID_SHOTGUN] = init_shotgun(g_h, scale_y, window_size);
+    guns[W_ID_MINIGUN] = init_minigun(g_h, scale_y, window_size);
     return guns;
 }

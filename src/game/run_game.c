@@ -63,6 +63,8 @@ void new_moove_player(player_t *player, hud_t *hud)
 
 int run_game(game_handler_t *g_h)
 {
+    if (!g_h->game->clock_game)
+        g_h->game->clock_game = sfClock_create();
     handle_ent_event(g_h, g_h->game->ent);
     handle_player_shooting(g_h);
     player_interaction(g_h->game->ent->player->property, NULL);
