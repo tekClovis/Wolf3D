@@ -26,5 +26,6 @@ bool load_map(game_handler_t *g_h);
 bool parsing_map(game_handler_t *g_h);
 bool init_game(game_handler_t *g_h, char *save_dir);
 bool init_ray_buffer(ray_cast_t *ray_cast);
+bool init_hud(game_handler_t *g_h);
 
 #endif //INIT_H
