@@ -67,24 +67,28 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 }
 
 static
+void death_choice(ennemies_t *ennemie, int width_max)
+{
+    if (ennemie->property->img->rect.left <
+        ennemie->property->img->rect.width * width_max){
+        ennemie->property->img->rect.left +=
+            ennemie->property->img->rect.width;
+        sfClock_restart(ennemie->clock_touch.clock);
+    }
+}
+
+static
 bool death_anim(ennemies_t *ennemie)
 {
     if (ennemie->property->life < 0){
         if (ennemie->clock_touch.time.microseconds / 1000.0 < 250.0)
             return false;
-        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
-            width * 5 && ennemie->property->id == ID_SS)
-            ennemie->property->img->rect.left +=
-                ennemie->property->img->rect.width;
-        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
-            width * 6 && ennemie->property->id == ID_MUTANT)
-            ennemie->property->img->rect.left +=
-                ennemie->property->img->rect.width;
-        if (ennemie->property->img->rect.left < ennemie->property->img->rect.
-            width * 3 && ennemie->property->id == ID_BRUT)
-            ennemie->property->img->rect.left +=
-                ennemie->property->img->rect.width;
-        sfClock_restart(ennemie->clock_touch.clock);
+        if (ennemie->property->id == ID_SS)
+            death_choice(ennemie, 5);
+        if (ennemie->property->id == ID_MUTANT)
+            death_choice(ennemie, 6);
+        if (ennemie->property->id == ID_BRUT)
+            death_choice(ennemie, 3);
         return false;
     }
     return true;
