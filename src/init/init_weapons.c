@@ -16,7 +16,7 @@ gun_t *init_knife(game_handler_t *g_h)
         (sfVector2f){630, 270}, g_h);
     sfSprite_setScale(knife->img->sprite, (sfVector2f){10, 10});
     knife->ammo = 0;
-    knife->mag_cap = 10;
+    knife->mag_cap = 0;
     knife->magazine = knife->mag_cap;
     knife->shoot_so = get_sound(g_h->sound, SO_KNIFE);
     knife->gun_shot = &knife_shoot;

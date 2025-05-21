@@ -7,6 +7,7 @@
 
 #include "game.h"
 #include "ray_casting.h"
+#include "entities.h"
 
 /*
 static
