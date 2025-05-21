@@ -99,7 +99,10 @@ void check_back_to_menu(game_handler_t *handler);
 void draw_hud(hud_t *hud, game_handler_t *g_h);
 
 /*Draw sprite*/
-int draw_sprite(game_handler_t *game);
+void draw_sprite(game_handler_t *game, sfRenderWindow *window);
+
+/*Call all draw funct*/
+void draw_screen(game_handler_t *game);
 
 /*get*/
 sfVector2f get_coord(sfVector2f coord_window);
