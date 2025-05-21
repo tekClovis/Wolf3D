@@ -52,11 +52,36 @@ void get_size_ent(draw_sprite_t *draw_ent)
     draw_ent->draw_end.x = sprite_width / 2 + draw_ent->sprite_screen_x;
     if(draw_ent->draw_end.x >= WIDTH) 
         draw_ent->draw_end.x = WIDTH - 1;
+    draw_ent->sprite_width;
+    draw_ent->sprite_height;
 }
 
-void draw_one_ent(entities_t *entities, draw_sprite_t *draw_ent)
+void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray_cast, int x)
 {
+    int texture_pos_y_scaled = 0;
+    int tex_y = 0;
+    sfColor pixel = {0};
+    int index = 0;
+
+    for (int y = draw_ent->draw_start.y; y < draw_ent->draw_end.y; y++){
+        texture_pos_y_scaled = y * 256 - HEIGHT * 128 + draw_ent->sprite_height * 128;
+        tex_y = ((texture_pos_y_scaled * 64) / draw_ent->sprite_height) / 256;
+        pixel = sfImage_getPixel(entities->img->img, tex_y, draw_ent->tex_x);
+        put_color_in_buffer(ray_cast->pixels, pixel, index);
+        index = (y * 1920 + x) * 4;
+    }
+}
+
+void draw_one_ent(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray_cast)
+{
+    draw_ent->tex_x = 0;
+
     get_size_ent(draw_ent);
+    for (int line = draw_ent->draw_start.x; line < draw_ent->draw_end.x; line++){
+        draw_ent->tex_x = (int)(256 * (line - (-draw_ent->sprite_width / 2 + draw_ent->sprite_screen_x)) * 64 / draw_ent->sprite_width) / 256;
+      if (draw_ent->transform.y > 0 && line > 0 && line < WIDTH && draw_ent->transform.y < ray_cast->z_buffer[line])
+        fill_ent_yray(entities, draw_ent, ray_cast, line);
+      }
 }
 
 /*
@@ -65,7 +90,7 @@ en commencant par la head et en suivant les nexts
 -----
 draw sprite me permet d' effectuer tous les calcul
 */
-void draw_lkd_sprite(node_t *node, entities_t *player, sfRenderWindow *window, double buffer_z[WIDTH])
+void draw_lkd_sprite(node_t *node, entities_t *player, sfRenderWindow *window, ray_cast_t *ray_cast)
 {
     entities_t *entitie = NULL;
     draw_sprite_t draw_ent = {0};
@@ -74,9 +99,9 @@ void draw_lkd_sprite(node_t *node, entities_t *player, sfRenderWindow *window, d
         return;
     entitie = (entities_t *)node->data;
     if (fill_draw_ent(&draw_ent, entitie, player) == false)
-        return draw_lkd_sprite(node->next, player, window, buffer_z);
-    draw_one_ent(entitie, &draw_ent);
-    return draw_lkd_sprite(node->next, player, window, buffer_z);
+        return draw_lkd_sprite(node->next, player, window, ray_cast);
+    draw_one_ent(entitie, &draw_ent, ray_cast);
+    return draw_lkd_sprite(node->next, player, window, ray_cast);
 }
 
 /*permet d' afficher tous les sprite
@@ -88,8 +113,8 @@ void draw_sprite(game_handler_t *game, sfRenderWindow *window)
 {
     node_t *node = (node_t *)game->game->ent->entities->head;
     entities_t *player = game->game->ent->player->property;
-    
+    memset(game->ray_cast.pixels, 0, 1920 * 1080 * 4);
     /*sort_sprite(game->game->ent->entities->head)*/
-    draw_lkd_sprite(node, player, window, game->ray_cast.z_buffer);
+    draw_lkd_sprite(node, player, window, &game->ray_cast);
     return;
 }
