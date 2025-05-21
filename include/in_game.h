@@ -28,12 +28,12 @@ comment draw chaque sprite.
 sprite coord correspond a la position relatif de l
 entité par rapport au repert joueur
 ------
-inv_mat calcul de la matrice inverse pour calculé 
+inv_mat calcul de la matrice inverse pour calculé
 transform X et Y
 ------
-Transform X correspond a la postion lateral 
+Transform X correspond a la postion lateral
 en rapport avec la camera
-Transform Y permet de déterminer si le sprite et 
+Transform Y permet de déterminer si le sprite et
 derriere ou devant le sprite
 -----
 sprite_screen_x calcul ou on draw le sprite

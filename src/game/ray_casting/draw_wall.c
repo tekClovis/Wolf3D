@@ -16,4 +16,3 @@ int draw_wall(ray_cast_t *ray_cast, sfRenderWindow *window)
     sfRenderWindow_drawSprite(window, ray_cast->sprite_screen, NULL);
     return 0;
 }
-
