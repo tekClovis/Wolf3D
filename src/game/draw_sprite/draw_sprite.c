@@ -62,6 +62,10 @@ void get_size_ent(draw_sprite_t *draw_ent)
     draw_ent->sprite_height = sprite_height;
 }
 
+/*
+simulation de float avec
+virgule fix 8 bit
+*/
 void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent,
     ray_cast_t *ray_cast, int x)
 {

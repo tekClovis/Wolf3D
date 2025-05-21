@@ -8,12 +8,17 @@
 #include "game.h"
 #include "ray_casting.h"
 
+void convert_vector_to_deg(entities_t *ent)
+{
+    ent->angle = (atan2(ent->dir.y, ent->dir.x)) * 180.0f / M_PI;
+}
+
+
 static
 void rotate_right(entities_t *player, float rot_speed)
 {
     float old_dir_x = 0;
     float old_plane_x = 0;
-
 
     old_dir_x = player->dir.x;
     player->dir.x = player->dir.x * cos(-rot_speed) -
@@ -25,6 +30,7 @@ void rotate_right(entities_t *player, float rot_speed)
     - player->plan.y * sin(-rot_speed);
     player->plan.y = old_plane_x * sin(-rot_speed) + player->plan.y
     * cos(-rot_speed);
+    convert_vector_to_deg(player);
 }
 
 static
@@ -43,6 +49,7 @@ void rotate_left(entities_t *player, float rot_speed)
     - player->plan.y * sin(rot_speed);
     player->plan.y = old_plane_x * sin(rot_speed)
     + player->plan.y * cos(rot_speed);
+    convert_vector_to_deg(player);
 }
 
 void new_rotate_player(entities_t *player, float rot_speed, sfInt32 time, sfEvent *event)
