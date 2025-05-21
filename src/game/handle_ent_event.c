@@ -29,15 +29,21 @@ float get_relative_angle(entities_t *player, entities_t *ennemies)
     sfVector2f position_v = {player->coord.x - ennemies->coord.x,
         player->coord.y - ennemies->coord.y};
     double rad_angle = ennemies->angle * (M_PI / 180.0);
-    sfVector2f angle_v = {cos(rad_angle), sin(rad_angle)};
-    float scalaire = angle_v.x * position_v.x + angle_v.y * position_v.y;
-    float magA = sqrt(position_v.x * position_v.x +
+    sfVector2f angle_v = {cosf(rad_angle), sinf(rad_angle)};
+    float scalaire = 0;
+    float cross = 0;
+    float magA = sqrtf(position_v.x * position_v.x +
         position_v.y * position_v.y);
-    float magB = sqrt(angle_v.x * angle_v.x +
-        angle_v.y * angle_v.y);
-    float finalRadians = (scalaire / (magA * magB));
+    float angledeg = 0;
 
-    return finalRadians * (180.0 / M_PI);
+    if (magA == 0)
+        return 0;
+    scalaire = angle_v.x * position_v.x + angle_v.y * position_v.y;
+    cross = angle_v.x * position_v.y - angle_v.y * position_v.x;
+    angledeg = atan2f(cross, scalaire) * (180.0 / M_PI);
+    if (angledeg < 0)
+        return angledeg + 360.0;
+    return angledeg;
 }
 
 void rotate_sprite(player_t *player, ennemies_t *ennemi)
