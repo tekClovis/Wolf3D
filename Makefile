@@ -46,7 +46,7 @@ SRC += src/game/ray_casting/init_ray_casting.c
 SRC += src/game/ray_casting/dda_managment.c
 SRC += src/game/ray_casting/execute_ray.c
 SRC += src/game/ray_casting/wall_text_managment.c
-SRC += src/game/ray_casting/draw_screen.c
+SRC += src/game/ray_casting/draw_wall.c
 SRC += src/game/hud/hud.c
 SRC += src/game/weapons/launch_shoot.c
 SRC += src/game/weapons/search_entity.c
@@ -54,6 +54,8 @@ SRC += src/game/weapons/weapons.c
 SRC += src/game/run_game.c
 SRC+= src/game/weapons/animate_weapons.c
 SRC += src/init/init_ray_buffer.c
+SRC += src/game/draw_screen.c
+SRC += src/game/draw_sprite/draw_sprite.c
 SRC += src/game/weapons/handle_player_shooting.c
 
 OBJ = $(SRC:.c=.o)

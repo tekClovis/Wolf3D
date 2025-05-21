@@ -98,8 +98,14 @@ void free_game(game_handler_t *game_handler);
 void check_back_to_menu(game_handler_t *handler);
 void draw_hud(hud_t *hud, game_handler_t *g_h);
 
+
 /*Draw sprite*/
-int draw_sprite(game_handler_t *game);
+void draw_sprite(game_handler_t *game, sfRenderWindow *window);
+void put_color_in_buffer(sfUint8 *array_pixel,
+    sfColor new_pixel, int index_storage);
+
+/*Call all draw funct*/
+void draw_screen(game_handler_t *game);
 
 /*get*/
 sfVector2f get_coord(sfVector2f coord_window);
