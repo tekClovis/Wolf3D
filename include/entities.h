@@ -78,6 +78,7 @@ typedef struct player_s {
 
 typedef struct ennemies_s {
     bool is_shooting;
+    int anim;
     entities_t *property;
     int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
     time_management_t clock_sound;
