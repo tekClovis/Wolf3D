@@ -16,51 +16,54 @@ de l' entité par rapport a la position du joueur
 renvoie true si l' ennemie est dans la zone vu par le plan
 camera determiner pas la vecteur direction du joueur
 */
-bool fill_draw_ent(draw_sprite_t *draw_ent, entities_t *entities, entities_t *player)
+bool fill_draw_ent(draw_sprite_t *draw_ent, entities_t *entities,
+    entities_t *player)
 {
     double det = 0;
+
     draw_ent->sprite_coord.x = entities->coord.x - player->coord.x;
     draw_ent->sprite_coord.y = entities->coord.y - player->coord.y;
     det = (player->plan.x * player->dir.y - player->dir.x * player->plan.y);
     if (det == 0)
         return false;
     draw_ent->inv_mat = 1.0f / det;
-    draw_ent->transform.x = draw_ent->inv_mat * 
+    draw_ent->transform.x = draw_ent->inv_mat *
         (player->dir.y * draw_ent->sprite_coord.x -
         player->dir.x * draw_ent->sprite_coord.y);
     draw_ent->transform.y = draw_ent->inv_mat *
         (-player->plan.y * draw_ent->sprite_coord.x +
         player->plan.x * draw_ent->sprite_coord.y);
-    draw_ent->sprite_screen_x = (int)((WIDTH / 2) * (1 + draw_ent->transform.x / draw_ent->transform.y));
+    draw_ent->sprite_screen_x = (int)((WIDTH / 2) *
+        (1 + draw_ent->transform.x / draw_ent->transform.y));
     if (draw_ent->transform.y > 0)
             return true;
-   return false;
+    return false;
 }
 
 void get_size_ent(draw_sprite_t *draw_ent)
 {
     int sprite_width = 0;
     int sprite_height = abs((int)(HEIGHT / (draw_ent->transform.y)));
-    
+
     draw_ent->draw_start.y = -sprite_height / 2 + HEIGHT / 2;
     if (draw_ent->draw_start.y < 0)
         draw_ent->draw_start.y = 0;
     draw_ent->draw_end.y = sprite_height / 2 + HEIGHT / 2;
-    if (draw_ent->draw_end.y >= HEIGHT) 
-        draw_ent->draw_end.y  = HEIGHT - 1;
-    sprite_width = abs((int) (HEIGHT / (draw_ent->transform.y)));
-
+    if (draw_ent->draw_end.y >= HEIGHT)
+        draw_ent->draw_end.y = HEIGHT - 1;
+    sprite_width = abs((int)(HEIGHT / (draw_ent->transform.y)));
     draw_ent->draw_start.x = -sprite_width / 2 + draw_ent->sprite_screen_x;
-    if (draw_ent->draw_start.x < 0) 
+    if (draw_ent->draw_start.x < 0)
         draw_ent->draw_start.x = 0;
     draw_ent->draw_end.x = sprite_width / 2 + draw_ent->sprite_screen_x;
-    if(draw_ent->draw_end.x >= WIDTH) 
+    if (draw_ent->draw_end.x >= WIDTH)
         draw_ent->draw_end.x = WIDTH - 1;
     draw_ent->sprite_width = sprite_width;
     draw_ent->sprite_height = sprite_height;
 }
 
-void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray_cast, int x)
+void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent,
+    ray_cast_t *ray_cast, int x)
 {
     int texture_pos_y_scaled = 0;
     int tex_y = 0;
@@ -68,7 +71,8 @@ void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ra
     int index = 0;
 
     for (int y = draw_ent->draw_start.y; y < draw_ent->draw_end.y; y++){
-        texture_pos_y_scaled = y * 256 - HEIGHT * 128 + draw_ent->sprite_height * 128;
+        texture_pos_y_scaled = y * 256 - HEIGHT * 128 +
+            draw_ent->sprite_height * 128;
         tex_y = ((texture_pos_y_scaled * 64) / draw_ent->sprite_height) / 256;
         tex_y = (tex_y > 63) ? 63 : tex_y;
         tex_y = (tex_y < 0) ? 0 : tex_y;
@@ -80,18 +84,21 @@ void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ra
     }
 }
 
-void draw_one_ent(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray_cast)
+void draw_one_ent(entities_t *entities, draw_sprite_t *draw_ent,
+    ray_cast_t *ray_cast)
 {
     draw_ent->tex_x = 0;
-
     get_size_ent(draw_ent);
-    for (int line = draw_ent->draw_start.x; line < draw_ent->draw_end.x; line++){
+    for (int line = draw_ent->draw_start.x; line < draw_ent->draw_end.x;
+        line++){
         if (draw_ent->sprite_width == 0 || draw_ent->sprite_height == 0)
             continue;
-        draw_ent->tex_x = (int)(256 * (line - (-draw_ent->sprite_width / 2 + draw_ent->sprite_screen_x)) * 64 / draw_ent->sprite_width) / 256;
-        if (draw_ent->transform.y > 0 && line > 0 && line < WIDTH && draw_ent->transform.y < ray_cast->z_buffer[line])
+        draw_ent->tex_x = (int)(256 * (line - (-draw_ent->sprite_width / 2 +
+            draw_ent->sprite_screen_x)) * 64 / draw_ent->sprite_width) / 256;
+        if (draw_ent->transform.y > 0 && line > 0 && line < WIDTH &&
+            draw_ent->transform.y < ray_cast->z_buffer[line])
             fill_ent_yray(entities, draw_ent, ray_cast, line);
-      }
+    }
 }
 
 /*
@@ -100,7 +107,8 @@ en commencant par la head et en suivant les nexts
 -----
 draw sprite me permet d' effectuer tous les calcul
 */
-void draw_lkd_sprite(node_t *node, entities_t *player, sfRenderWindow *window, ray_cast_t *ray_cast)
+static void draw_lkd_sprite(node_t *node, entities_t *player,
+    sfRenderWindow *window, ray_cast_t *ray_cast)
 {
     entities_t *entitie = NULL;
     draw_sprite_t draw_ent = {0};
