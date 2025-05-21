@@ -8,6 +8,7 @@
 #include "game.h"
 #include "in_game.h"
 #include "ray_casting.h"
+#include <string.h>
 
 /*
 effectue plusieur calul pour déterminer la position
@@ -52,8 +53,8 @@ void get_size_ent(draw_sprite_t *draw_ent)
     draw_ent->draw_end.x = sprite_width / 2 + draw_ent->sprite_screen_x;
     if(draw_ent->draw_end.x >= WIDTH) 
         draw_ent->draw_end.x = WIDTH - 1;
-    draw_ent->sprite_width;
-    draw_ent->sprite_height;
+    draw_ent->sprite_width = sprite_width;
+    draw_ent->sprite_height = sprite_height;
 }
 
 void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray_cast, int x)
@@ -78,9 +79,11 @@ void draw_one_ent(entities_t *entities, draw_sprite_t *draw_ent, ray_cast_t *ray
 
     get_size_ent(draw_ent);
     for (int line = draw_ent->draw_start.x; line < draw_ent->draw_end.x; line++){
+        if (draw_ent->sprite_width == 0 || draw_ent->sprite_height == 0)
+            continue;
         draw_ent->tex_x = (int)(256 * (line - (-draw_ent->sprite_width / 2 + draw_ent->sprite_screen_x)) * 64 / draw_ent->sprite_width) / 256;
-      if (draw_ent->transform.y > 0 && line > 0 && line < WIDTH && draw_ent->transform.y < ray_cast->z_buffer[line])
-        fill_ent_yray(entities, draw_ent, ray_cast, line);
+        if (draw_ent->transform.y > 0 && line > 0 && line < WIDTH && draw_ent->transform.y < ray_cast->z_buffer[line])
+            fill_ent_yray(entities, draw_ent, ray_cast, line);
       }
 }
 
@@ -113,6 +116,7 @@ void draw_sprite(game_handler_t *game, sfRenderWindow *window)
 {
     node_t *node = (node_t *)game->game->ent->entities->head;
     entities_t *player = game->game->ent->player->property;
+
     memset(game->ray_cast.pixels, 0, 1920 * 1080 * 4);
     /*sort_sprite(game->game->ent->entities->head)*/
     draw_lkd_sprite(node, player, window, &game->ray_cast);
