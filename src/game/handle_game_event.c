@@ -23,6 +23,29 @@ void check_w_switch(game_handler_t *g_h, player_t *player)
 }
 
 static
+void check_reload(game_handler_t *g_h, inventory_t *inv)
+{
+    int to_refill = inv->gun[inv->actual_gun]->mag_cap -
+        inv->gun[inv->actual_gun]->magazine;
+
+    if ((g_h->event->key.code == sfKeyR &&
+        g_h->event->type == sfEvtKeyPressed) || check_square()){
+        if (inv->gun[inv->actual_gun]->ammo <
+            inv->gun[inv->actual_gun]->mag_cap){
+            inv->gun[inv->actual_gun]->magazine
+            = inv->gun[inv->actual_gun]->ammo;
+            inv->gun[inv->actual_gun]->ammo = 0;
+        }
+        if (inv->gun[inv->actual_gun]->ammo >=
+            inv->gun[inv->actual_gun]->mag_cap){
+            inv->gun[inv->actual_gun]->magazine
+            = inv->gun[inv->actual_gun]->mag_cap;
+            inv->gun[inv->actual_gun]->ammo -= to_refill;
+        }
+    }
+}
+
+static
 void handle_player(game_handler_t *g_h, player_t *player)
 {
     if ((g_h->event->key.code == sfKeySpace &&
@@ -32,7 +55,7 @@ void handle_player(game_handler_t *g_h, player_t *player)
         g_h->event->type == sfEvtKeyReleased) || check_cross())
         player->is_shooting = false;
     check_w_switch(g_h, player);
-    return;
+    check_reload(g_h, player->inventory);
 }
 
 static
