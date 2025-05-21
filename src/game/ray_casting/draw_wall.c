@@ -6,7 +6,8 @@
 */
 #include "ray_casting.h"
 
-int draw_screen(ray_cast_t *ray_cast, sfRenderWindow *window)
+/*Display the buffer of pixel how contain the wall*/
+int draw_wall(ray_cast_t *ray_cast, sfRenderWindow *window)
 {
     sfTexture_updateFromPixels(ray_cast->screen_text,
         ray_cast->pixels, 1920, 1080, 0, 0);
@@ -15,3 +16,4 @@ int draw_screen(ray_cast_t *ray_cast, sfRenderWindow *window)
     sfRenderWindow_drawSprite(window, ray_cast->sprite_screen, NULL);
     return 0;
 }
+
