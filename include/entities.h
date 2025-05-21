@@ -94,6 +94,12 @@ typedef struct entities_handler_s {
     list_t *entities;
 }entities_handler_t;
 
+
+typedef struct angle_sprite_s {
+    sfVector2f angle_interval;
+    int sprite_coef;
+} angle_sprite_t;
+
 bool launch_e_shoot(ennemies_t *en, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
 bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
@@ -109,4 +115,6 @@ int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
     game_handler_t *g_h);
 void handle_player_shooting(game_handler_t *g_h);
+void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent);
+
 #endif //ENTITIES_H
