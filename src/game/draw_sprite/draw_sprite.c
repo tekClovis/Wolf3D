@@ -118,12 +118,14 @@ static void draw_lkd_sprite(node_t *node, entities_t *player,
     entities_t *entitie = NULL;
     draw_sprite_t draw_ent = {0};
 
+    memset(ray_cast->pixels, 0, 1920 * 1080 * 4);
     if (node == NULL)
         return;
     entitie = (entities_t *)node->data;
     if (fill_draw_ent(&draw_ent, entitie, player) == false)
         return draw_lkd_sprite(node->next, player, window, ray_cast);
     draw_one_ent(entitie, &draw_ent, ray_cast);
+    draw_wall(ray_cast, window);
     return draw_lkd_sprite(node->next, player, window, ray_cast);
 }
 
@@ -137,7 +139,6 @@ void draw_sprite(game_handler_t *game, sfRenderWindow *window)
     node_t *node = (node_t *)game->game->ent->entities->head;
     entities_t *player = game->game->ent->player->property;
 
-    memset(game->ray_cast.pixels, 0, 1920 * 1080 * 4);
     /*sort_sprite(game->game->ent->entities->head)*/
     draw_lkd_sprite(node, player, window, &game->ray_cast);
     return;
