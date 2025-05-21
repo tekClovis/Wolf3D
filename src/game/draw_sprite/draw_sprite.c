@@ -78,7 +78,8 @@ void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent,
         tex_y = (tex_y < 0) ? 0 : tex_y;
         draw_ent->tex_x = (draw_ent->tex_x > 63) ? 63 : draw_ent->tex_x;
         draw_ent->tex_x = (draw_ent->tex_x < 0) ? 0 : draw_ent->tex_x;
-        pixel = sfImage_getPixel(entities->img->img, draw_ent->tex_x, tex_y);
+        pixel = sfImage_getPixel(entities->img->img, draw_ent->tex_x +
+            entities->img->rect.left, tex_y + entities->img->rect.top);
         index = (y * 1920 + x) * 4;
         put_color_in_buffer(ray_cast->pixels, pixel, index);
     }

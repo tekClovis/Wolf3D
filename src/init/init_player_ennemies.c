@@ -57,6 +57,7 @@ bool init_player(game_handler_t *g_h)
     g_h->game->ent->player->clock_sound = init_clock();
     g_h->game->ent->player->inventory = init_inventory(g_h);
     g_h->game->ent->player->is_shooting = false;
+    g_h->game->ent->player->property->angle = 0.0;
     if (g_h->game->ent->player->inventory == NULL)
         return false;
     if (!load_from_file(g_h, "life.bin",
@@ -142,7 +143,8 @@ void choose_parsing(game_handler_t *g_h, int x, int y)
             return;
     if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
         ID_PLAYER)
-        g_h->game->ent->player->property->coord = (sfVector2f){x + 1.5, y - 0.5};
+        g_h->game->ent->player->property->coord =
+            (sfVector2f){x + 1.5, y - 0.5};
 }
 
 bool parsing_map(game_handler_t *g_h)

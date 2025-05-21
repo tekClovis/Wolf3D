@@ -7,6 +7,7 @@
 
 #include "game.h"
 #include "ray_casting.h"
+#include "entities.h"
 
 static
 void rotate_left(entities_t *player, float rot_speed)
@@ -107,6 +108,7 @@ void new_moove_player(entities_t *player, sfEvent *event)
 int run_game(game_handler_t *g_h)
 {
     handle_player_shooting(g_h);
+    handle_ent_event(g_h, g_h->game->ent);
     new_rotate_player(g_h->game->ent->player->property, 0.03);
     new_moove_player(g_h->game->ent->player->property, g_h->event);
     execute_ray(g_h, g_h->game->ent->player->property);
