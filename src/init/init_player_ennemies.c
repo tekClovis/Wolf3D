@@ -20,7 +20,7 @@ entities_t *init_entities(sfVector2f coord, sfVector2f h_b, size_t id,
     entities->id = id;
     entities->angle = 0;
     entities->speed = WALK;
-    entities->coord = coord;
+    entities->coord = (sfVector2f){coord.x - 0.5, coord.y};
     entities->hb_2d = h_b;
     entities->clock = init_clock();
     entities->dir = (sfVector2f){-1.0, 0.0};
@@ -53,7 +53,7 @@ bool init_player(game_handler_t *g_h)
         return false;
     g_h->game->ent->player->property = init_entities((sfVector2f){5, 5},
         (sfVector2f){0.4, 0.4}, ID_PLAYER, set_img(T_P_2D,
-        (sfIntRect){0, 0, 0, 0}, (sfVector2f){-0.3, 0.3}, g_h));
+        (sfIntRect){0, 0, 0, 0}, (sfVector2f){0.3, 0.3}, g_h));
     g_h->game->ent->player->clock_sound = init_clock();
     g_h->game->ent->player->inventory = init_inventory(g_h);
     g_h->game->ent->player->is_shooting = false;
@@ -142,7 +142,7 @@ void choose_parsing(game_handler_t *g_h, int x, int y)
             return;
     if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
         ID_PLAYER)
-        g_h->game->ent->player->property->coord = (sfVector2f){x, y};
+        g_h->game->ent->player->property->coord = (sfVector2f){x + 1.5, y - 0.5};
 }
 
 bool parsing_map(game_handler_t *g_h)
