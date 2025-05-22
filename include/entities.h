@@ -121,5 +121,6 @@ void new_moove_up(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 void new_moove_down(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 void new_moove_left(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 void new_moove_right(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
+bool search_player(game_handler_t *game, entities_t *ennemie);
 
 #endif //ENTITIES_H
