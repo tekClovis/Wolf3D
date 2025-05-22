@@ -54,7 +54,7 @@ void animate_minigun(game_handler_t *g_h, gun_t *gun)
     float second = time.microseconds / 1000.0;
 
     if (second > 100.0 / 2.0) {
-        if (!g_h->game->ent->player->is_shooting &&
+        if ((!g_h->game->ent->player->is_shooting || gun->magazine <= 0) &&
             gun->img->rect.left == gun->img->rect.width * 3)
             g_h->game->hud->anim = false;
         if (gun->img->rect.left == gun->img->rect.width * 3)

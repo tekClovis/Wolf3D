@@ -14,5 +14,5 @@ void handle_player_shooting(game_handler_t *g_h)
     if (player->is_shooting == false)
         return;
     player->inventory->gun[player->inventory->actual_gun]->
-        gun_shot(g_h->game->ent->ennemies, player, NULL, g_h);
+        gun_shot(player, NULL, g_h);
 }
