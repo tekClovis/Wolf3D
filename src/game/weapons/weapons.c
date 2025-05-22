@@ -17,13 +17,12 @@ void decrease_life(game_handler_t *g_h, ennemies_t *ent, size_t damage,
         g_h->game->ent->player->property->life -= damage;
         return;
     }
-    if (ent == NULL)
+    if (ent == NULL || ent->property->life < 0)
         return;
     manage_ennemi_touch(ent, damage, g_h);
 }
 
-int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -31,13 +30,12 @@ int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_KNIFE))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
+        entities_touch = shoot_ray(g_h, player->property);
     decrease_life(g_h, entities_touch, D_KNIFE, shooter);
     return 0;
 }
 
-int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int gun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -48,13 +46,12 @@ int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_GUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
+        entities_touch = shoot_ray(g_h, player->property);
     decrease_life(g_h, entities_touch, D_GUN, shooter);
     return 0;
 }
 
-int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -62,13 +59,12 @@ int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_SHOTGUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
+        entities_touch = shoot_ray(g_h, player->property);
     decrease_life(g_h, entities_touch, D_SHOTGUN, shooter);
     return 0;
 }
 
-int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int minigun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -79,7 +75,7 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_GUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
+        entities_touch = shoot_ray(g_h, player->property);
     decrease_life(g_h, entities_touch, D_MINIGUN, shooter);
     return 0;
 }

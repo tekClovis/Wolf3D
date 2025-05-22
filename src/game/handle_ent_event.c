@@ -119,7 +119,7 @@ void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
         if (((ennemies_t *)actual->data)->is_shooting){
             aim_player(player, actual->data);
             ((ennemies_t *)actual->data)->
-                gun_shot(ent->ennemies, player, actual->data, game_handler);
+                gun_shot(player, actual->data, game_handler);
             continue;
         }
         //move_ennemies(actual->data);

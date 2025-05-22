@@ -55,7 +55,7 @@ typedef struct gun_s {
     int ammo;
     int magazine;
     int mag_cap;
-    int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
+    int (*gun_shot)(player_t *, ennemies_t *, game_handler_t *);
     sfSound *shoot_so;
     img_t *img;
     char *save_file;
@@ -80,7 +80,7 @@ typedef struct ennemies_s {
     bool is_shooting;
     int anim;
     entities_t *property;
-    int (*gun_shot)(list_t *, player_t *, ennemies_t *, game_handler_t *);
+    int (*gun_shot)(player_t *, ennemies_t *, game_handler_t *);
     time_management_t clock_sound;
     time_management_t clock_shoot;
     time_management_t clock_touch;
@@ -110,14 +110,10 @@ bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
 ennemies_t *search_entity(list_t *ennemies, player_t *player,
     game_handler_t *g_h);
-int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
-int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
-int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
-int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
+int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
+int gun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
+int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
+int minigun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 void handle_player_shooting(game_handler_t *g_h);
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent);
 void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h);
