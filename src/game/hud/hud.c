@@ -38,10 +38,24 @@ static void set_catint_in_text(int value, sfText *text, char *str)
     sfText_setString(text, buffer);
 }
 
+int get_clocktime(sfClock *clock)
+{
+    sfTime time = sfClock_getElapsedTime(clock);
+    float seconds = sfTime_asSeconds(time);
+
+    return (int)seconds;
+}
+
 static void check_anim_gun(game_handler_t *g_h)
 {
     inventory_t *inv = g_h->game->ent->player->inventory;
 
+    if (inv->gun[inv->actual_gun]->img->pos.y < g_h->game->hud->y_move.x)
+        g_h->game->hud->to_move = 2.0;
+    if (inv->gun[inv->actual_gun]->img->pos.y > g_h->game->hud->y_move.y)
+        g_h->game->hud->to_move = -2.0;
+    sfSprite_setPosition(inv->gun[inv->actual_gun]->img->sprite,
+        inv->gun[inv->actual_gun]->img->pos);
     if (g_h->game->hud->anim)
         TAB_ANIM[inv->actual_gun].func(g_h, inv->gun[inv->actual_gun]);
 }
@@ -57,7 +71,7 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
     hud->ammo);
     set_int_in_text(game->ent->player->inventory->gun[actual_gun]->magazine,
     hud->magazine);
-    set_catint_in_text(g_h->general_clock.time_as_second,
+    set_catint_in_text(get_clocktime(g_h->game->clock_game),
         hud->time, "Time : ");
     sfRenderWindow_drawSprite(g_h->screen->win,
         hud->weapon_two_d[actual_gun]->sprite, NULL);

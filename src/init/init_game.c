@@ -26,20 +26,21 @@ score_t init_score(game_handler_t *g_h)
 }
 
 static
-img_t **init_weapons_two_d(game_handler_t *g_h)
+img_t **init_weapons_two_d(game_handler_t *g_h, float scale_x, float scale_y,
+    sfVector2u window_size)
 {
     img_t **wp_two_d = malloc(sizeof(img_t *) * NB_GUN);
 
     if (wp_two_d == NULL)
         return NULL;
     wp_two_d[0] = set_img(T_2D_KNIFE, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1620, 855}, g_h);
+        , (sfVector2f){1620 * scale_x, window_size.y - (225 * scale_y)}, g_h);
     wp_two_d[1] = set_img(T_2D_GUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1640, 868}, g_h);
+        , (sfVector2f){1640 * scale_x, window_size.y - (212 * scale_y)}, g_h);
     wp_two_d[2] = set_img(T_2D_SHOTGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1605, 920}, g_h);
+        , (sfVector2f){1605 * scale_x, window_size.y - (160 * scale_y)}, g_h);
     wp_two_d[3] = set_img(T_2D_MINIGUN, (sfIntRect){0, 0, 0, 0}
-        , (sfVector2f){1580, 920}, g_h);
+        , (sfVector2f){1580 * scale_x, window_size.y - (160 * scale_y)}, g_h);
     sfSprite_setScale(wp_two_d[0]->sprite, (sfVector2f){11.5, 11.5});
     sfSprite_setScale(wp_two_d[1]->sprite, (sfVector2f){11.5, 11.5});
     sfSprite_setScale(wp_two_d[2]->sprite, (sfVector2f){8, 8});
@@ -49,48 +50,60 @@ img_t **init_weapons_two_d(game_handler_t *g_h)
     return wp_two_d;
 }
 
-void scale_hud(hud_t *hud)
+void scale_hud(hud_t *hud, float scale_x, float scale_y)
 {
     sfSprite_setScale(hud->bg_player_info->sprite, (sfVector2f){9, 5.5});
-    sfText_setScale(hud->life, (sfVector2f){1.5, 1.5});
-    sfText_setScale(hud->score, (sfVector2f){1.5, 1.5});
-    sfText_setScale(hud->magazine, (sfVector2f){1.5, 1.5});
-    sfText_setScale(hud->ammo, (sfVector2f){1.5, 1.5});
-    sfText_setScale(hud->score, (sfVector2f){0.75, 0.75});
-    sfText_setScale(hud->time, (sfVector2f){0.75, 0.75});
-}
-
-void init_text_base_hud(game_handler_t *g_h)
-{
-    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(255, 255, 255),
-        (sfVector2f){1040, 990}, "6");
-    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(255, 0, 0),
-            (sfVector2f){670, 970}, "0");
-    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){50, 90}, "0.0");
-    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){30, 30}, "0");
-    g_h->game->hud->ammo = set_txt(80, sfColor_fromRGB(105, 105, 105),
-        (sfVector2f){230, 970}, "6");
+    sfText_setScale(hud->life, (sfVector2f){1.5 * scale_x, 1.5 * scale_y});
+    sfText_setScale(hud->score, (sfVector2f){1.5 * scale_x, 1.5 * scale_y});
+    sfText_setScale(hud->magazine, (sfVector2f){1.5 * scale_x, 1.5 * scale_y});
+    sfText_setScale(hud->ammo, (sfVector2f){1.5 * scale_x, 1.5 * scale_y});
+    sfText_setScale(hud->score, (sfVector2f){0.75 * scale_x, 0.75 * scale_y});
+    sfText_setScale(hud->time, (sfVector2f){0.75 * scale_x, 0.75 * scale_y});
 }
 
 static
+void init_text_base_hud(game_handler_t *g_h, float scale_x, float scale_y,
+    sfVector2u window_size)
+{
+    g_h->game->hud->magazine = set_txt(80, sfColor_fromRGB(255, 255, 255),
+        (sfVector2f){1040 * scale_x, window_size.y - (90 * scale_y)}, "6");
+    g_h->game->hud->life = set_txt(80, sfColor_fromRGB(255, 0, 0),
+            (sfVector2f){670 * scale_x, window_size.y - (110 * scale_y)}, "0");
+    g_h->game->hud->time = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){50 * scale_x, 90 * scale_y}, "0.0");
+    g_h->game->hud->score = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){30 * scale_x, 30 * scale_y}, "0");
+    g_h->game->hud->ammo = set_txt(80, sfColor_fromRGB(105, 105, 105),
+        (sfVector2f){230 * scale_x, window_size.y - (110 * scale_y)}, "6");
+}
+
+static
+void init_w_anim(game_handler_t *g_h)
+{
+    g_h->game->hud->y_move = (sfVector2f){950.0, 970.0};
+    g_h->game->hud->to_move = 2.0;
+    g_h->game->hud->animation = sfClock_create();
+    g_h->game->hud->anim = false;
+}
+
 bool init_hud(game_handler_t *g_h)
 {
     player_t *player = g_h->game->ent->player;
+    sfVector2u window_size = sfRenderWindow_getSize(g_h->screen->win);
+    float scale_x = (float)window_size.x / (float)WINDOW_SIZE_X;
+    float scale_y = (float)window_size.y / (float)WINDOW_SIZE_y;
 
     g_h->game->hud = malloc(sizeof(hud_t));
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
         (sfVector2f){0, 910}, g_h);
-        g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h);
-        g_h->game->hud->actual_weapon =
-        g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
-    init_text_base_hud(g_h);
-    scale_hud(g_h->game->hud);
-    g_h->game->hud->animation = sfClock_create();
-    g_h->game->hud->anim = false;
+    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h,
+        scale_x, scale_y, window_size);
+    g_h->game->hud->actual_weapon =
+    g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
+    init_text_base_hud(g_h, scale_x, scale_y, window_size);
+    scale_hud(g_h->game->hud, scale_x, scale_y);
     return true;
 }
 
@@ -116,6 +129,7 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     if (g_h->game == NULL)
         return false;
     g_h->game->ent = init_handler();
+    g_h->game->clock_game = NULL;
     g_h->game->actual_save = strdup(save_dir);
     g_h->game->score = init_score(g_h);
     if (g_h->game->ent == NULL)

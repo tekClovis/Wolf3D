@@ -32,13 +32,12 @@ ennemies_t *search_entity(list_t *ennemies, player_t *player,
         player->property->coord.y};
 
     while (!IS_WALL(g_h->game->level.map[g_h->game->level.actual_level]
-        [(int)floor(tmp.y)][(int)floor(tmp.x)])){
+        [(int)fabs(tmp.y)][(int)fabs(tmp.x)])){
         touch = verif_touch(ennemies, tmp);
-        if (touch){
+        if (touch)
             break;
-        }
-        tmp = (sfVector2f){player->property->dir.x / 10 + tmp.x,
-            player->property->dir.y / 10 + tmp.y};
+        tmp = (sfVector2f){player->property->dir.x / 20 + tmp.x,
+            player->property->dir.y / 20 + tmp.y};
     }
     return touch;
 }

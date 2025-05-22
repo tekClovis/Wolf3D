@@ -8,12 +8,14 @@
 #include "game.h"
 #include "string.h"
 
-gun_t *init_knife(game_handler_t *g_h)
+gun_t *init_knife(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *knife = malloc(sizeof(gun_t));
 
     knife->img = set_img(T_3D_KNIFE, (sfIntRect){1, 0, 64, 64},
-        (sfVector2f){630, 270}, g_h);
+        (sfVector2f){630, 950}, g_h);
+    sfSprite_setOrigin(knife->img->sprite, (sfVector2f){0,
+        knife->img->rect.height});
     sfSprite_setScale(knife->img->sprite, (sfVector2f){10, 10});
     knife->ammo = 0;
     knife->mag_cap = 0;
@@ -23,14 +25,16 @@ gun_t *init_knife(game_handler_t *g_h)
     return knife;
 }
 
-gun_t *init_gun(game_handler_t *g_h)
+gun_t *init_gun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *gun = malloc(sizeof(gun_t));
 
     if (gun == NULL)
         return NULL;
     gun->img = set_img(T_3D_GUN, (sfIntRect){1, 0, 64, 64},
-        (sfVector2f){690, 270}, g_h);
+        (sfVector2f){690, 950}, g_h);
+    sfSprite_setOrigin(gun->img->sprite, (sfVector2f){0,
+        gun->img->rect.height});
     sfSprite_setScale(gun->img->sprite, (sfVector2f){10, 10});
     gun->save_file = strdup("gun_ammo.bin");
     if (gun->save_file == NULL || gun->img == NULL)
@@ -44,15 +48,17 @@ gun_t *init_gun(game_handler_t *g_h)
     return gun;
 }
 
-gun_t *init_shotgun(game_handler_t *g_h)
+gun_t *init_shotgun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *shotgun = malloc(sizeof(gun_t));
 
     if (shotgun == NULL)
         return NULL;
     shotgun->img = set_img(T_3D_SHOTGUN, (sfIntRect){0, 0, 466, 412},
-        (sfVector2f){990, 600}, g_h);
-    sfSprite_setScale(shotgun->img->sprite, (sfVector2f){1.5, 1.5});
+        (sfVector2f){990, 950}, g_h);
+    sfSprite_setOrigin(shotgun->img->sprite, (sfVector2f){0,
+        shotgun->img->rect.height});
+    sfSprite_setScale(shotgun->img->sprite, (sfVector2f){1, 1});
     shotgun->save_file = strdup("shotgun_ammo.bin");
     if (shotgun->save_file == NULL || shotgun->img == NULL)
         return NULL;
@@ -66,14 +72,16 @@ gun_t *init_shotgun(game_handler_t *g_h)
     return shotgun;
 }
 
-gun_t *init_minigun(game_handler_t *g_h)
+gun_t *init_minigun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
 {
     gun_t *minigun = malloc(sizeof(gun_t));
 
     if (minigun == NULL)
         return NULL;
     minigun->img = set_img(T_3D_MINIGUN, (sfIntRect){80, 0, 80, 75},
-        (sfVector2f){825, 550}, g_h);
+        (sfVector2f){825, 950}, g_h);
+    sfSprite_setOrigin(minigun->img->sprite, (sfVector2f){0,
+        minigun->img->rect.height});
     sfSprite_setScale(minigun->img->sprite, (sfVector2f){5, 5});
     minigun->save_file = strdup("minigun_ammo.bin");
     if (minigun->save_file == NULL || minigun->img == NULL)
@@ -91,12 +99,14 @@ gun_t *init_minigun(game_handler_t *g_h)
 gun_t **init_weapons(game_handler_t *g_h)
 {
     gun_t **guns = malloc(sizeof(gun_t *) * NB_GUN);
+    sfVector2u window_size = sfRenderWindow_getSize(g_h->screen->win);
+    float scale_y = window_size.y / WINDOW_SIZE_y;
 
     if (guns == NULL)
         return NULL;
-    guns[W_ID_KNIFE] = init_knife(g_h);
-    guns[W_ID_GUN] = init_gun(g_h);
-    guns[W_ID_SHOTGUN] = init_shotgun(g_h);
-    guns[W_ID_MINIGUN] = init_minigun(g_h);
+    guns[W_ID_KNIFE] = init_knife(g_h, scale_y, window_size);
+    guns[W_ID_GUN] = init_gun(g_h, scale_y, window_size);
+    guns[W_ID_SHOTGUN] = init_shotgun(g_h, scale_y, window_size);
+    guns[W_ID_MINIGUN] = init_minigun(g_h, scale_y, window_size);
     return guns;
 }

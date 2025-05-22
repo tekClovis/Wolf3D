@@ -61,6 +61,8 @@ typedef struct hud_s {
     sfText *ammo;
     sfText *score;
     sfText *life;
+    sfVector2f y_move;
+    float to_move;
     img_t *actual_weapon;
     sfClock *animation;
     bool anim;
@@ -72,6 +74,7 @@ typedef struct game_s {
     hud_t *hud;
     score_t score;
     sfMusic *game_music;
+    sfClock *clock_game;
     char *actual_save;
 } game_t;
 

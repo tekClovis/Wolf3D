@@ -9,58 +9,17 @@
 #include "my.h"
 #include "entities.h"
 
-
 static
-void anim_little_death(ennemies_t *ent)
-{
-    ent->property->img->rect.top = ent->property->img->rect.height * 5;
-    ent->property->img->rect.left =
-        ent->property->img->rect.width * 2;
-    sfClock_restart(ent->clock_touch.clock);
-}
-
-void anim_big_death(ennemies_t *ent)
-{
-    ent->property->img->rect.top = ent->property->img->rect.height * 2;
-    ent->property->img->rect.left = 0;
-    sfClock_restart(ent->clock_touch.clock);
-}
-
-static
-void manage_ennemi_touch(ennemies_t *ent, size_t damage)
-{
-    ent->property->life -= damage;
-    if (ent->property->life < 0){
-        if (ent->property->id == ID_BRUT)
-            anim_big_death(ent);
-        if (ent->property->id != ID_BRUT)
-            anim_little_death(ent);
-        return;
-    }
-    if (ent->property->id == ID_BRUT)
-        return;
-    ent->clock_touch.time = sfClock_getElapsedTime
-        (ent->clock_touch.clock);
-    if (ent->clock_touch.time.microseconds / 1000.0 > 100.0){
-        ent->property->img->rect.left =
-        ent->property->img->rect.width * ent->anim;
-        ent->anim = (ent->anim + 1) % 2;
-        ent->property->img->rect.top = ent->property->img->rect.height * 5;
-        sfClock_restart(ent->clock_touch.clock);
-    }
-}
-
-static
-void decrease_life(player_t *player, ennemies_t *ent, size_t damage,
+void decrease_life(game_handler_t *g_h, ennemies_t *ent, size_t damage,
     ennemies_t *shooter)
 {
     if (shooter != NULL){
-        player->property->life -= damage;
+        g_h->game->ent->player->property->life -= damage;
         return;
     }
     if (ent == NULL)
         return;
-    manage_ennemi_touch(ent, damage);
+    manage_ennemi_touch(ent, damage, g_h);
 }
 
 int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
@@ -73,7 +32,7 @@ int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         return 0;
     if (shooter == NULL)
         entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_KNIFE, shooter);
+    decrease_life(g_h, entities_touch, D_KNIFE, shooter);
     return 0;
 }
 
@@ -90,7 +49,7 @@ int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         return 0;
     if (shooter == NULL)
         entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_GUN, shooter);
+    decrease_life(g_h, entities_touch, D_GUN, shooter);
     return 0;
 }
 
@@ -104,7 +63,7 @@ int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         return 0;
     if (shooter == NULL)
         entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_SHOTGUN, shooter);
+    decrease_life(g_h, entities_touch, D_SHOTGUN, shooter);
     return 0;
 }
 
@@ -121,6 +80,6 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         return 0;
     if (shooter == NULL)
         entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_MINIGUN, shooter);
+    decrease_life(g_h, entities_touch, D_MINIGUN, shooter);
     return 0;
 }

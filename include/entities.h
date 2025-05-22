@@ -29,7 +29,7 @@
     #define D_KNIFE 50
     #define D_GUN 15
     #define D_SHOTGUN 20
-    #define D_MINIGUN 2
+    #define D_MINIGUN 5
     #define NB_GUN 4
 
 typedef struct game_s game_t;
@@ -120,5 +120,6 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
     game_handler_t *g_h);
 void handle_player_shooting(game_handler_t *g_h);
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent);
+void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h);
 
 #endif //ENTITIES_H
