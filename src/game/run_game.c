@@ -20,7 +20,6 @@ sfInt32 get_milisc_clock(time_management_t time_manage)
 
 int run_game(game_handler_t *g_h)
 {
-    launch_ray(g_h, g_h->game->ent->player->property);
     if (!g_h->game->clock_game)
         g_h->game->clock_game = sfClock_create();
     handle_ent_event(g_h, g_h->game->ent);
