@@ -90,8 +90,6 @@ void new_rotate_player(entities_t *player, float rot_speed,
     sfInt32 time);
 void animate_shgun(game_handler_t *g_h, gun_t *shotgun);
 void animate_gun(game_handler_t *g_h, gun_t *gun);
-int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
 void animate_minigun(game_handler_t *g_h, gun_t *gun);
 
 /*3D*/
