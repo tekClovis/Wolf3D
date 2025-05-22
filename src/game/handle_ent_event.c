@@ -21,7 +21,8 @@ const angle_sprite_t SPRITE_TAB[] = {
 static
 void aim_player(player_t *player, ennemies_t *ennemies)
 {
-    ennemies->property->angle = fmodf(player->property->angle + 180.0, 360.0);
+    ennemies->property->angle =
+    fmodf(player->property->angle + 180.0, 360.0);
 }
 
 float get_relative_angle(entities_t *player, entities_t *ennemies)
@@ -106,6 +107,30 @@ bool restart_anim(ennemies_t *ennemie)
     return true;
 }
 
+static
+void anim_detect(ennemies_t *ent)
+{
+    if (ent->is_shooting == false)
+        return;
+    sfClock_restart(ent->clock_shoot.clock);
+    ent->property->img->rect.top = ent->property->img->rect.height * 6;
+    if (ent->property->id == ID_BRUT)
+        ent->property->img->rect.top = ent->property->img->rect.height;
+}
+
+static
+void detect_player(ennemies_t *ent, game_handler_t *game_handler)
+{
+    if (ent->is_shooting == false){
+        ent->is_shooting = search_player(game_handler,
+            ent->property);
+        if (ent->is_shooting == true)
+            anim_detect(ent);
+    } else
+        ent->is_shooting = search_player(game_handler,
+            ent->property);
+}
+
 //actual node set at the second node because the first is the player
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
 {
@@ -115,7 +140,7 @@ void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
     for (; actual; actual = actual->next){
         if (!restart_anim(actual->data))
             continue;
-        //detect_player(actual->data, player);
+        detect_player(actual->data, game_handler);
         if (((ennemies_t *)actual->data)->is_shooting){
             aim_player(player, actual->data);
             ((ennemies_t *)actual->data)->

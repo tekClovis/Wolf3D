@@ -49,7 +49,7 @@ bool find_the_closer(entities_t *ent,
 
 bool search_player(game_handler_t *game, entities_t *ennemie)
 {
-    int x = WIDTH / 2;
+    int x = 0;
 
     init_ray_cast(&game->ray_cast, ennemie, x);
     prep_dda(&game->ray_cast, ennemie);
