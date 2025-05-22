@@ -121,9 +121,9 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
 void handle_player_shooting(game_handler_t *g_h);
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent);
 void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h);
-void new_moove_up(entities_t *entities, sfInt32 tim_mili);
-void new_moove_down(entities_t *entities, sfInt32 tim_mili);
-void new_moove_left(entities_t *entities, sfInt32 tim_mili);
-void new_moove_right(entities_t *entities, sfInt32 tim_mili);
+void new_moove_up(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
+void new_moove_down(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
+void new_moove_left(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
+void new_moove_right(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 
 #endif //ENTITIES_H
