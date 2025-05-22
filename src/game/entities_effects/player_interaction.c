@@ -23,7 +23,8 @@ sfInt32 get_milisc_clock(time_management_t *time_manage, int restart)
 }
 
 static
-void new_moove_player(player_t *player, hud_t *hud, sfInt32 tim_mili, int map[20][20])
+void new_moove_player(player_t *player, hud_t *hud, sfInt32 tim_mili,
+    int map[20][20])
 {
     if (sfKeyboard_isKeyPressed(sfKeyZ)){
         new_moove_up(player->property, tim_mili, map);
