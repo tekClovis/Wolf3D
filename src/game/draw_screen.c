@@ -8,6 +8,7 @@
 #include "game.h"
 #include "ray_casting.h"
 
+static
 node_t *sort_by_dist(node_t *left, node_t *right)
 {
     node_t *result = NULL;
@@ -30,6 +31,7 @@ node_t *sort_by_dist(node_t *left, node_t *right)
     return result;
 }
 
+static
 node_t *get_pivot(node_t *head)
 {
     node_t *slow = head;
@@ -42,6 +44,7 @@ node_t *get_pivot(node_t *head)
     return slow;
 }
 
+static
 node_t *quick_sort(node_t *head)
 {
     node_t *pivot = NULL;
@@ -49,7 +52,7 @@ node_t *quick_sort(node_t *head)
     node_t *left = NULL;
     node_t *right = NULL;
 
-    if (head  == NULL || head->next == NULL)
+    if (head == NULL || head->next == NULL)
         return head;
     pivot = get_pivot(head);
     next_half = pivot->next;
@@ -59,10 +62,13 @@ node_t *quick_sort(node_t *head)
     return sort_by_dist(left, right);
 }
 
-float find_dist(float x1, float y1, float x2, float y2) {
+static
+float find_dist(float x1, float y1, float x2, float y2)
+{
     return ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+static
 void fill_distance(node_t *node, entities_t *player)
 {
     entities_t *ent = NULL;
@@ -70,15 +76,18 @@ void fill_distance(node_t *node, entities_t *player)
     if (node == NULL)
         return;
     ent = (entities_t *)node->data;
-    ent->distance = find_dist(ent->coord.x, ent->coord.y, player->coord.x, player->coord.y);
+    ent->distance = find_dist(ent->coord.x, ent->coord.y,
+        player->coord.x, player->coord.y);
     return fill_distance(node->next, player);
 }
 
 /*CALL all the function to draw*/
 void draw_screen(game_handler_t *game)
 {
-    fill_distance(game->game->ent->entities->head, game->game->ent->player->property);
-    game->game->ent->entities->head = quick_sort(game->game->ent->entities->head);
+    fill_distance(game->game->ent->entities->head,
+        game->game->ent->player->property);
+    game->game->ent->entities->head =
+        quick_sort(game->game->ent->entities->head);
     draw_wall(&game->ray_cast, game->screen->win);
     draw_sprite(game, game->screen->win);
     draw_hud(game->game->hud, game);
