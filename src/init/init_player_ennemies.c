@@ -97,7 +97,7 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
     ennemi->anim = 0;
-    ennemi->gun_shot = &gun_shoot;
+    ennemi->gun_shot = &assault_shoot;
     return ennemi;
 }
 

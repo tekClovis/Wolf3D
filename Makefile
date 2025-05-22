@@ -63,6 +63,7 @@ SRC += src/game/entities_effects/player_interaction.c
 SRC += src/game/launch_ray.c
 SRC += src/game/weapons/manege_ennemi_touch.c
 SRC += src/game/entities_effects/move_ent.c
+SRC += src/game/weapons/anim_ent_shoot.c
 
 OBJ = $(SRC:.c=.o)
 

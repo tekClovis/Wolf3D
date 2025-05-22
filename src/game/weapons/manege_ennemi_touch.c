@@ -42,6 +42,7 @@ void anim_touch(ennemies_t *ent)
 
 void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h)
 {
+    ent->is_shooting = true;
     ent->property->life -= damage;
     if (ent->property->life < 0){
         if (ent->property->id == ID_BRUT)

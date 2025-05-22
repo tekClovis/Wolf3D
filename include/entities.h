@@ -27,9 +27,10 @@
     #define W_ID_SHOTGUN 2
     #define W_ID_MINIGUN 3
     #define D_KNIFE 50
-    #define D_GUN 15
-    #define D_SHOTGUN 20
-    #define D_MINIGUN 5
+    #define D_GUN 20
+    #define D_SHOTGUN 100
+    #define D_MINIGUN 3
+    #define D_ASSAULT 4
     #define NB_GUN 4
 
 typedef struct game_s game_t;
@@ -114,6 +115,7 @@ int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 int gun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 int minigun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
+int assault_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 void handle_player_shooting(game_handler_t *g_h);
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent);
 void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h);
@@ -123,5 +125,8 @@ void new_moove_left(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 void new_moove_right(entities_t *entities, sfInt32 tim_mili, int map[20][20]);
 bool search_player(game_handler_t *game, entities_t *ennemie);
 ennemies_t *shoot_ray(game_handler_t *game, entities_t *player);
+void anim_shoot_mutant(ennemies_t *ennemi);
+void anim_shoot_ss(ennemies_t *ennemi);
+void anim_shoot_brut(ennemies_t *ennemi);
 
 #endif //ENTITIES_H
