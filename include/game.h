@@ -128,4 +128,6 @@ sfUint8 get_right_stick(void);
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
+/*method ray*/
+entities_t *launch_ray(game_handler_t *game, entities_t *player);
 #endif //GAME_H
