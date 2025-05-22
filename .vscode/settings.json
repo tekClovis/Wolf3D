@@ -17,6 +17,9 @@
         "menu.h": "c",
         "level.h": "c",
         "ray_casting.h": "c",
-        "raointintrin.h": "c"
+        "raointintrin.h": "c",
+        "bitset": "c",
+        "string_view": "c",
+        "regex": "c"
     }
 }

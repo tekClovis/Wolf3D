@@ -79,12 +79,14 @@ typedef struct player_s {
 
 typedef struct ennemies_s {
     bool is_shooting;
+    bool last_frame_shooting;
     int anim;
     entities_t *property;
     int (*gun_shot)(player_t *, ennemies_t *, game_handler_t *);
-    time_management_t clock_sound;
+    time_management_t clock_search;
     time_management_t clock_shoot;
     time_management_t clock_touch;
+    time_management_t clock_move;
 }ennemies_t;
 
 typedef struct object_s {
@@ -128,5 +130,6 @@ ennemies_t *shoot_ray(game_handler_t *game, entities_t *player);
 void anim_shoot_mutant(ennemies_t *ennemi);
 void anim_shoot_ss(ennemies_t *ennemi);
 void anim_shoot_brut(ennemies_t *ennemi);
+void move_ennemies(ennemies_t *ennemies, game_handler_t *g_h);
 
 #endif //ENTITIES_H

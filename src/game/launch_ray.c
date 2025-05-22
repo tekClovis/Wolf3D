@@ -11,10 +11,10 @@ bool is_between_point(sfVector2f entity_pos,
     sfVector2f start_point, sfVector2f end_point)
 {
     float error = 1.0f;
-    float dx1 = end_point.x - start_point.x;
-    float dy1 = end_point.y - start_point.y;
-    float dx2 = entity_pos.x - start_point.x;
-    float dy2 = entity_pos.y - start_point.y;
+    float dx1 = end_point.x - 0.5 - start_point.x;
+    float dy1 = end_point.y - 0.5 - start_point.y;
+    float dx2 = entity_pos.x - 0.5 - start_point.x;
+    float dy2 = entity_pos.y - 0.5 - start_point.y;
     float cross = dx1 * dy2 - dy1 * dx2;
     float dot = 0;
     float len_sq = 0;
@@ -42,14 +42,14 @@ bool find_the_closer(entities_t *ent,
 {
     if (ent == NULL)
         return false;
-    if (is_between_point(ent->coord, player_co, wall_co) == true)
+    if (is_between_point(player_co, ent->coord, wall_co) == true)
         return true;
     return false;
 }
 
 bool search_player(game_handler_t *game, entities_t *ennemie)
 {
-    int x = 0;
+    int x = WIDTH / 2;
 
     init_ray_cast(&game->ray_cast, ennemie, x);
     prep_dda(&game->ray_cast, ennemie);
