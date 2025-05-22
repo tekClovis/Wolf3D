@@ -83,5 +83,6 @@ void get_text_pixel(ray_cast_t *ray_cast, entities_t *player);
 
 /*Draw buffer how contain screen*/
 int draw_wall(ray_cast_t *ray_cast, sfRenderWindow *window);
+void convert_vector_to_deg(entities_t *ent);
 
 #endif //RAY_CASTING_H

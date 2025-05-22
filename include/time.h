@@ -18,4 +18,6 @@ typedef struct time_management_s {
     float time_as_second;
 }time_management_t;
 
+sfInt32 get_milisc_clock(time_management_t *time_manage, int restart);
+
 #endif //TIME_H
