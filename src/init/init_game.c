@@ -102,6 +102,7 @@ bool init_hud(game_handler_t *g_h)
         scale_x, scale_y, window_size);
     g_h->game->hud->actual_weapon =
     g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
+    init_w_anim(g_h);
     init_text_base_hud(g_h, scale_x, scale_y, window_size);
     scale_hud(g_h->game->hud, scale_x, scale_y);
     return true;

@@ -85,11 +85,9 @@ int display_menu(game_handler_t *g_handler);
 int run_game(game_handler_t *g_h);
 
 /*Player*/
-void player_interaction(entities_t *player, sfEvent *event);
-void move_player(player_t *entities);
+void player_interaction(entities_t *player, game_handler_t *g_h);
 void new_rotate_player(entities_t *player, float rot_speed,
-    sfInt32 time, sfEvent *event);
-void manage_player(game_handler_t *game_handler);
+    sfInt32 time);
 void animate_shgun(game_handler_t *g_h, gun_t *shotgun);
 void animate_gun(game_handler_t *g_h, gun_t *gun);
 int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
