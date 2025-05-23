@@ -22,5 +22,4 @@ typedef struct level_s {
     int actual_level;
     int map[3][MAP_HEIGHT][MAP_WIDTH];
 } level_t;
-bool is_wall(int x, int y);
 #endif //MAP_H

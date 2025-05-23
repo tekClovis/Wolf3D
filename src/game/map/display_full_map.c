@@ -6,7 +6,6 @@
 */
 #include "game.h"
 #include "call_csfml.h"
-#include "map.h"
 #include <stdbool.h>
 #include "entities.h"
 

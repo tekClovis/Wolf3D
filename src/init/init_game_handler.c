@@ -25,6 +25,22 @@ sfMusic *init_music(char *file, game_handler_t *g_h)
 }
 
 static
+list_t *init_text_setting(void)
+{
+    list_t *list = list_create();
+
+    if (list == NULL)
+        return NULL;
+    push_back(list, set_txt(80, sfWhite, (sfVector2f){WIDTH / 2, 320},
+        "SOUND"));
+    push_back(list, set_txt(80, sfWhite,
+        (sfVector2f){WIDTH / 2, HEIGHT / 2 - 55}, "MUSIC"));
+    push_back(list, set_txt(80, sfWhite,
+        (sfVector2f){WIDTH / 2, HEIGHT / 2 + 85}, "WINDOW MODE"));
+    return list;
+}
+
+static
 screen_t *init_screen(game_handler_t *game_handler)
 {
     screen_t *screen = malloc(sizeof(screen_t));
@@ -45,6 +61,7 @@ screen_t *init_screen(game_handler_t *game_handler)
     if (!init_end_menu(&screen->menu[M_END], game_handler))
         return free(screen->menu), NULL;
     screen->menu_music = init_music("sound/menu_music.mp3", game_handler);
+    screen->text = init_text_setting();
     return screen;
 }
 

@@ -54,6 +54,7 @@ typedef struct screen_s {
     size_t last_menu;
     sfRenderWindow *win;
     sfVideoMode win_mode;
+    list_t *text;
 } screen_t;
 
 typedef struct game_handler_s {
