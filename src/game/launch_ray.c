@@ -11,10 +11,10 @@ bool is_between_point(sfVector2f entity_pos,
     sfVector2f start_point, sfVector2f end_point)
 {
     float error = 1.0f;
-    float dx1 = end_point.x - 0.5 - start_point.x;
-    float dy1 = end_point.y - 0.5 - start_point.y;
-    float dx2 = entity_pos.x - 0.5 - start_point.x;
-    float dy2 = entity_pos.y - 0.5 - start_point.y;
+    float dx1 = end_point.x - start_point.x;
+    float dy1 = end_point.y - start_point.y;
+    float dx2 = entity_pos.x - start_point.x;
+    float dy2 = entity_pos.y - start_point.y;
     float cross = dx1 * dy2 - dy1 * dx2;
     float dot = 0;
     float len_sq = 0;
@@ -70,7 +70,8 @@ ennemies_t *find_the_closer_en(node_t *node,
     if (node == NULL)
         return NULL;
     ennemi = (ennemies_t *)node->data;
-    if (is_between_point(ennemi->property->coord, player_co, wall_co) == true)
+    if (ennemi->property->life > 0 &&
+        is_between_point(ennemi->property->coord, player_co, wall_co) == true)
         return ennemi;
     return find_the_closer_en(node->next, player_co, wall_co);
 }
