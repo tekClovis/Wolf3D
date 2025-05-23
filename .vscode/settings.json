@@ -21,6 +21,8 @@
         "bitset": "c",
         "string_view": "c",
         "regex": "c",
-        "random": "c"
+        "random": "c",
+        "map": "c",
+        "format": "c"
     }
 }

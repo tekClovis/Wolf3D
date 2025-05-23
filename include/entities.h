@@ -133,5 +133,7 @@ void anim_shoot_mutant(ennemies_t *ennemi);
 void anim_shoot_ss(ennemies_t *ennemi);
 void anim_shoot_brut(ennemies_t *ennemi);
 void move_ennemies(ennemies_t *ennemies, game_handler_t *g_h);
+void rotate_right(entities_t *player, float rot_speed);
+void rotate_left(entities_t *player, float rot_speed);
 
 #endif //ENTITIES_H

@@ -61,12 +61,10 @@ int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
         entities_touch = shoot_ray(g_h, player->property);
     if (entities_touch != NULL){
         dist = sqrtf(
-            powf((player->property->coord.x - 
+            powf((player->property->coord.x -
                 entities_touch->property->coord.x), 2.0) +
             powf((player->property->coord.y -
                 entities_touch->property->coord.y), 2.0));
-        if (dist < 0.0)
-            dist *= -1.0;
         if (dist > 2.0)
             return 0;
     }

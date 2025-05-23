@@ -62,8 +62,6 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 
     if (ennemi->property->id == ID_BRUT)
         return;
-    ennemi->property->img->rect = sfSprite_getTextureRect
-        (ennemi->property->img->sprite);
     angle = get_relative_angle(player->property, ennemi->property);
     if (angle > SPRITE_TAB[0].angle_interval.x ||
         angle < SPRITE_TAB[0].angle_interval.y)
@@ -141,6 +139,7 @@ void detect_player(ennemies_t *ent, game_handler_t *game_handler)
     if (ent->is_shooting == false && ent->last_frame_shooting == true){
         ent->anim = 0;
         ent->property->img->rect.left = 0;
+        ent->property->img->rect.top = 0;
         sfClock_restart(ent->property->clock.clock);
     }
 }
