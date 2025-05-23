@@ -10,14 +10,14 @@ static
 float calc_hb_x(entities_t *entity, entities_t *player)
 {
     return
-    entity->coord.x - (player->dir.y / 250.0) * 25.0 - player->coord.x;
+    entity->coord.x - player->dir.y / 15.0 - player->coord.x;
 }
 
 static
 float calc_hb_y(entities_t *entity, entities_t *player)
 {
     return
-    entity->coord.y + player->dir.x / 250.0 * 25.0 - player->coord.y;
+    entity->coord.y - player->dir.x / 15.0 - player->coord.y;
 }
 
 bool is_between_point(entities_t *entity,
