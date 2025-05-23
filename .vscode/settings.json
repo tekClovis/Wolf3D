@@ -20,6 +20,7 @@
         "raointintrin.h": "c",
         "bitset": "c",
         "string_view": "c",
-        "regex": "c"
+        "regex": "c",
+        "random": "c"
     }
 }

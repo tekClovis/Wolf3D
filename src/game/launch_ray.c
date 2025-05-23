@@ -6,15 +6,28 @@
 */
 #include "game.h"
 
+static
+float calc_hb_x(entities_t *entity, entities_t *player)
+{
+    return
+    entity->coord.x - (player->dir.y / 250.0) * 25.0 - player->coord.x;
+}
 
-bool is_between_point(sfVector2f entity_pos,
-    sfVector2f start_point, sfVector2f end_point)
+static
+float calc_hb_y(entities_t *entity, entities_t *player)
+{
+    return
+    entity->coord.y + player->dir.x / 250.0 * 25.0 - player->coord.y;
+}
+
+bool is_between_point(entities_t *entity,
+    entities_t *player, sfVector2f end_point)
 {
     float error = 1.0f;
-    float dx1 = end_point.x - start_point.x;
-    float dy1 = end_point.y - start_point.y;
-    float dx2 = entity_pos.x - start_point.x;
-    float dy2 = entity_pos.y - start_point.y;
+    float dx1 = end_point.x - player->coord.x;
+    float dy1 = end_point.y - player->coord.y;
+    float dx2 = calc_hb_x(entity, player);
+    float dy2 = calc_hb_y(entity, player);
     float cross = dx1 * dy2 - dy1 * dx2;
     float dot = 0;
     float len_sq = 0;
@@ -38,11 +51,11 @@ on récupere les coords de l' entité dans la node
 */
 static
 bool find_the_closer(entities_t *ent,
-    sfVector2f player_co, sfVector2f wall_co)
+    entities_t *player_ent, sfVector2f wall_co)
 {
     if (ent == NULL)
         return false;
-    if (is_between_point(player_co, ent->coord, wall_co) == true)
+    if (is_between_point(player_ent, ent, wall_co) == true)
         return true;
     return false;
 }
@@ -56,14 +69,14 @@ bool search_player(game_handler_t *game, entities_t *ennemie)
     execute_dda(&game->ray_cast,
         game->game->level.map[game->game->level.actual_level]);
     return find_the_closer(ennemie,
-        game->game->ent->player->property->coord,
+        game->game->ent->player->property,
         (sfVector2f){(float)game->ray_cast.map_x,
         (float)game->ray_cast.map_y});
 }
 
 static
 ennemies_t *find_the_closer_en(node_t *node,
-    sfVector2f player_co, sfVector2f wall_co)
+    entities_t *player_ent, sfVector2f wall_co)
 {
     ennemies_t *ennemi = NULL;
 
@@ -71,9 +84,9 @@ ennemies_t *find_the_closer_en(node_t *node,
         return NULL;
     ennemi = (ennemies_t *)node->data;
     if (ennemi->property->life > 0 &&
-        is_between_point(ennemi->property->coord, player_co, wall_co) == true)
+        is_between_point(ennemi->property, player_ent, wall_co) == true)
         return ennemi;
-    return find_the_closer_en(node->next, player_co, wall_co);
+    return find_the_closer_en(node->next, player_ent, wall_co);
 }
 
 ennemies_t *shoot_ray(game_handler_t *game, entities_t *player)
@@ -85,6 +98,6 @@ ennemies_t *shoot_ray(game_handler_t *game, entities_t *player)
     execute_dda(&game->ray_cast,
         game->game->level.map[game->game->level.actual_level]);
     return find_the_closer_en(game->game->ent->ennemies->head,
-        player->coord, (sfVector2f){(float)game->ray_cast.map_x,
+        player, (sfVector2f){(float)game->ray_cast.map_x,
         (float)game->ray_cast.map_y});
 }

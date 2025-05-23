@@ -77,39 +77,49 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 }
 
 static
-void death_choice(ennemies_t *ennemie, int width_max)
+bool death_choice(node_t *actual, int width_max, game_handler_t *g_h)
 {
+    ennemies_t *ennemie = (ennemies_t *)actual->data;
+
+    if (ennemie->property->img->rect.left >=
+        ennemie->property->img->rect.width * width_max)
+        destroy_nodes(g_h->game->ent->ennemies, actual);
     if (ennemie->property->img->rect.left <
         ennemie->property->img->rect.width * width_max){
         ennemie->property->img->rect.left +=
             ennemie->property->img->rect.width;
         sfClock_restart(ennemie->clock_touch.clock);
     }
+    return false;
 }
 
 static
-bool death_anim(ennemies_t *ennemie)
+bool death_anim(node_t *actual, game_handler_t *g_h)
 {
-    if (ennemie->property->life < 0){
+    ennemies_t *ennemie = (ennemies_t *)actual->data;
+
+    if (ennemie->property->life <= 0){
         if (ennemie->clock_touch.time.microseconds / 1000.0 < 250.0)
             return false;
         if (ennemie->property->id == ID_SS)
-            death_choice(ennemie, 5);
+            return death_choice(actual, 5, g_h);
         if (ennemie->property->id == ID_MUTANT)
-            death_choice(ennemie, 6);
+            return death_choice(actual, 6, g_h);
         if (ennemie->property->id == ID_BRUT)
-            death_choice(ennemie, 3);
+            return death_choice(actual, 3, g_h);
         return false;
     }
     return true;
 }
 
 static
-bool restart_anim(ennemies_t *ennemie)
+bool restart_anim(node_t *actual, game_handler_t *g_h)
 {
+    ennemies_t *ennemie = (ennemies_t *)actual->data;
+
     ennemie->clock_touch.time =
         sfClock_getElapsedTime(ennemie->clock_touch.clock);
-    if (!death_anim(ennemie))
+    if (!death_anim(actual, g_h))
         return false;
     if (ennemie->clock_touch.time.microseconds / 1000.0 < 200.0)
         return false;
@@ -139,10 +149,13 @@ void detect_player(ennemies_t *ent, game_handler_t *game_handler)
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
 {
     node_t *actual = ent->ennemies->head;
+    node_t *next = NULL;
     player_t *player = ent->player;
 
-    for (; actual; actual = actual->next){
-        if (!restart_anim(actual->data))
+    printf("list_size: %d\n", ent->ennemies->size);
+    for (; actual; actual = next){
+        next = actual->next;
+        if (!restart_anim(actual, game_handler))
             continue;
         detect_player(actual->data, game_handler);
         if (((ennemies_t *)actual->data)->is_shooting){

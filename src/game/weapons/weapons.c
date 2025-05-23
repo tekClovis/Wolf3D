@@ -44,7 +44,7 @@ void decrease_life(game_handler_t *g_h, ennemies_t *ent, size_t damage,
         g_h->game->ent->player->property->life -= damage;
         return anim_ent_shoot(shooter);
     }
-    if (ent == NULL || ent->property->life < 0)
+    if (ent == NULL || ent->property->life <= 0)
         return;
     manage_ennemi_touch(ent, damage, g_h);
 }
@@ -90,7 +90,7 @@ int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
         entities_touch = shoot_ray(g_h, player->property);
     if (entities_touch != NULL)
         damage = calc_dist(player, entities_touch, D_SHOTGUN);
-    decrease_life(g_h, entities_touch, damage, shooter);
+    decrease_life(g_h, entities_touch, (int)fabs(damage), shooter);
     return 0;
 }
 
@@ -114,9 +114,6 @@ int assault_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
-    if (shooter == NULL && !launch_p_shoot(player->inventory, 200.0, g_h,
-        SO_ASSAULT))
-        return 0;
     if (shooter != NULL && !launch_e_shoot(shooter, 200.0, g_h,
         SO_ASSAULT))
         return 0;
