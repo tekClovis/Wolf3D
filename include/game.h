@@ -31,7 +31,7 @@
     #define WINM_BIG 1
     #define RST_CLOCK 0
     #define LET_CLOCK 1
-    #define FLOOR 4
+    #define FLOOR 2
     #define CEILING 3
 
 int wolf3d(void);
