@@ -152,7 +152,6 @@ void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
     node_t *next = NULL;
     player_t *player = ent->player;
 
-    printf("list_size: %d\n", ent->ennemies->size);
     for (; actual; actual = next){
         next = actual->next;
         if (!restart_anim(actual, game_handler))

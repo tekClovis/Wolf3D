@@ -6,33 +6,19 @@
 */
 #include "game.h"
 
-static
-float calc_hb_x(entities_t *entity, entities_t *player)
-{
-    return
-    entity->coord.x - player->dir.y / 15.0 - player->coord.x;
-}
-
-static
-float calc_hb_y(entities_t *entity, entities_t *player)
-{
-    return
-    entity->coord.y - player->dir.x / 15.0 - player->coord.y;
-}
-
 bool is_between_point(entities_t *entity,
     entities_t *player, sfVector2f end_point)
 {
-    float error = 1.0f;
+    float error = 1.1f;
     float dx1 = end_point.x - player->coord.x;
     float dy1 = end_point.y - player->coord.y;
-    float dx2 = calc_hb_x(entity, player);
-    float dy2 = calc_hb_y(entity, player);
+    float dx2 = entity->coord.x - player->coord.x;
+    float dy2 = entity->coord.y - player->coord.y;
     float cross = dx1 * dy2 - dy1 * dx2;
     float dot = 0;
     float len_sq = 0;
 
-    if (fabs(cross) > error)
+    if (cross > error)
         return false;
     dot = dx2 * dx1 + dy2 * dy1;
     if (dot < 0)
