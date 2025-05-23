@@ -19,6 +19,9 @@
     #define ID_SS ID_PLAYER + 1
     #define ID_MUTANT ID_SS + 1
     #define ID_BRUT ID_MUTANT + 1
+    #define ID_AMMO ID_BRUT +1
+    #define ID_LIFE ID_AMMO +1
+    #define ID_WEAPON_OBJ ID_LIFE + 1
     #define ID_PLAYER_MOVE 0
     #define ID_ENNEMIE_MOVE 1
     #define ID_OBJECT_MOVE 2
@@ -91,7 +94,7 @@ typedef struct ennemies_s {
 
 typedef struct object_s {
     entities_t *property;
-    int (*effect)(game_handler_t *);
+    void (*effect)(game_handler_t *, node_t *);
 }object_t;
 
 typedef struct entities_handler_s {
@@ -111,8 +114,6 @@ bool launch_e_shoot(ennemies_t *en, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
 bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
-ennemies_t *search_entity(list_t *ennemies, player_t *player,
-    game_handler_t *g_h);
 
 ennemies_t *shoot_ray(game_handler_t *game, entities_t *player);
 int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
@@ -135,5 +136,8 @@ void anim_shoot_brut(ennemies_t *ennemi);
 void move_ennemies(ennemies_t *ennemies, game_handler_t *g_h);
 void rotate_right(entities_t *player, float rot_speed);
 void rotate_left(entities_t *player, float rot_speed);
+void increase_life(game_handler_t *g_h, node_t *object);
+void increase_ammo(game_handler_t *g_h, node_t *object);
+void increase_weapon(game_handler_t *g_h, node_t *object);
 
 #endif //ENTITIES_H

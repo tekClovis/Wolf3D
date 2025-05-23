@@ -23,6 +23,9 @@
         "regex": "c",
         "random": "c",
         "map": "c",
-        "format": "c"
+        "format": "c",
+        "chrono": "c",
+        "ranges": "c",
+        "variant": "c"
     }
 }

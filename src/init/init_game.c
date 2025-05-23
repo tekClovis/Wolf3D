@@ -84,6 +84,23 @@ void init_w_anim(game_handler_t *g_h)
     g_h->game->hud->to_move = 2.0;
     g_h->game->hud->animation = sfClock_create();
     g_h->game->hud->anim = false;
+    g_h->game->clock_game = sfClock_create();
+}
+
+static
+void init_level_launch(hud_t *hud)
+{
+    sfFloatRect size;
+    sfFont *font = sfFont_createFromFile("font/title.ttf");
+
+    hud->Level_txt = set_txt(400, sfColor_fromRGB(128, 0, 128),
+        (sfVector2f){0, 0}, "LEVEL 1");
+    size = sfText_getLocalBounds(hud->Level_txt);
+    sfText_setOrigin(hud->Level_txt, (sfVector2f)
+        {size.width / 2, size.height});
+    sfText_setPosition(hud->Level_txt, (sfVector2f){WIDTH / 2, HEIGHT / 2});
+    sfText_setFont(hud->Level_txt, font);
+    hud->level_launch = init_clock();
 }
 
 bool init_hud(game_handler_t *g_h)
@@ -105,6 +122,7 @@ bool init_hud(game_handler_t *g_h)
     init_w_anim(g_h);
     init_text_base_hud(g_h, scale_x, scale_y, window_size);
     scale_hud(g_h->game->hud, scale_x, scale_y);
+    init_level_launch(g_h->game->hud);
     return true;
 }
 
@@ -120,6 +138,9 @@ entities_handler_t *init_handler(void)
         return free(ent), NULL;
     ent->entities = list_create();
     if (ent->entities == NULL)
+        return free(ent), NULL;
+    ent->object = list_create();
+    if (ent->object == NULL)
         return free(ent), NULL;
     return ent;
 }

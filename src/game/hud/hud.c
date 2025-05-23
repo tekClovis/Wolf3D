@@ -65,6 +65,8 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
     game_t *game = g_h->game;
     int actual_gun = game->ent->player->inventory->actual_gun;
 
+    set_catint_in_text(g_h->game->level.actual_level + 1, hud->Level_txt,
+        "LEVEL ");
     set_catint_in_text(game->score.score, hud->score, "Score : ");
     set_int_in_text(game->ent->player->property->life, hud->life);
     set_int_in_text(game->ent->player->inventory->gun[actual_gun]->ammo,
@@ -112,6 +114,17 @@ void draw_unlock_w(hud_t *hud, game_handler_t *g_h)
     }
 }
 
+void handle_launch(hud_t *hud, game_handler_t *g_h)
+{
+    sfRenderWindow_drawText(g_h->screen->win, hud->Level_txt, NULL);
+    for (node_t *cur = g_h->game->ent->entities->head; cur; cur = cur->next)
+        sfClock_restart(((entities_t *)cur->data)->clock.clock);
+    sfClock_restart(g_h->game->ent->player->property->clock.clock);
+    sfClock_restart(g_h->general_clock.clock);
+    sfClock_restart(g_h->game->clock_game);
+    sfClock_restart(g_h->game->ent->player->inventory->clock_shoot.clock);
+}
+
 void draw_hud(hud_t *hud, game_handler_t *g_h)
 {
     inventory_t *inv = g_h->game->ent->player->inventory;
@@ -123,6 +136,9 @@ void draw_hud(hud_t *hud, game_handler_t *g_h)
         NULL);
     update_assets(hud, g_h);
     draw_unlock_w(hud, g_h);
+    if (sfClock_getElapsedTime(hud->level_launch.clock).microseconds / 1000.0
+        < 3000.0)
+        handle_launch(hud, g_h);
     sfRenderWindow_drawText(g_h->screen->win, hud->score, NULL);
     sfRenderWindow_drawText(g_h->screen->win, hud->time, NULL);
     sfRenderWindow_drawText(g_h->screen->win, hud->magazine, NULL);

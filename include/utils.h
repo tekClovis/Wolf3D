@@ -40,6 +40,8 @@
     #define T_2D_SHOTGUN T_2D_GUN + 1
     #define T_2D_MINIGUN T_2D_SHOTGUN + 1
     #define T_HUD T_2D_MINIGUN + 1
+    #define T_AMMO T_HUD +1
+    #define T_LIFE T_AMMO +1
 
     #define SO_B_MOVE 0
     #define SO_B_CLICK 1
@@ -50,6 +52,7 @@
     #define SO_MINIGUN 6
     #define SO_DIYING 7
     #define SO_ASSAULT 8
+    #define SO_OBJ 9
 
 typedef struct game_handler_s game_handler_t;
 

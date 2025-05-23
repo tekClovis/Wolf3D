@@ -41,7 +41,7 @@ void move_little(ennemies_t *ennemies, sfInt32 tim_mili,
         return;
     ennemies->property->coord.x -=
         (ennemies->property->dir.x / 250.0) * tim_mili * 1.7;
-    ennemies->property->coord.y -= 
+    ennemies->property->coord.y -=
         (ennemies->property->dir.y / 250.0) * tim_mili * 1.7;
     rotate_left(ennemies->property, 1.5);
 }

@@ -7,6 +7,14 @@
 
 #include "game.h"
 
+void free_entities(entities_t *ent)
+{
+    sfSprite_destroy(ent->img->sprite);
+    sfClock_destroy(ent->clock.clock);
+    free(ent->img);
+    free(ent);
+}
+
 static
 void save_game(game_t *game, game_handler_t *g_h)
 {

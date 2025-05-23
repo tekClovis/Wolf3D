@@ -127,6 +127,7 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     return ennemi;
 }
 
+static
 bool init_ennemies(game_handler_t *g_h, sfVector2f coord, int id)
 {
     ennemies_t *ennemies = malloc(sizeof(ennemies_t));

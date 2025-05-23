@@ -20,11 +20,12 @@ sfInt32 get_milisc_clock(time_management_t time_manage)
 
 int run_game(game_handler_t *g_h)
 {
-    if (!g_h->game->clock_game)
-        g_h->game->clock_game = sfClock_create();
-    handle_ent_event(g_h, g_h->game->ent);
-    handle_player_shooting(g_h);
-    player_interaction(g_h->game->ent->player->property, g_h);
+    if (sfClock_getElapsedTime(g_h->game->hud->level_launch.clock)
+        .microseconds / 1000.0 > 3000.0){
+        handle_ent_event(g_h, g_h->game->ent);
+        handle_player_shooting(g_h);
+        player_interaction(g_h->game->ent->player->property, g_h);
+    }
     execute_ray(g_h, g_h->game->ent->player->property);
     draw_screen(g_h);
     return 0;
