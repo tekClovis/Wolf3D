@@ -12,6 +12,7 @@
 int execute_ray(game_handler_t *game, entities_t *player)
 {
     memset(game->ray_cast.pixels, 0, 1920 * 1080 * 4);
+    draw_floor(player, &game->ray_cast, game->texture);
     for (int x = 0; x < 1920; x++){
         init_ray_cast(&game->ray_cast, game->game->ent->player->property, x);
         prep_dda(&game->ray_cast, player);

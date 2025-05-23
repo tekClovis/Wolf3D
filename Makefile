@@ -64,6 +64,7 @@ SRC += src/game/weapons/manege_ennemi_touch.c
 SRC += src/game/entities_effects/move_ent.c
 SRC += src/game/weapons/anim_ent_shoot.c
 SRC += src/game/ennemies/move_ennemies.c
+SRC += src/game/ray_casting/draw_floor.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -113,6 +113,8 @@ bool launch_p_shoot(inventory_t *inv, float millisec_to_wait,
     game_handler_t *g_h, size_t token_sound);
 ennemies_t *search_entity(list_t *ennemies, player_t *player,
     game_handler_t *g_h);
+
+ennemies_t *shoot_ray(game_handler_t *game, entities_t *player);
 int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 int gun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
 int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h);
