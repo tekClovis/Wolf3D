@@ -45,8 +45,12 @@ void execute_dda(ray_cast_t *ray_cast, int map[20][20])
         ray_cast->map_y += ray_cast->step_y;
         ray_cast->side = 1;
         }
-        if ((IS_WALL(map[ray_cast->map_x][ray_cast->map_y])) == true)
+        if (ray_cast->map_x < MAP_WIDTH && ray_cast->map_x >= 0 &&
+            ray_cast->map_y < MAP_HEIGHT && ray_cast->map_y >= 0 &&
+            IS_WALL(map[ray_cast->map_x][ray_cast->map_y]) == true)
             ray_cast->hit = 1;
     }
-    ray_cast->texture = map[ray_cast->map_x][ray_cast->map_y];
+    if (ray_cast->map_x < MAP_WIDTH && ray_cast->map_x >= 0 &&
+        ray_cast->map_y < MAP_HEIGHT && ray_cast->map_y >= 0)
+        ray_cast->texture = map[ray_cast->map_x][ray_cast->map_y];
 }

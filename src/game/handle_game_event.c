@@ -73,7 +73,7 @@ void handle_menu(game_handler_t *g_h)
 void handle_game_event(game_handler_t *g_h)
 {
     if (sfClock_getElapsedTime(g_h->game->hud->level_launch.clock)
-        .microseconds / 1000.0 < 3000.0)
+        .microseconds / 1000.0 < 2000.0)
         return;
     handle_player(g_h, g_h->game->ent->player);
     handle_menu(g_h);

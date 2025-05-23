@@ -61,9 +61,7 @@ bool init_player(game_handler_t *g_h)
     g_h->game->ent->player->property->angle = 0.0;
     if (g_h->game->ent->player->inventory == NULL)
         return false;
-    if (!load_from_file(g_h, "life.bin",
-        &g_h->game->ent->player->property->life, sizeof(int)))
-        g_h->game->ent->player->property->life = 100;
+    g_h->game->ent->player->property->life = 100;
     return true;
 }
 
@@ -158,7 +156,7 @@ void choose_parsing(game_handler_t *g_h, int x, int y)
     if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
         ID_PLAYER)
         g_h->game->ent->player->property->coord =
-            (sfVector2f){x + 1.5, y - 0.5};
+            (sfVector2f){x, y};
 }
 
 bool parsing_map(game_handler_t *g_h)

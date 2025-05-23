@@ -38,12 +38,22 @@ static void set_catint_in_text(int value, sfText *text, char *str)
     sfText_setString(text, buffer);
 }
 
-int get_clocktime(sfClock *clock)
+sfInt32 get_clocktime(sfClock *clock)
 {
     sfTime time = sfClock_getElapsedTime(clock);
-    float seconds = sfTime_asSeconds(time);
+    sfInt32 seconds = sfTime_asMilliseconds(time);
 
-    return (int)seconds;
+    sfClock_restart(clock);
+    return seconds;
+}
+
+static void set_time_in_text(sfInt32 value, sfText *text, char *str)
+{
+    char buffer[19];
+
+    snprintf(buffer, sizeof(buffer), "%s%d.%d", str, value / 1000, value
+        % 1000);
+    sfText_setString(text, buffer);
 }
 
 static void check_anim_gun(game_handler_t *g_h)
@@ -73,7 +83,8 @@ void update_assets(hud_t *hud, game_handler_t *g_h)
     hud->ammo);
     set_int_in_text(game->ent->player->inventory->gun[actual_gun]->magazine,
     hud->magazine);
-    set_catint_in_text(get_clocktime(g_h->game->clock_game),
+    g_h->game->score.score_mili_s += get_clocktime(g_h->game->clock_game);
+    set_time_in_text(g_h->game->score.score_mili_s,
         hud->time, "Time : ");
     sfRenderWindow_drawSprite(g_h->screen->win,
         hud->weapon_two_d[actual_gun]->sprite, NULL);
@@ -137,7 +148,7 @@ void draw_hud(hud_t *hud, game_handler_t *g_h)
     update_assets(hud, g_h);
     draw_unlock_w(hud, g_h);
     if (sfClock_getElapsedTime(hud->level_launch.clock).microseconds / 1000.0
-        < 3000.0)
+        < 2000.0)
         handle_launch(hud, g_h);
     sfRenderWindow_drawText(g_h->screen->win, hud->score, NULL);
     sfRenderWindow_drawText(g_h->screen->win, hud->time, NULL);

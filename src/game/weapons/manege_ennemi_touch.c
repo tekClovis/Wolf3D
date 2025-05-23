@@ -16,8 +16,9 @@ void anim_little_death(ennemies_t *ent)
 }
 
 static
-void anim_big_death(ennemies_t *ent)
+void anim_big_death(ennemies_t *ent, game_handler_t *g_h)
 {
+    g_h->game->score.score += 500;
     ent->property->img->rect.top = ent->property->img->rect.height * 2;
     ent->property->img->rect.left = 0;
     sfClock_restart(ent->clock_touch.clock);
@@ -45,9 +46,12 @@ void manage_ennemi_touch(ennemies_t *ent, size_t damage, game_handler_t *g_h)
     ent->property->life -= damage;
     if (ent->property->life <= 0){
         if (ent->property->id == ID_BRUT)
-            anim_big_death(ent);
-        if (ent->property->id != ID_BRUT)
-            anim_little_death(ent);
+            return anim_big_death(ent, g_h);
+        if (ent->property->id == ID_SS)
+            g_h->game->score.score += 100;
+        if (ent->property->id == ID_MUTANT)
+            g_h->game->score.score += 200;
+        anim_little_death(ent);
         sfSound_play(get_sound(g_h->sound, SO_DIYING));
         return;
     }

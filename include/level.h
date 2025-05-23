@@ -11,6 +11,7 @@
     # define TILE_SIZE 60
     # define MAP_WIDTH 20
     # define MAP_HEIGHT 20
+    # define NB_MAP 3
     #include <stdbool.h>
 
 typedef struct game_handler_s game_handler_t;

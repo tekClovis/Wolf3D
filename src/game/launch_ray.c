@@ -72,7 +72,7 @@ ennemies_t *find_the_closer_en(node_t *node,
     if (ennemi->property->life > 0 &&
         is_between_point(ennemi->property, player_ent, wall_co) == true)
         return ennemi;
-    return find_the_closer_en(node->prev, player_ent, wall_co);
+    return find_the_closer_en(node->next, player_ent, wall_co);
 }
 
 ennemies_t *shoot_ray(game_handler_t *game, entities_t *player)
@@ -83,7 +83,7 @@ ennemies_t *shoot_ray(game_handler_t *game, entities_t *player)
     prep_dda(&game->ray_cast, player);
     execute_dda(&game->ray_cast,
         game->game->level.map[game->game->level.actual_level]);
-    return find_the_closer_en(game->game->ent->ennemies->tail,
+    return find_the_closer_en(game->game->ent->ennemies->head,
         player, (sfVector2f){(float)game->ray_cast.map_x,
         (float)game->ray_cast.map_y});
 }

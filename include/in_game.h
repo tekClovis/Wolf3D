@@ -81,5 +81,6 @@ typedef struct game_s {
 } game_t;
 
 void handle_game_event(game_handler_t *g_h);
+void save_game(game_t *game, game_handler_t *g_h);
 
 #endif

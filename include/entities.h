@@ -32,8 +32,8 @@
     #define D_KNIFE 50
     #define D_GUN 20
     #define D_SHOTGUN 100
-    #define D_MINIGUN 3
-    #define D_ASSAULT 4
+    #define D_MINIGUN 2
+    #define D_ASSAULT 3
     #define NB_GUN 4
 
 typedef struct game_s game_t;

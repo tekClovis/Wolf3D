@@ -35,7 +35,11 @@ void move_little(ennemies_t *ennemies, sfInt32 tim_mili,
         (ennemies->property->dir.x / 250.0) * tim_mili * 1.7;
     ennemies->property->coord.y +=
         (ennemies->property->dir.y / 250.0) * tim_mili * 1.7;
-    if (!IS_WALL(g_h->game->level.map
+    if ((int)ennemies->property->coord.x < MAP_WIDTH &&
+        (int)ennemies->property->coord.x > 0 &&
+        (int)ennemies->property->coord.y < MAP_WIDTH &&
+        (int)ennemies->property->coord.y > 0
+        && !IS_WALL(g_h->game->level.map
         [g_h->game->level.actual_level][(int)ennemies->property->coord.x]
         [(int)ennemies->property->coord.y]))
         return;

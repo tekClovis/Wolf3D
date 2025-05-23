@@ -8,15 +8,6 @@
 #include "init.h"
 #include "ray_casting.h"
 
-static
-int init_binary_tree(buffer_z_t **buffer_z)
-{
-    *buffer_z = malloc(sizeof(buffer_z_t) * WINDOW_SIZE_X);
-    if (*buffer_z == NULL)
-        return 84;
-    return 0;
-}
-
 void init_controller(controller_t *controller)
 {
     controller->control = 0;
