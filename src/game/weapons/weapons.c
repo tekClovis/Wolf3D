@@ -25,14 +25,14 @@ float calc_dist(player_t *player, ennemies_t *ent, size_t damage)
 {
     float new_damage = 0;
     float dist = sqrtf(
-        powf((player->property->coord.x + ent->property->coord.x), 2.0) +
-        powf((player->property->coord.y + ent->property->coord.y), 2.0));
+        powf((player->property->coord.x - ent->property->coord.x), 2.0) +
+        powf((player->property->coord.y - ent->property->coord.y), 2.0));
 
     if (dist < 0.0)
         dist *= -1.0;
     if (dist == 0)
         dist = 0.1;
-    new_damage = damage * (20.0 / dist);
+    new_damage = damage * (1.0 / dist);
     return new_damage;
 }
 
@@ -61,13 +61,13 @@ int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
         entities_touch = shoot_ray(g_h, player->property);
     if (entities_touch != NULL){
         dist = sqrtf(
-            powf((player->property->coord.x + 
+            powf((player->property->coord.x - 
                 entities_touch->property->coord.x), 2.0) +
-            powf((player->property->coord.y + 
+            powf((player->property->coord.y -
                 entities_touch->property->coord.y), 2.0));
         if (dist < 0.0)
             dist *= -1.0;
-        if (dist < 19.0)
+        if (dist > 2.0)
             return 0;
     }
     decrease_life(g_h, entities_touch, D_KNIFE, shooter);
