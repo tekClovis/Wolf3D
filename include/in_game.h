@@ -78,6 +78,7 @@ typedef struct game_s {
     sfMusic *game_music;
     sfClock *clock_game;
     char *actual_save;
+    bool have_been_f;
 } game_t;
 
 void handle_game_event(game_handler_t *g_h);

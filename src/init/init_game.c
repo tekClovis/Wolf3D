@@ -15,6 +15,9 @@ score_t init_score(game_handler_t *g_h)
 {
     score_t score;
 
+    if (!load_from_file(g_h, "have_been_f.bin", &g_h->game->have_been_f,
+        sizeof(g_h->game->have_been_f)))
+        g_h->game->have_been_f = false;
     if (!load_from_file(g_h, "score_nb.bin", &score.score,
         sizeof(score.score)))
         score.score = 0;

@@ -12,6 +12,8 @@ bool load_from_file(game_handler_t *g_h, char *file, void *to_rd, ssize_t sz)
     FILE *fd = NULL;
     char path[256];
 
+    if (g_h->game->have_been_f)
+        return false;
     snprintf(path, sizeof(path), "%s%s", g_h->game->actual_save, file);
     fd = fopen(path, "rb");
     if (fd == NULL)

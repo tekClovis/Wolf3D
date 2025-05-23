@@ -35,6 +35,8 @@ bool pass_level(game_handler_t *g_h)
     if (g_h->game->ent->ennemies->size <= 0){
         if (g_h->game->level.actual_level == NB_MAP - 1){
             g_h->screen->act_menu = M_END;
+            g_h->game->have_been_f = true;
+            save_game(g_h->game, g_h);
             sfSprite_setTexture(g_h->screen->menu[M_END].background->sprite,
                 g_h->ray_cast.screen_text, sfTrue);
             g_h->screen_mode = S_MENU;

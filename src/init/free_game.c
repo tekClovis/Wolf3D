@@ -17,6 +17,8 @@ void free_entities(entities_t *ent)
 
 void save_game(game_t *game, game_handler_t *g_h)
 {
+    save_to_file(g_h, "have_been_f.bin", &game->have_been_f,
+        sizeof(game->have_been_f));
     save_to_file(g_h, "score_nb.bin", &game->score.score,
         sizeof(game->score.score));
     save_to_file(g_h, "score_time.bin", &game->score.score_mili_s,
@@ -33,5 +35,5 @@ void save_game(game_t *game, game_handler_t *g_h)
 
 void free_game(game_handler_t *g_h)
 {
-    save_game(g_h->game, g_h);
+    free(g_h->game->actual_save);
 }
