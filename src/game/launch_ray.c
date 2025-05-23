@@ -37,30 +37,27 @@ wall_co correspond a la coord
 on récupere les coords de l' entité dans la node
 */
 static
-entities_t *find_the_closer(node_t *node,
+bool find_the_closer(entities_t *ent,
     sfVector2f player_co, sfVector2f wall_co)
 {
-    entities_t *entitie = NULL;
-    draw_sprite_t draw_ent = {0};
-
-    if (node == NULL)
-        return NULL;
-    entitie = (entities_t *)node->data;
-    if (is_between_point(entitie->coord, player_co, wall_co) == true)
-        return entitie;
-    return find_the_closer(node->next, player_co, wall_co);
+    if (ent == NULL)
+        return false;
+    if (is_between_point(player_co, ent->coord, wall_co) == true)
+        return true;
+    return false;
 }
 
-entities_t *launch_ray(game_handler_t *game, entities_t *player)
+bool search_player(game_handler_t *game, entities_t *ennemie)
 {
     int x = WIDTH / 2;
 
-    init_ray_cast(&game->ray_cast, game->game->ent->player->property, x);
-    prep_dda(&game->ray_cast, player);
+    init_ray_cast(&game->ray_cast, ennemie, x);
+    prep_dda(&game->ray_cast, ennemie);
     execute_dda(&game->ray_cast,
         game->game->level.map[game->game->level.actual_level]);
-    return find_the_closer(game->game->ent->entities->head,
-        player->coord, (sfVector2f){(float)game->ray_cast.map_x,
+    return find_the_closer(ennemie,
+        game->game->ent->player->property->coord,
+        (sfVector2f){(float)game->ray_cast.map_x,
         (float)game->ray_cast.map_y});
 }
 
@@ -69,12 +66,12 @@ ennemies_t *find_the_closer_en(node_t *node,
     sfVector2f player_co, sfVector2f wall_co)
 {
     ennemies_t *ennemi = NULL;
-    draw_sprite_t draw_ent = {0};
 
     if (node == NULL)
         return NULL;
     ennemi = (ennemies_t *)node->data;
-    if (is_between_point(ennemi->property->coord, player_co, wall_co) == true)
+    if (ennemi->property->life > 0 &&
+        is_between_point(ennemi->property->coord, player_co, wall_co) == true)
         return ennemi;
     return find_the_closer_en(node->next, player_co, wall_co);
 }

@@ -21,7 +21,17 @@ const angle_sprite_t SPRITE_TAB[] = {
 static
 void aim_player(player_t *player, ennemies_t *ennemies)
 {
-    ennemies->property->angle = fmodf(player->property->angle + 180.0, 360.0);
+    sfVector2f dir = { player->property->coord.x - ennemies->property->coord.x,
+        player->property->coord.y - ennemies->property->coord.y};
+    float length = sqrtf(dir.x * dir.x + dir.y * dir.y);
+
+    if (length == 0){
+        ennemies->property->dir = (sfVector2f){0.0, 0.0};
+        return;
+    }
+    ennemies->property->dir = (sfVector2f){dir.x / length, dir.y / length};
+    convert_vector_to_deg(ennemies->property);
+    return;
 }
 
 float get_relative_angle(entities_t *player, entities_t *ennemies)
@@ -106,6 +116,25 @@ bool restart_anim(ennemies_t *ennemie)
     return true;
 }
 
+static
+void detect_player(ennemies_t *ent, game_handler_t *game_handler)
+{
+    if (ent->property->id == ID_BRUT || ent->is_shooting)
+        aim_player(game_handler->game->ent->player, ent);
+    if (sfClock_getElapsedTime(ent->clock_search.clock).microseconds / 1000.0
+        > 500.0){
+        ent->last_frame_shooting = ent->is_shooting;
+        ent->is_shooting = search_player(game_handler,
+            ent->property);
+        sfClock_restart(ent->clock_search.clock);
+    }
+    if (ent->is_shooting == false && ent->last_frame_shooting == true){
+        ent->anim = 0;
+        ent->property->img->rect.left = 0;
+        sfClock_restart(ent->property->clock.clock);
+    }
+}
+
 //actual node set at the second node because the first is the player
 void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
 {
@@ -115,14 +144,13 @@ void handle_ent_event(game_handler_t *game_handler, entities_handler_t *ent)
     for (; actual; actual = actual->next){
         if (!restart_anim(actual->data))
             continue;
-        //detect_player(actual->data, player);
+        detect_player(actual->data, game_handler);
         if (((ennemies_t *)actual->data)->is_shooting){
-            aim_player(player, actual->data);
             ((ennemies_t *)actual->data)->
                 gun_shot(player, actual->data, game_handler);
             continue;
         }
-        //move_ennemies(actual->data);
+        move_ennemies(actual->data, game_handler);
         rotate_sprite(player, actual->data);
     }
 }

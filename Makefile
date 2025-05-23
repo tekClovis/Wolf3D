@@ -49,7 +49,6 @@ SRC += src/game/ray_casting/wall_text_managment.c
 SRC += src/game/ray_casting/draw_wall.c
 SRC += src/game/hud/hud.c
 SRC += src/game/weapons/launch_shoot.c
-SRC += src/game/weapons/search_entity.c
 SRC += src/game/weapons/weapons.c
 SRC += src/game/handle_ent_event.c
 SRC += src/game/run_game.c
@@ -63,6 +62,8 @@ SRC += src/game/entities_effects/player_interaction.c
 SRC += src/game/launch_ray.c
 SRC += src/game/weapons/manege_ennemi_touch.c
 SRC += src/game/entities_effects/move_ent.c
+SRC += src/game/weapons/anim_ent_shoot.c
+SRC += src/game/ennemies/move_ennemies.c
 
 OBJ = $(SRC:.c=.o)
 
