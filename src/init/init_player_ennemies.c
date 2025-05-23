@@ -74,7 +74,7 @@ ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_SS,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_search = init_clock();
-    ennemi->property->life = 100;
+    ennemi->property->life = 70;
     ennemi->is_shooting = false;
     ennemi->last_frame_shooting = false;
     ennemi->property->speed = WALK + 25;
@@ -94,7 +94,7 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_MUTANT
         , set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_search = init_clock();
-    ennemi->property->life = 150;
+    ennemi->property->life = 100;
     ennemi->property->speed = RUN;
     ennemi->is_shooting = false;
     ennemi->last_frame_shooting = false;
@@ -114,7 +114,7 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
     ennemi->property = init_entities(coord, (sfVector2f){0.7, 0.7}, ID_BRUT,
         set_img(T_BRUT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
     ennemi->clock_search = init_clock();
-    ennemi->property->life = 200;
+    ennemi->property->life = 125;
     ennemi->property->speed = WALK - 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
