@@ -96,7 +96,7 @@ void init_level_launch(hud_t *hud)
     sfFloatRect size;
     sfFont *font = sfFont_createFromFile("font/title.ttf");
 
-    hud->Level_txt = set_txt(400, sfColor_fromRGB(0, 128, 128),
+    hud->Level_txt = set_txt(400, sfColor_fromRGB(250, 157, 0),
         (sfVector2f){0, 0}, "LEVEL 1");
     size = sfText_getLocalBounds(hud->Level_txt);
     sfText_setOrigin(hud->Level_txt, (sfVector2f)

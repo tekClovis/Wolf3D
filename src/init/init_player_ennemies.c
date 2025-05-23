@@ -156,7 +156,7 @@ void choose_parsing(game_handler_t *g_h, int x, int y)
     if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
         ID_PLAYER)
         g_h->game->ent->player->property->coord =
-            (sfVector2f){x, y};
+            (sfVector2f){x + 1.5, y + 0.5};
 }
 
 bool parsing_map(game_handler_t *g_h)

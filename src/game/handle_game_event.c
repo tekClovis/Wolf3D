@@ -32,9 +32,11 @@ void check_reload(game_handler_t *g_h, inventory_t *inv)
         g_h->event->type == sfEvtKeyPressed) || check_square()){
         if (inv->gun[inv->actual_gun]->ammo <
             inv->gun[inv->actual_gun]->mag_cap){
-            inv->gun[inv->actual_gun]->magazine
-            = inv->gun[inv->actual_gun]->ammo;
-            inv->gun[inv->actual_gun]->ammo = 0;
+            inv->gun[inv->actual_gun]->magazine += inv->gun[inv->actual_gun]
+                ->mag_cap - inv->gun[inv->actual_gun]->magazine;
+            inv->gun[inv->actual_gun]->ammo =
+                inv->gun[inv->actual_gun]->mag_cap -
+                inv->gun[inv->actual_gun]->magazine;
         }
         if (inv->gun[inv->actual_gun]->ammo >=
             inv->gun[inv->actual_gun]->mag_cap){
