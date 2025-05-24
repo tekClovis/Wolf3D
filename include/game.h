@@ -121,7 +121,7 @@ void draw_floor(entities_t *player, ray_cast_t *ray_cast,
 /*Draw sprite*/
 void draw_sprite(game_handler_t *game, sfRenderWindow *window);
 void put_color_in_buffer(sfUint8 *array_pixel,
-    sfColor new_pixel, int index_storage);
+    sfColor new_pixel, int index_storage, double dist);
 
 /*Call all draw funct*/
 void draw_screen(game_handler_t *game);
