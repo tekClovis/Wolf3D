@@ -85,7 +85,7 @@ void fill_ent_yray(entities_t *entities, draw_sprite_t *draw_ent,
         pixel = sfImage_getPixel(entities->img->img, draw_ent->tex_x +
             entities->img->rect.left, tex_y + entities->img->rect.top);
         index = (y * 1920 + x) * 4;
-        put_color_in_buffer(ray_cast->pixels, pixel, index, ray_cast->perp_wall_dist);
+        put_color_in_buffer(ray_cast->pixels, pixel, index, ray_cast->height_line);
     }
 }
 

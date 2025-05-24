@@ -32,10 +32,10 @@ void get_text_pixel(ray_cast_t *ray_cast, entities_t *player)
     ray_cast->tex_x = (int)(ray_cast->wall_x * (double)(64));
 }
 
-sfColor get_shadow(double distance, sfColor pixel)
+sfColor get_shadow(int distance, sfColor pixel)
 {
-    double shade = distance / 1080;
-    sfColor color;
+    double shade = distance / 540.0f;
+    sfColor color = {0};
 
     if (pixel.a == 0)
         return pixel;
@@ -55,7 +55,7 @@ sfColor get_shadow(double distance, sfColor pixel)
 ** prend un sfcolor et le place dans un buffer aplatie 1D
 */
 void put_color_in_buffer(sfUint8 *array_pixel,
-    sfColor new_pixel, int index_storage, double dist)
+    sfColor new_pixel, int index_storage, int dist)
 {
     new_pixel = get_shadow(dist, new_pixel);
     array_pixel[index_storage] = new_pixel.r;
@@ -82,6 +82,6 @@ void fill_line(ray_cast_t *ray_cast, int x, tab_texture_t **tab_texture)
             sfImage_getPixel(tab_texture[ray_cast->texture - 1]->img,
             ray_cast->tex_x, tex_y);
         index = (y * 1920 + x) * 4;
-        put_color_in_buffer(ray_cast->pixels, pixel_to_add, index, ray_cast->perp_wall_dist);
+        put_color_in_buffer(ray_cast->pixels, pixel_to_add, index, ray_cast->height_line);
     }
 }

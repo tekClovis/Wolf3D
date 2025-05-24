@@ -61,11 +61,11 @@ void draw_floor(entities_t *player, ray_cast_t *ray_cast,
         for (int x = 0; x < WIDTH; x++) {
             init_texture_px(&drawable_zone, tab_texture);
             index = (y * WIDTH + x) * 4;
-            put_color_in_buffer(ray_cast->pixels, drawable_zone.color, index, x);
+            put_color_in_buffer(ray_cast->pixels, drawable_zone.color, index, y);
             drawable_zone.color = sfImage_getPixel(tab_texture[CEILING]->img,
                 drawable_zone.tex.x, drawable_zone.tex.y);
             index = (((HEIGHT - y - 1) * WIDTH + x) * 4);
-            put_color_in_buffer(ray_cast->pixels, drawable_zone.color, index, x);
+            put_color_in_buffer(ray_cast->pixels, drawable_zone.color, index, y);
             drawable_zone.floor.x += drawable_zone.floor_step.x;
             drawable_zone.floor.y += drawable_zone.floor_step.y;
         }
