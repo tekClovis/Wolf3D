@@ -101,7 +101,7 @@ bool init_map(game_handler_t *g_h)
 
 bool load_map(game_handler_t *g_h)
 {
-    if (!load_from_file(g_h, "actual_level.bin",
+    if (g_h->game->have_been_f || !load_from_file(g_h, "actual_level.bin",
         &g_h->game->level.actual_level,
         sizeof(g_h->game->level.actual_level)))
         g_h->game->level.actual_level = 0;

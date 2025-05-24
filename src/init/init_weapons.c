@@ -39,7 +39,8 @@ gun_t *init_gun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
     gun->save_file = strdup("gun_ammo.bin");
     if (gun->save_file == NULL || gun->img == NULL)
         return NULL;
-    if (!load_from_file(g_h, gun->save_file, &gun->ammo, sizeof(gun->ammo)))
+    if (g_h->game->have_been_f || !load_from_file(g_h, gun->save_file,
+        &gun->ammo, sizeof(gun->ammo)))
         gun->ammo = 60;
     gun->mag_cap = 8;
     gun->magazine = gun->mag_cap;
@@ -62,8 +63,8 @@ gun_t *init_shotgun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
     shotgun->save_file = strdup("shotgun_ammo.bin");
     if (shotgun->save_file == NULL || shotgun->img == NULL)
         return NULL;
-    if (!load_from_file(g_h, shotgun->save_file, &shotgun->ammo,
-        sizeof(shotgun->ammo)))
+    if (g_h->game->have_been_f || !load_from_file(g_h, shotgun->save_file,
+        &shotgun->ammo, sizeof(shotgun->ammo)))
         shotgun->ammo = 20;
     shotgun->mag_cap = 5;
     shotgun->magazine = shotgun->mag_cap;
@@ -86,8 +87,8 @@ gun_t *init_minigun(game_handler_t *g_h, float scale_y, sfVector2u window_size)
     minigun->save_file = strdup("minigun_ammo.bin");
     if (minigun->save_file == NULL || minigun->img == NULL)
         return NULL;
-    if (!load_from_file(g_h, minigun->save_file, &minigun->ammo,
-        sizeof(minigun->ammo)))
+    if (g_h->game->have_been_f || !load_from_file(g_h, minigun->save_file,
+        &minigun->ammo, sizeof(minigun->ammo)))
         minigun->ammo = 200;
     minigun->mag_cap = 100;
     minigun->magazine = minigun->mag_cap;

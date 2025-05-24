@@ -115,6 +115,8 @@ bool restart_anim(node_t *actual, game_handler_t *g_h)
 {
     ennemies_t *ennemie = (ennemies_t *)actual->data;
 
+    if (ennemie->property->id == ID_BRUT || ennemie->is_shooting)
+        aim_player(g_h->game->ent->player, ennemie);
     ennemie->clock_touch.time =
         sfClock_getElapsedTime(ennemie->clock_touch.clock);
     if (!death_anim(actual, g_h))
@@ -127,8 +129,6 @@ bool restart_anim(node_t *actual, game_handler_t *g_h)
 static
 void detect_player(ennemies_t *ent, game_handler_t *game_handler)
 {
-    if (ent->property->id == ID_BRUT || ent->is_shooting)
-        aim_player(game_handler->game->ent->player, ent);
     if (sfClock_getElapsedTime(ent->clock_search.clock).microseconds / 1000.0
         > 500.0){
         ent->last_frame_shooting = ent->is_shooting;

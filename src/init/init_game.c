@@ -11,19 +11,22 @@
 #include "string.h"
 
 static
-score_t init_score(game_handler_t *g_h)
+score_t init_score_and_save(game_handler_t *g_h)
 {
     score_t score;
 
-    if (!load_from_file(g_h, "have_been_f.bin", &g_h->game->have_been_f,
-        sizeof(g_h->game->have_been_f)))
-        g_h->game->have_been_f = false;
-    if (!load_from_file(g_h, "score_nb.bin", &score.score,
-        sizeof(score.score)))
+    if (!load_from_file(g_h, "have_been_f.bin",
+        &g_h->game->have_been_f, sizeof(g_h->game->have_been_f)))
+        g_h->game->have_been_f = 0;
+    if (g_h->game->have_been_f)
+        save_to_file(g_h, "have_been_f.bin", &g_h->game->have_been_f,
+            sizeof(g_h->game->have_been_f));
+    if (g_h->game->have_been_f || !load_from_file(g_h, "score_nb.bin",
+        &score.score, sizeof(score.score)))
         score.score = 0;
-    if (!load_from_file(g_h, "score_time.bin", &score.score_mili_s,
-        sizeof(score.score_mili_s)))
-        score.score_mili_s = 0;
+    if (g_h->game->have_been_f || !load_from_file(g_h, "score_time.bin",
+            &score.score_mili_s, sizeof(score.score_mili_s)))
+        score.score_mili_s = 1;
     score.time_to_end = init_clock();
     return score;
 }
@@ -156,7 +159,7 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     g_h->game->ent = init_handler();
     g_h->game->clock_game = NULL;
     g_h->game->actual_save = strdup(save_dir);
-    g_h->game->score = init_score(g_h);
+    g_h->game->score = init_score_and_save(g_h);
     if (g_h->game->ent == NULL)
         return false;
     g_h->game->game_music = init_music("sound/game_music.ogg", g_h);
