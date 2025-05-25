@@ -9,11 +9,21 @@
 #include <stdbool.h>
 #include "controller.h"
 
-int check_triangle(void)
+int check_cross(void)
 {
     if (!sfJoystick_isConnected(0))
         return false;
-    if (sfJoystick_isButtonPressed(0, 2))
+    if (sfJoystick_isButtonPressed(0, 0)) {
+        return true;
+    }
+    return false;
+}
+
+int check_circle(void)
+{
+    if (!sfJoystick_isConnected(0))
+        return false;
+    if (sfJoystick_isButtonPressed(0, 1))
         return true;
     return false;
 }
@@ -22,27 +32,16 @@ int check_square(void)
 {
     if (!sfJoystick_isConnected(0))
         return false;
-    if (sfJoystick_isButtonPressed(0, 0))
-        return true;
-    return false;
-}
-
-int check_circle(void)
-{
-    if (!sfJoystick_isConnected(0))
-        return false;
     if (sfJoystick_isButtonPressed(0, 2))
         return true;
     return false;
 }
 
-int check_cross(void)
+int check_triangle(void)
 {
     if (!sfJoystick_isConnected(0))
         return false;
-    if (sfJoystick_isButtonPressed(0, 0)){
-        printf("cross\n");
+    if (sfJoystick_isButtonPressed(0, 3))
         return true;
-    }
     return false;
 }

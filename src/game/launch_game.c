@@ -43,15 +43,18 @@ bool need_refresh(game_handler_t *game_handler)
 void handle_event(game_handler_t *g_h)
 {
     sfEvent e;
+    sfUint8 controller = 0;
 
     while (sfRenderWindow_pollEvent(g_h->screen->win, &e)){
-        if (need_refresh_clock(&g_h->controller.time, 0.5))
+        if (need_refresh_clock(&g_h->controller.time, 0.01)){
+            controller = get_left_stick();
             g_h->controller.control = get_controller_button();
+        }
         g_h->event = &e;
-        if ((g_h->screen_mode == S_MENU && g_h->event->type == sfEvtKeyPressed)
-            || g_h->controller.control != 0)
-            handle_menu_event(&g_h->screen->menu[g_h->screen->act_menu], g_h);
-        if (g_h->screen_mode == S_GAME || g_h->controller.control != 0)
+        if (g_h->screen_mode == S_MENU && (g_h->event->type == sfEvtKeyPressed
+            || g_h->controller.control != 0 || controller != 0))
+            handle_menu_event(&g_h->screen->menu[g_h->screen->act_menu], g_h, controller);
+        if (g_h->screen_mode == S_GAME)
             handle_game_event(g_h);
         if (e.type == sfEvtClosed && g_h->screen->act_menu != M_PAUSE)
             sfRenderWindow_close(g_h->screen->win);

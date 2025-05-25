@@ -28,10 +28,8 @@ void draw_menu(menu_t *menu, game_handler_t *g_h)
         sfRenderWindow_drawText(g_h->screen->win, cur->data, NULL);
 }
 
-void handle_menu_event(menu_t *menu, game_handler_t *g_h)
+void handle_menu_event(menu_t *menu, game_handler_t *g_h, sfUint8 controller)
 {
-    sfUint8 controller = get_left_stick();
-
     if (g_h->event->key.code == sfKeyDown || (controller & DOWN)){
         menu->actual_bouton = menu->actual_bouton->next;
         sfSound_play(get_sound(g_h->sound, SO_B_MOVE));
