@@ -17,6 +17,7 @@ void go_to_home(game_handler_t *g_h)
 {
     g_h->screen->act_menu = M_START;
     free_game(g_h);
+    sfMusic_stop(g_h->game->game_music);
     g_h->game = NULL;
 }
 
