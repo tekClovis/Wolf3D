@@ -11,16 +11,25 @@
 #include "string.h"
 
 static
-score_t init_score(game_handler_t *g_h)
+score_t init_score_and_save(game_handler_t *g_h)
 {
     score_t score;
 
-    if (!load_from_file(g_h, "score_nb.bin", &score.score,
-        sizeof(score.score)))
+    if (!load_from_file(g_h, "have_been_f.bin",
+        &g_h->game->have_been_f, sizeof(g_h->game->have_been_f)))
+        g_h->game->have_been_f = 0;
+    if (g_h->game->have_been_f){
+        g_h->game->have_been_f = 0;
+        save_to_file(g_h, "have_been_f.bin", &g_h->game->have_been_f,
+            sizeof(g_h->game->have_been_f));
+        g_h->game->have_been_f = 1;
+    }
+    if (g_h->game->have_been_f || !load_from_file(g_h, "score_nb.bin",
+        &score.score, sizeof(score.score)))
         score.score = 0;
-    if (!load_from_file(g_h, "score_time.bin", &score.score_mili_s,
-        sizeof(score.score_mili_s)))
-        score.score_mili_s = 0;
+    if (g_h->game->have_been_f || !load_from_file(g_h, "score_time.bin",
+            &score.score_mili_s, sizeof(score.score_mili_s)))
+        score.score_mili_s = 1;
     score.time_to_end = init_clock();
     return score;
 }
@@ -77,6 +86,31 @@ void init_text_base_hud(game_handler_t *g_h, float scale_x, float scale_y,
         (sfVector2f){230 * scale_x, window_size.y - (110 * scale_y)}, "6");
 }
 
+static
+void init_w_anim(game_handler_t *g_h)
+{
+    g_h->game->hud->y_move = (sfVector2f){950.0, 970.0};
+    g_h->game->hud->to_move = 2.0;
+    g_h->game->hud->animation = sfClock_create();
+    g_h->game->hud->anim = false;
+    g_h->game->clock_game = sfClock_create();
+}
+
+static
+void init_level_launch(hud_t *hud)
+{
+    sfFloatRect size;
+    sfFont *font = sfFont_createFromFile("font/title.ttf");
+
+    hud->Level_txt = set_txt(400, sfColor_fromRGB(250, 157, 0),
+        (sfVector2f){0, 0}, "LEVEL 1");
+    size = sfText_getLocalBounds(hud->Level_txt);
+    sfText_setOrigin(hud->Level_txt, (sfVector2f)
+        {size.width / 2, size.height});
+    sfText_setPosition(hud->Level_txt, (sfVector2f){WIDTH / 2, HEIGHT / 2});
+    sfText_setFont(hud->Level_txt, font);
+    hud->level_launch = init_clock();
+}
 
 bool init_hud(game_handler_t *g_h)
 {
@@ -89,15 +123,15 @@ bool init_hud(game_handler_t *g_h)
     if (g_h->game->hud == NULL)
         return false;
     g_h->game->hud->bg_player_info = set_img(T_HUD, (sfIntRect){0, 0, 0, 0},
-        (sfVector2f){0, window_size.y - (170.0f * scale_y)}, g_h);
-    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h, scale_x,
-        scale_y, window_size);
+        (sfVector2f){0, 910}, g_h);
+    g_h->game->hud->weapon_two_d = init_weapons_two_d(g_h,
+        scale_x, scale_y, window_size);
     g_h->game->hud->actual_weapon =
     g_h->game->hud->weapon_two_d[player->inventory->actual_gun];
+    init_w_anim(g_h);
     init_text_base_hud(g_h, scale_x, scale_y, window_size);
     scale_hud(g_h->game->hud, scale_x, scale_y);
-    g_h->game->hud->animation = sfClock_create();
-    g_h->game->hud->anim = false;
+    init_level_launch(g_h->game->hud);
     return true;
 }
 
@@ -114,6 +148,9 @@ entities_handler_t *init_handler(void)
     ent->entities = list_create();
     if (ent->entities == NULL)
         return free(ent), NULL;
+    ent->object = list_create();
+    if (ent->object == NULL)
+        return free(ent), NULL;
     return ent;
 }
 
@@ -125,7 +162,7 @@ bool init_game(game_handler_t *g_h, char *save_dir)
     g_h->game->ent = init_handler();
     g_h->game->clock_game = NULL;
     g_h->game->actual_save = strdup(save_dir);
-    g_h->game->score = init_score(g_h);
+    g_h->game->score = init_score_and_save(g_h);
     if (g_h->game->ent == NULL)
         return false;
     g_h->game->game_music = init_music("sound/game_music.ogg", g_h);

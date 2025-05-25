@@ -31,6 +31,8 @@
     #define WINM_BIG 1
     #define RST_CLOCK 0
     #define LET_CLOCK 1
+    #define FLOOR 2
+    #define CEILING 3
 
 int wolf3d(void);
 /*
@@ -52,6 +54,7 @@ typedef struct screen_s {
     size_t last_menu;
     sfRenderWindow *win;
     sfVideoMode win_mode;
+    list_t *text;
 } screen_t;
 
 typedef struct game_handler_s {
@@ -64,11 +67,22 @@ typedef struct game_handler_s {
     tab_texture_t **texture;
     tab_sound_t **sound;
     game_t *game;
-    sfTexture *wall;
     sfRectangleShape *square;
-    buffer_z_t *buffer_z;
     controller_t controller;
 }game_handler_t;
+
+typedef struct floor_ceiling_s {
+    sfVector2f ray_dir_0;
+    sfVector2f ray_dir_1;
+    int p;
+    float pos_z;
+    float row_dist;
+    sfVector2f floor_step;
+    sfVector2f floor;
+    sfColor color;
+    sfVector2i cell;
+    sfVector2i tex;
+} floor_ceiling_t;
 
 typedef struct entities_class_s entities_class_t;
 
@@ -85,15 +99,11 @@ int display_menu(game_handler_t *g_handler);
 int run_game(game_handler_t *g_h);
 
 /*Player*/
-void player_interaction(entities_t *player, sfEvent *event);
-void move_player(player_t *entities);
+void player_interaction(entities_t *player, game_handler_t *g_h);
 void new_rotate_player(entities_t *player, float rot_speed,
-    sfInt32 time, sfEvent *event);
-void manage_player(game_handler_t *game_handler);
+    sfInt32 time);
 void animate_shgun(game_handler_t *g_h, gun_t *shotgun);
 void animate_gun(game_handler_t *g_h, gun_t *gun);
-int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h);
 void animate_minigun(game_handler_t *g_h, gun_t *gun);
 
 /*3D*/
@@ -102,12 +112,14 @@ int display_3d_map(game_handler_t *game_handler);
 void free_game(game_handler_t *game_handler);
 void check_back_to_menu(game_handler_t *handler);
 void draw_hud(hud_t *hud, game_handler_t *g_h);
+void draw_floor(entities_t *player, ray_cast_t *ray_cast,
+    tab_texture_t **tab_texture);
 
 
 /*Draw sprite*/
 void draw_sprite(game_handler_t *game, sfRenderWindow *window);
 void put_color_in_buffer(sfUint8 *array_pixel,
-    sfColor new_pixel, int index_storage);
+    sfColor new_pixel, int index_storage, int dist);
 
 /*Call all draw funct*/
 void draw_screen(game_handler_t *game);
@@ -129,5 +141,10 @@ sfUint8 get_right_stick(void);
 
 /*Time and clock*/
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
+
+/*free*/
+void free_img(img_t *img);
+void free_time_manage(time_management_t *time_manage);
+void free_screen(screen_t *screen);
 
 #endif //GAME_H

@@ -6,10 +6,13 @@
 */
 
 #include "game.h"
+#include <time.h>
+#include "ray_casting.h"
 /*
 return the time of clock
 in millisecond
 */
+
 sfInt32 get_milisc_clock(time_management_t *time_manage, int restart)
 {
     time_manage->time = sfClock_getElapsedTime(time_manage->clock);
@@ -19,9 +22,30 @@ sfInt32 get_milisc_clock(time_management_t *time_manage, int restart)
     return time_manage->time_as_milli_sc;
 }
 
-void player_interaction(entities_t *player, sfEvent *event)
+static
+void new_moove_player(player_t *player, hud_t *hud, sfInt32 tim_mili,
+    int map[20][20])
 {
-    sfInt32 time = get_milisc_clock(&player->clock, RST_CLOCK);
+    if (sfKeyboard_isKeyPressed(sfKeyZ)){
+        new_moove_up(player->property, tim_mili, map);
+        player->inventory->gun[player->inventory->actual_gun]->img->pos.y
+        += hud->to_move;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyS))
+        new_moove_down(player->property, tim_mili, map);
+    if (sfKeyboard_isKeyPressed(sfKeyQ))
+        new_moove_left(player->property, tim_mili, map);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        new_moove_right(player->property, tim_mili, map);
+}
 
-    new_rotate_player(player, 0.003, time, event);
+void player_interaction(entities_t *player, game_handler_t *g_h)
+{
+    sfInt32 tim_mili = get_milisc_clock(&player->clock, RST_CLOCK);
+
+    new_moove_player(g_h->game->ent->player
+        , g_h->game->hud
+        , tim_mili
+        , g_h->game->level.map[g_h->game->level.actual_level]);
+    new_rotate_player(player, 0.003, tim_mili);
 }

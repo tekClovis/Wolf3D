@@ -36,7 +36,7 @@ inventory_t *init_inventory(game_handler_t *g_h)
     if (inventory == NULL)
         return NULL;
     inventory->gun = malloc(sizeof(gun_t) * NB_GUN);
-    if (!load_from_file(g_h, "nb_gun.bin",
+    if (g_h->game->have_been_f || !load_from_file(g_h, "nb_gun.bin",
         &inventory->nb_of_gun, sizeof(inventory->nb_of_gun)))
         inventory->nb_of_gun = 2;
     inventory->actual_gun = W_ID_KNIFE;
@@ -60,9 +60,7 @@ bool init_player(game_handler_t *g_h)
     g_h->game->ent->player->property->angle = 0.0;
     if (g_h->game->ent->player->inventory == NULL)
         return false;
-    if (!load_from_file(g_h, "life.bin",
-        &g_h->game->ent->player->property->life, sizeof(int)))
-        g_h->game->ent->player->property->life = 100;
+    g_h->game->ent->player->property->life = 100;
     return true;
 }
 
@@ -72,12 +70,15 @@ ennemies_t *set_ss(game_handler_t *g_h, ennemies_t *ennemi,
 {
     ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_SS,
         set_img(T_SS, (sfIntRect){0, 0, 65, 65}, coord, g_h));
-    ennemi->clock_sound = init_clock();
-    ennemi->property->life = 100;
+    ennemi->clock_search = init_clock();
+    ennemi->property->life = 45;
     ennemi->is_shooting = false;
+    ennemi->last_frame_shooting = false;
     ennemi->property->speed = WALK + 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
+    ennemi->clock_search = init_clock();
+    ennemi->clock_move = init_clock();
     ennemi->anim = 0;
     ennemi->gun_shot = &gun_shoot;
     return ennemi;
@@ -89,14 +90,17 @@ ennemies_t *set_mutant(game_handler_t *g_h, ennemies_t *ennemi,
 {
     ennemi->property = init_entities(coord, (sfVector2f){0.5, 0.5}, ID_MUTANT
         , set_img(T_MUTANT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
-    ennemi->clock_sound = init_clock();
-    ennemi->property->life = 150;
+    ennemi->clock_search = init_clock();
+    ennemi->property->life = 55;
     ennemi->property->speed = RUN;
     ennemi->is_shooting = false;
+    ennemi->last_frame_shooting = false;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
+    ennemi->clock_search = init_clock();
+    ennemi->clock_move = init_clock();
     ennemi->anim = 0;
-    ennemi->gun_shot = &gun_shoot;
+    ennemi->gun_shot = &assault_shoot;
     return ennemi;
 }
 
@@ -106,17 +110,21 @@ ennemies_t *set_brut(game_handler_t *g_h, ennemies_t *ennemi,
 {
     ennemi->property = init_entities(coord, (sfVector2f){0.7, 0.7}, ID_BRUT,
         set_img(T_BRUT, (sfIntRect){0, 0, 65, 65}, coord, g_h));
-    ennemi->clock_sound = init_clock();
-    ennemi->property->life = 200;
+    ennemi->clock_search = init_clock();
+    ennemi->property->life = 75;
     ennemi->property->speed = WALK - 25;
     ennemi->clock_touch = init_clock();
     ennemi->clock_shoot = init_clock();
+    ennemi->clock_search = init_clock();
+    ennemi->clock_move = init_clock();
     ennemi->is_shooting = false;
+    ennemi->last_frame_shooting = false;
     ennemi->anim = 0;
     ennemi->gun_shot = &minigun_shoot;
     return ennemi;
 }
 
+static
 bool init_ennemies(game_handler_t *g_h, sfVector2f coord, int id)
 {
     ennemies_t *ennemies = malloc(sizeof(ennemies_t));
@@ -147,7 +155,7 @@ void choose_parsing(game_handler_t *g_h, int x, int y)
     if (g_h->game->level.map[g_h->game->level.actual_level][y][x] ==
         ID_PLAYER)
         g_h->game->ent->player->property->coord =
-            (sfVector2f){x + 1.5, y - 0.5};
+            (sfVector2f){x + 1.5, y + 0.5};
 }
 
 bool parsing_map(game_handler_t *g_h)

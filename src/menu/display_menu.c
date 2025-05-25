@@ -23,6 +23,9 @@ void draw_menu(menu_t *menu, game_handler_t *g_h)
             ((bouton_t *)cur->data)->released->sprite, NULL);
         cur = cur->next;
     }
+    for (node_t *cur = g_h->screen->text->head
+        ; cur && g_h->screen->act_menu == M_SETTING; cur = cur->next)
+        sfRenderWindow_drawText(g_h->screen->win, cur->data, NULL);
 }
 
 void handle_menu_event(menu_t *menu, game_handler_t *g_h)

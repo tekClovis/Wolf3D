@@ -8,6 +8,7 @@
 #include "game.h"
 #include "ray_casting.h"
 #include "entities.h"
+#include "init.h"
 
 /*
 static
@@ -17,54 +18,72 @@ sfInt32 get_milisc_clock(time_management_t time_manage)
     sfTime_asMilliseconds(entities->clock.clock);
 }
 */
-static
-void new_moove_up(entities_t *entities)
+
+void free_ent_handler(entities_handler_t *ent)
 {
-    entities->coord.x += entities->dir.x / 10;
-    entities->coord.y += entities->dir.y / 10;
+    node_t *next = NULL;
+
+    for (node_t *cur = ent->entities->head; cur; cur = next){
+        next = cur->next;
+        free_entities(cur->data);
+        destroy_nodes(ent->entities, cur);
+    }
 }
 
 static
-void new_moove_down(entities_t *entities)
+bool check_end(game_handler_t *g_h)
 {
-    entities->coord.x -= entities->dir.x / 10;
-    entities->coord.y -= entities->dir.y / 10;
+    g_h->screen->act_menu = M_END;
+    save_game(g_h->game, g_h, true);
+    sfSprite_setTexture(g_h->screen->menu[M_END].background->sprite,
+        g_h->ray_cast.screen_text, sfTrue);
+    g_h->screen_mode = S_MENU;
+    return true;
 }
 
 static
-void new_moove_right(entities_t *entities)
+bool pass_level(game_handler_t *g_h)
 {
-    entities->coord.x += entities->dir.y / 10;
-    entities->coord.y += -entities->dir.x / 10;
+    if (g_h->game->ent->ennemies->size <= 0){
+        if (g_h->game->level.actual_level >= NB_MAP - 1
+            && g_h->game->have_been_f == false)
+            return check_end(g_h);
+        if (!(g_h->game->level.actual_level < NB_MAP - 1)
+            && g_h->game->have_been_f == true)
+            return true;
+        g_h->game->ent->player->inventory->nb_of_gun++;
+        g_h->game->level.actual_level += 1;
+        g_h->game->ent->player->property->life = 100;
+        sfClock_restart(g_h->game->hud->level_launch.clock);
+        save_game(g_h->game, g_h, false);
+        free_ent_handler(g_h->game->ent);
+        parsing_map(g_h);
+        return false;
+    }
+    return false;
 }
 
-static
-void new_moove_left(entities_t *entities)
+bool check_die(game_handler_t *g_h)
 {
-    entities->coord.x -= entities->dir.y / 10;
-    entities->coord.y -= -entities->dir.x / 10;
-}
-
-static
-void new_moove_player(entities_t *player, sfEvent *event)
-{
-    if (sfKeyboard_isKeyPressed(sfKeyZ))
-        new_moove_up(player);
-    if (sfKeyboard_isKeyPressed(sfKeyS))
-        new_moove_down(player);
-    if (sfKeyboard_isKeyPressed(sfKeyQ))
-        new_moove_left(player);
-    if (sfKeyboard_isKeyPressed(sfKeyD))
-        new_moove_right(player);
+    if (g_h->game->ent->player->property->life > 0)
+        return false;
+    g_h->screen->act_menu = M_GO;
+    g_h->screen_mode = S_MENU;
+    return true;
 }
 
 int run_game(game_handler_t *g_h)
 {
-    if (!g_h->game->clock_game)
-        g_h->game->clock_game = sfClock_create();
-    handle_player_shooting(g_h);
-    player_interaction(g_h->game->ent->player->property, NULL);
-    new_moove_player(g_h->game->ent->player->property, g_h->event);
+    if (pass_level(g_h))
+        return 0;
+    if (check_die(g_h))
+        return 0;
+    if (sfClock_getElapsedTime(g_h->game->hud->level_launch.clock)
+        .microseconds / 1000.0 > 2000.0){
+        handle_ent_event(g_h, g_h->game->ent);
+        handle_player_shooting(g_h);
+        player_interaction(g_h->game->ent->player->property, g_h);
+    }
     execute_ray(g_h, g_h->game->ent->player->property);
     draw_screen(g_h);
     return 0;

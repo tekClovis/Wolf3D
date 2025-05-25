@@ -9,76 +9,70 @@
 #include "my.h"
 #include "entities.h"
 
-
 static
-void anim_little_death(ennemies_t *ent)
+void anim_ent_shoot(ennemies_t *shooter)
 {
-    ent->property->img->rect.top = ent->property->img->rect.height * 5;
-    ent->property->img->rect.left =
-        ent->property->img->rect.width * 2;
-    sfClock_restart(ent->clock_touch.clock);
-}
-
-void anim_big_death(ennemies_t *ent)
-{
-    ent->property->img->rect.top = ent->property->img->rect.height * 2;
-    ent->property->img->rect.left = 0;
-    sfClock_restart(ent->clock_touch.clock);
+    if (shooter->property->id == ID_SS)
+        return anim_shoot_ss(shooter);
+    if (shooter->property->id == ID_BRUT)
+        return anim_shoot_brut(shooter);
+    if (shooter->property->id == ID_MUTANT)
+        return anim_shoot_mutant(shooter);
 }
 
 static
-void manage_ennemi_touch(ennemies_t *ent, size_t damage)
+float calc_dist(player_t *player, ennemies_t *ent, size_t damage)
 {
-    ent->property->life -= damage;
-    if (ent->property->life < 0){
-        if (ent->property->id == ID_BRUT)
-            anim_big_death(ent);
-        if (ent->property->id != ID_BRUT)
-            anim_little_death(ent);
-        return;
-    }
-    if (ent->property->id == ID_BRUT)
-        return;
-    ent->clock_touch.time = sfClock_getElapsedTime
-        (ent->clock_touch.clock);
-    if (ent->clock_touch.time.microseconds / 1000.0 > 100.0){
-        ent->property->img->rect.left =
-        ent->property->img->rect.width * ent->anim;
-        ent->anim = (ent->anim + 1) % 2;
-        ent->property->img->rect.top = ent->property->img->rect.height * 5;
-        sfClock_restart(ent->clock_touch.clock);
-    }
+    float new_damage = 0;
+    float dist = sqrtf(
+        powf((player->property->coord.x - ent->property->coord.x), 2.0) +
+        powf((player->property->coord.y - ent->property->coord.y), 2.0));
+
+    if (dist < 0.0)
+        dist *= -1.0;
+    if (dist == 0)
+        dist = 0.1;
+    new_damage = damage * (1.0 / dist);
+    return new_damage;
 }
 
 static
-void decrease_life(player_t *player, ennemies_t *ent, size_t damage,
+void decrease_life(game_handler_t *g_h, ennemies_t *ent, size_t damage,
     ennemies_t *shooter)
 {
     if (shooter != NULL){
-        player->property->life -= damage;
-        return;
+        g_h->game->ent->player->property->life -= damage;
+        return anim_ent_shoot(shooter);
     }
-    if (ent == NULL)
+    if (ent == NULL || ent->property->life <= 0)
         return;
-    manage_ennemi_touch(ent, damage);
+    manage_ennemi_touch(ent, damage, g_h);
 }
 
-int knife_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int knife_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
+    float dist = 0;
 
     if (shooter == NULL && !launch_p_shoot(player->inventory, 700.0, g_h,
         SO_KNIFE))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_KNIFE, shooter);
+        entities_touch = shoot_ray(g_h, player->property);
+    if (entities_touch != NULL){
+        dist = sqrtf(
+            powf((player->property->coord.x -
+                entities_touch->property->coord.x), 2.0) +
+            powf((player->property->coord.y -
+                entities_touch->property->coord.y), 2.0));
+        if (dist > 2.0)
+            return 0;
+    }
+    decrease_life(g_h, entities_touch, D_KNIFE, shooter);
     return 0;
 }
 
-int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int gun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -89,27 +83,28 @@ int gun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_GUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_GUN, shooter);
+        entities_touch = shoot_ray(g_h, player->property);
+    decrease_life(g_h, entities_touch, D_GUN, shooter);
     return 0;
 }
 
-int shotgun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int shotgun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
+    float damage = 0;
 
     if (shooter == NULL && !launch_p_shoot(player->inventory, 1100.0, g_h,
         SO_SHOTGUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_SHOTGUN, shooter);
+        entities_touch = shoot_ray(g_h, player->property);
+    if (entities_touch != NULL)
+        damage = calc_dist(player, entities_touch, D_SHOTGUN);
+    decrease_life(g_h, entities_touch, (int)fabs(damage), shooter);
     return 0;
 }
 
-int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
-    game_handler_t *g_h)
+int minigun_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
 {
     ennemies_t *entities_touch = NULL;
 
@@ -120,7 +115,20 @@ int minigun_shoot(list_t *ennemies, player_t *player, ennemies_t *shooter,
         SO_GUN))
         return 0;
     if (shooter == NULL)
-        entities_touch = search_entity(ennemies, player, g_h);
-    decrease_life(player, entities_touch, D_MINIGUN, shooter);
+        entities_touch = shoot_ray(g_h, player->property);
+    decrease_life(g_h, entities_touch, D_MINIGUN, shooter);
+    return 0;
+}
+
+int assault_shoot(player_t *player, ennemies_t *shooter, game_handler_t *g_h)
+{
+    ennemies_t *entities_touch = NULL;
+
+    if (shooter != NULL && !launch_e_shoot(shooter, 200.0, g_h,
+        SO_ASSAULT))
+        return 0;
+    if (shooter == NULL)
+        entities_touch = shoot_ray(g_h, player->property);
+    decrease_life(g_h, entities_touch, D_ASSAULT, shooter);
     return 0;
 }

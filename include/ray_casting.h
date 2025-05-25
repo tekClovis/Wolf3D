@@ -17,19 +17,6 @@ typedef struct game_handler_s game_handler_t;
 typedef struct entities_s entities_t;
 typedef struct tab_texture_s tab_texture_t;
 
-/*
-** Node contient tous l arbre binaire
-** qui contient lui meme tous ce
-** qu' il faut afficher
-*/
-typedef struct buffer_z_s {
-    double distance;
-    double id;
-    size_t type;
-    sfColor shadow;
-}buffer_z_t;
-
-
 typedef struct ray_cast_s {
     /* calcul */
     double camera_x;
@@ -83,5 +70,6 @@ void get_text_pixel(ray_cast_t *ray_cast, entities_t *player);
 
 /*Draw buffer how contain screen*/
 int draw_wall(ray_cast_t *ray_cast, sfRenderWindow *window);
+void convert_vector_to_deg(entities_t *ent);
 
 #endif //RAY_CASTING_H

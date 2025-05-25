@@ -61,6 +61,10 @@ typedef struct hud_s {
     sfText *ammo;
     sfText *score;
     sfText *life;
+    sfText *Level_txt;
+    time_management_t level_launch;
+    sfVector2f y_move;
+    float to_move;
     img_t *actual_weapon;
     sfClock *animation;
     bool anim;
@@ -74,8 +78,10 @@ typedef struct game_s {
     sfMusic *game_music;
     sfClock *clock_game;
     char *actual_save;
+    int have_been_f;
 } game_t;
 
 void handle_game_event(game_handler_t *g_h);
+void save_game(game_t *game, game_handler_t *g_h, int finish);
 
 #endif
