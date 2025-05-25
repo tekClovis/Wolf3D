@@ -6,21 +6,12 @@
 */
 #include "game.h"
 
-static
-void free_window(sfRenderWindow *window)
-{
-    sfRenderWindow_destroy(window);
-}
-
-static
 void free_img(img_t *img)
 {
     sfSprite_destroy(img->sprite);
     sfImage_destroy(img->img);
-    free(img);
 }
 
-static
 void free_time_manage(time_management_t *time_manage)
 {
     sfClock_destroy(time_manage->clock);
@@ -50,6 +41,13 @@ void free_texture_pool(tab_texture_t **texture_tab)
     }
 }
 
+void free_ray_cast(ray_cast_t *ray_cast)
+{
+    free(ray_cast->pixels);
+    sfTexture_destroy(ray_cast->screen_text);
+    sfSprite_destroy(ray_cast->sprite_screen);
+}
+
 void free_game_handler(game_handler_t *game_handler)
 {
     free_controller(&game_handler->controller);
@@ -59,7 +57,10 @@ void free_game_handler(game_handler_t *game_handler)
     free(game_handler->sound);
     free_screen(game_handler->screen);
     free(game_handler->screen);
-
-    if (game_handler->game)
+    free_time_manage(&game_handler->general_clock);
+    
+    if (game_handler->game){
+        free_ray_cast(&game_handler->ray_cast);
         free_game(game_handler);
+    }
 }
