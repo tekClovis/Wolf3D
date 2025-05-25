@@ -60,6 +60,7 @@ void rotate_sprite(player_t *player, ennemies_t *ennemi)
 {
     float angle;
 
+    convert_vector_to_deg(ennemi->property);
     if (ennemi->property->id == ID_BRUT)
         return;
     angle = get_relative_angle(player->property, ennemi->property);

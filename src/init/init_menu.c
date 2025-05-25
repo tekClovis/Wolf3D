@@ -109,6 +109,8 @@ bool init_pause_menu(menu_t *menu, game_handler_t *game_h)
     menu = init_menu(menu, game_h, "PAUSE");
     if (menu == NULL)
         return false;
+    push_back(menu->boutons, set_buttons(set_img(T_B_HOME, (sfIntRect)
+        {0, 0, 0, 0}, (sfVector2f){650, 350}, game_h), &go_to_home));
     push_back(menu->boutons, set_buttons(set_img(T_B_SETTINGS, (sfIntRect)
         {0, 0, 0, 0}, (sfVector2f){650, 500}, game_h), &go_to_settings));
     push_back(menu->boutons, set_buttons(set_img(T_B_BACK, (sfIntRect)

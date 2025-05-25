@@ -36,10 +36,9 @@ inventory_t *init_inventory(game_handler_t *g_h)
     if (inventory == NULL)
         return NULL;
     inventory->gun = malloc(sizeof(gun_t) * NB_GUN);
-    if (!g_h->game->have_been_f && !load_from_file(g_h, "nb_gun.bin",
+    if (g_h->game->have_been_f || !load_from_file(g_h, "nb_gun.bin",
         &inventory->nb_of_gun, sizeof(inventory->nb_of_gun)))
-        inventory->nb_of_gun = 4;
-    inventory->nb_of_gun = 4;
+        inventory->nb_of_gun = 2;
     inventory->actual_gun = W_ID_KNIFE;
     inventory->gun = init_weapons(g_h);
     inventory->clock_refill = init_clock();

@@ -55,7 +55,7 @@ void anim_move_little(ennemies_t *ennemies, sfInt32 tim_mili,
     game_handler_t *g_h)
 {
     if (sfClock_getElapsedTime(ennemies->clock_move.clock).microseconds
-        / 1000.0 > 300.0){
+        / 1000.0 > 200.0){
         if (ennemies->property->img->rect.top >
             ennemies->property->img->rect.height * 3)
             ennemies->property->img->rect.top = 0;
