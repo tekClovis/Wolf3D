@@ -82,6 +82,7 @@ void fill_line(ray_cast_t *ray_cast, int x, tab_texture_t **tab_texture)
             sfImage_getPixel(tab_texture[ray_cast->texture - 1]->img,
             ray_cast->tex_x, tex_y);
         index = (y * 1920 + x) * 4;
-        put_color_in_buffer(ray_cast->pixels, pixel_to_add, index, ray_cast->height_line);
+        put_color_in_buffer(ray_cast->pixels, pixel_to_add,
+            index, ray_cast->height_line);
     }
 }

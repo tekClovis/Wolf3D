@@ -18,9 +18,12 @@ score_t init_score_and_save(game_handler_t *g_h)
     if (!load_from_file(g_h, "have_been_f.bin",
         &g_h->game->have_been_f, sizeof(g_h->game->have_been_f)))
         g_h->game->have_been_f = 0;
-    if (g_h->game->have_been_f)
+    if (g_h->game->have_been_f){
+        g_h->game->have_been_f = 0;
         save_to_file(g_h, "have_been_f.bin", &g_h->game->have_been_f,
             sizeof(g_h->game->have_been_f));
+        g_h->game->have_been_f = 1;
+    }
     if (g_h->game->have_been_f || !load_from_file(g_h, "score_nb.bin",
         &score.score, sizeof(score.score)))
         score.score = 0;
