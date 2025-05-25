@@ -51,7 +51,8 @@ screen_t *init_screen(game_handler_t *game_handler)
         return free(screen->menu), NULL;
     if (!init_settings_menu(&screen->menu[M_SETTING], game_handler))
         return free(screen->menu), NULL;
-    if (!init_end_menu(&screen->menu[M_END], game_handler))
+    if (!init_end_menu(&screen->menu[M_END], game_handler) ||
+        !init_lore(&screen))
         return free(screen->menu), NULL;
     screen->menu_music = init_music("sound/menu_music.mp3", game_handler);
     return screen;
@@ -69,13 +70,13 @@ int init_game_handler(game_handler_t *game_handler)
 {
     init_controller(&game_handler->controller);
     init_settings(&game_handler->settings);
-    game_handler->screen_mode = S_MENU;
+    game_handler->screen_mode = S_LORE;
     game_handler->game = NULL;
     game_handler->texture = init_textures();
     game_handler->sound = init_sound();
     game_handler->screen = init_screen(game_handler);
     if (!game_handler->sound || !game_handler->texture ||
-        !game_handler->screen)
+        !game_handler->screen || !init_lore(game_handler))
         return 84;
     game_handler->general_clock = init_clock();
     if (game_handler->general_clock.clock == NULL)
