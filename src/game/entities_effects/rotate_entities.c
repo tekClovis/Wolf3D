@@ -52,8 +52,10 @@ void rotate_left(entities_t *player, float rot_speed)
 void new_rotate_player(entities_t *player, float rot_speed,
     sfInt32 time)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyLeft))
+    sfUint8 controller = get_right_stick();
+
+    if (sfKeyboard_isKeyPressed(sfKeyLeft) || controller & LEFT)
         rotate_left(player, rot_speed * time);
-    if (sfKeyboard_isKeyPressed(sfKeyRight))
+    if (sfKeyboard_isKeyPressed(sfKeyRight) || controller & RIGHT)
         rotate_right(player, rot_speed * time);
 }

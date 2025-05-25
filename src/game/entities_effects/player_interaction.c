@@ -26,16 +26,18 @@ static
 void new_moove_player(player_t *player, hud_t *hud, sfInt32 tim_mili,
     int map[20][20])
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ)){
+    sfUint8 controller = get_left_stick();
+
+    if (sfKeyboard_isKeyPressed(sfKeyZ) || controller & UP){
         new_moove_up(player->property, tim_mili, map);
         player->inventory->gun[player->inventory->actual_gun]->img->pos.y
         += hud->to_move;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS))
+    if (sfKeyboard_isKeyPressed(sfKeyS) || controller & DOWN)
         new_moove_down(player->property, tim_mili, map);
-    if (sfKeyboard_isKeyPressed(sfKeyQ))
+    if (sfKeyboard_isKeyPressed(sfKeyQ) || controller & LEFT)
         new_moove_left(player->property, tim_mili, map);
-    if (sfKeyboard_isKeyPressed(sfKeyD))
+    if (sfKeyboard_isKeyPressed(sfKeyD) || controller & RIGHT)
         new_moove_right(player->property, tim_mili, map);
 }
 

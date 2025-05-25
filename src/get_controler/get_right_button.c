@@ -26,7 +26,7 @@ int check_r1(void)
     if (!sfJoystick_isConnected(0))
         return false;
     if (sfJoystick_isButtonPressed(0, 5))
-        return 0;
+        return true;
     return false;
 }
 
