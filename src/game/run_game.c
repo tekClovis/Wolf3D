@@ -30,21 +30,29 @@ void free_ent_handler(entities_handler_t *ent)
     }
 }
 
+static
+bool check_end(game_handler_t *g_h)
+{
+    g_h->screen->act_menu = M_END;
+    save_game(g_h->game, g_h, true);
+    sfSprite_setTexture(g_h->screen->menu[M_END].background->sprite,
+        g_h->ray_cast.screen_text, sfTrue);
+    g_h->screen_mode = S_MENU;
+    return true;
+}
+
+static
 bool pass_level(game_handler_t *g_h)
 {
     if (g_h->game->ent->ennemies->size <= 0){
         if (g_h->game->level.actual_level >= NB_MAP - 1
-            && g_h->game->have_been_f == false){
-            g_h->screen->act_menu = M_END;
-            save_game(g_h->game, g_h, true);
-            sfSprite_setTexture(g_h->screen->menu[M_END].background->sprite,
-                g_h->ray_cast.screen_text, sfTrue);
-            g_h->screen_mode = S_MENU;
-            return true;
-        }
-        if (g_h->game->have_been_f == true)
+            && g_h->game->have_been_f == false)
+            return check_end(g_h);
+        if (!(g_h->game->level.actual_level < NB_MAP - 1)
+            && g_h->game->have_been_f == true)
             return true;
         g_h->game->level.actual_level += 1;
+        g_h->game->ent->player->property->life = 100;
         sfClock_restart(g_h->game->hud->level_launch.clock);
         save_game(g_h->game, g_h, false);
         free_ent_handler(g_h->game->ent);
@@ -54,9 +62,20 @@ bool pass_level(game_handler_t *g_h)
     return false;
 }
 
+bool check_die(game_handler_t *g_h)
+{
+    if (g_h->game->ent->player->property->life > 0)
+        return false;
+    g_h->screen->act_menu = M_GO;
+    g_h->screen_mode = S_MENU;
+    return true;
+}
+
 int run_game(game_handler_t *g_h)
 {
     if (pass_level(g_h))
+        return 0;
+    if (check_die(g_h))
         return 0;
     if (sfClock_getElapsedTime(g_h->game->hud->level_launch.clock)
         .microseconds / 1000.0 > 2000.0){

@@ -143,8 +143,8 @@ sfUint8 get_right_stick(void);
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
 /*free*/
-void free_screen(screen_t *screen);
 void free_img(img_t *img);
 void free_time_manage(time_management_t *time_manage);
+void free_screen(screen_t *screen);
 
 #endif //GAME_H
