@@ -40,7 +40,6 @@ void free_sound_pool(tab_sound_t **texture_sound)
     }
 }
 
-
 void free_texture_pool(tab_texture_t **texture_tab)
 {
     for (int i = 0; texture_tab[i] != NULL; i++){
@@ -59,7 +58,6 @@ void free_game_handler(game_handler_t *game_handler)
     free(game_handler->sound);
     free_screen(game_handler->screen);
     free(game_handler->screen);
-
     if (game_handler->game)
         free_game(game_handler);
 }
