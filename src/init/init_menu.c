@@ -45,6 +45,21 @@ menu_t *init_menu(menu_t *menu, game_handler_t *game_h, char *title)
 
 bool init_end_menu(menu_t *menu, game_handler_t *game_h)
 {
+    menu = init_menu(menu, game_h, "YOU WIN !");
+    if (menu == NULL)
+        return false;
+    push_back(menu->boutons, set_buttons(set_img(T_B_HOME, (sfIntRect)
+        {0, 0, 0, 0}, (sfVector2f){650, 700}, game_h), &go_to_home));
+    push_back(menu->boutons, set_buttons(set_img(T_B_EXIT, (sfIntRect)
+        {0, 0, 0, 0}, (sfVector2f){650, 850}, game_h), &exit_game));
+        menu->boutons->tail->next = menu->boutons->head;
+        menu->boutons->head->prev = menu->boutons->tail;
+    menu->actual_bouton = menu->boutons->head;
+    return true;
+}
+
+bool init_go_menu(menu_t *menu, game_handler_t *game_h)
+{
     menu = init_menu(menu, game_h, "GAME OVER");
     if (menu == NULL)
         return false;

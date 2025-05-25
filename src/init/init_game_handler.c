@@ -41,6 +41,22 @@ list_t *init_text_setting(void)
 }
 
 static
+bool init_menus(screen_t *screen, game_handler_t *game_handler)
+{
+    if (!init_start_menu(&screen->menu[M_START], game_handler))
+        return free(screen->menu), false;
+    if (!init_pause_menu(&screen->menu[M_PAUSE], game_handler))
+        return free(screen->menu), false;
+    if (!init_settings_menu(&screen->menu[M_SETTING], game_handler))
+        return free(screen->menu), false;
+    if (!init_end_menu(&screen->menu[M_END], game_handler))
+        return free(screen->menu), false;
+    if (!init_go_menu(&screen->menu[M_GO], game_handler))
+        return free(screen->menu), false;
+    return true;
+}
+
+static
 screen_t *init_screen(game_handler_t *game_handler)
 {
     screen_t *screen = malloc(sizeof(screen_t));
@@ -52,14 +68,8 @@ screen_t *init_screen(game_handler_t *game_handler)
     screen->act_menu = M_START;
     if (screen->menu == NULL)
         return NULL;
-    if (!init_start_menu(&screen->menu[M_START], game_handler))
-        return free(screen->menu), NULL;
-    if (!init_pause_menu(&screen->menu[M_PAUSE], game_handler))
-        return free(screen->menu), NULL;
-    if (!init_settings_menu(&screen->menu[M_SETTING], game_handler))
-        return free(screen->menu), NULL;
-    if (!init_end_menu(&screen->menu[M_END], game_handler))
-        return free(screen->menu), NULL;
+    if (!init_menus(screen, game_handler))
+        return free(screen), NULL;
     screen->menu_music = init_music("sound/menu_music.mp3", game_handler);
     screen->text = init_text_setting();
     return screen;
