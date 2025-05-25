@@ -136,8 +136,5 @@ void anim_shoot_brut(ennemies_t *ennemi);
 void move_ennemies(ennemies_t *ennemies, game_handler_t *g_h);
 void rotate_right(entities_t *player, float rot_speed);
 void rotate_left(entities_t *player, float rot_speed);
-void increase_life(game_handler_t *g_h, node_t *object);
-void increase_ammo(game_handler_t *g_h, node_t *object);
-void increase_weapon(game_handler_t *g_h, node_t *object);
 
 #endif //ENTITIES_H
