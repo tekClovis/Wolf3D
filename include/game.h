@@ -67,9 +67,7 @@ typedef struct game_handler_s {
     tab_texture_t **texture;
     tab_sound_t **sound;
     game_t *game;
-    sfTexture *wall;
     sfRectangleShape *square;
-    buffer_z_t *buffer_z;
     controller_t controller;
 }game_handler_t;
 
@@ -145,6 +143,8 @@ sfUint8 get_right_stick(void);
 bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
 /*free*/
+void free_img(img_t *img);
+void free_time_manage(time_management_t *time_manage);
 void free_screen(screen_t *screen);
 
 #endif //GAME_H
