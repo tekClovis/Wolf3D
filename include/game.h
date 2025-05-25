@@ -144,5 +144,6 @@ bool need_refresh_clock(time_management_t *sound_clock, float sec_reset);
 
 /*free*/
 void free_screen(screen_t *screen);
+void free_img(img_t *img);
 
 #endif //GAME_H
