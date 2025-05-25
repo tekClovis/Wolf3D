@@ -22,6 +22,7 @@ void free_controller(controller_t *controller)
     free_time_manage(&controller->time);
 }
 
+static
 void free_sound_pool(tab_sound_t **texture_sound)
 {
     for (int i = 0; texture_sound[i] != NULL; i++){
@@ -31,6 +32,7 @@ void free_sound_pool(tab_sound_t **texture_sound)
     }
 }
 
+static
 void free_texture_pool(tab_texture_t **texture_tab)
 {
     for (int i = 0; texture_tab[i] != NULL; i++){
@@ -57,7 +59,6 @@ void free_game_handler(game_handler_t *game_handler)
     free_screen(game_handler->screen);
     free(game_handler->screen);
     free_time_manage(&game_handler->general_clock);
-    
-    if (game_handler->game){
+    if (game_handler->game)
         free_ray_cast(&game_handler->ray_cast);
 }

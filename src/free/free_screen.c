@@ -7,6 +7,7 @@
 
 #include "game.h"
 
+static
 void free_button(bouton_t *bouton)
 {
     free_img(bouton->released);
@@ -53,21 +54,8 @@ void free_menu(menu_t *menu)
     free(menu->background);
     sfText_destroy(menu->text);
     free(menu->boutons);
-    
 }
 
-/*
-==2777102== 
-==2777102== 56 bytes in 1 blocks are definitely lost in loss record 2,613 of 3,333
-==2777102==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2777102==    by 0x1107E1: init_menu (init_menu.c:36)
-==2777102==    by 0x11143B: init_start_menu (init_menu.c:111)
-==2777102==    by 0x10C997: init_screen (init_game_handler.c:55)
-==2777102==    by 0x10CB59: init_game_handler (init_game_handler.c:84)
-==2777102==    by 0x10BE17: wolf3d (wolf3d.c:18)
-==2777102==    by 0x10BDB5: main (main.c:11)
-==2777102== 
-*/
 void free_screen(screen_t *screen)
 {
     sfRenderWindow_destroy(screen->win);
