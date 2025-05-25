@@ -15,10 +15,13 @@ void free_entities(entities_t *ent)
     free(ent);
 }
 
-void save_game(game_t *game, game_handler_t *g_h)
+void save_game(game_t *game, game_handler_t *g_h, int finish)
 {
-    save_to_file(g_h, "have_been_f.bin", &game->have_been_f,
-        sizeof(game->have_been_f));
+    g_h->game->have_been_f = finish;
+    if (finish){
+        save_to_file(g_h, "have_been_f.bin", &finish,
+            sizeof(finish));
+        }
     save_to_file(g_h, "score_nb.bin", &game->score.score,
         sizeof(game->score.score));
     save_to_file(g_h, "score_time.bin", &game->score.score_mili_s,

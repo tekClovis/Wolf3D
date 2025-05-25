@@ -13,8 +13,9 @@
     #define M_START 0
     #define M_PAUSE 1
     #define M_SETTING 2
-    #define M_END 3
-    #define NB_MENU 4
+    #define M_GO 3
+    #define M_END 4
+    #define NB_MENU 5
 typedef struct game_handler_s game_handler_t;
 
 typedef struct boutons_s {
@@ -34,6 +35,7 @@ bool init_start_menu(menu_t *menu, game_handler_t *game_h);
 bool init_pause_menu(menu_t *menu, game_handler_t *game_h);
 bool init_settings_menu(menu_t *menu, game_handler_t *game_h);
 bool init_end_menu(menu_t *menu, game_handler_t *game_h);
+bool init_go_menu(menu_t *menu, game_handler_t *game_h);
 void min_sound(game_handler_t *g_h);
 void max_sound(game_handler_t *g_h);
 void max_music(game_handler_t *g_h);

@@ -8,7 +8,7 @@
 NAME = wolf3d
 
 
-SRC += main.c
+SRC = main.c
 SRC += src/wolf3d.c
 SRC += src/utils.c
 SRC += src/init/create_window.c
@@ -22,7 +22,8 @@ SRC += src/game/choose_window_mode.c
 SRC += src/init/init_game_handler.c
 ##SRC += src/game/3d/display_3d_map.c
 SRC += src/init/free_game.c
-SRC += src/init/free_game_handler.c
+SRC += src/free/free_game_handler.c
+SRC += src/free/free_screen.c
 SRC += src/init/init_game.c
 SRC += src/init/init_weapons.c
 SRC += src/init/init_player_ennemies.c
