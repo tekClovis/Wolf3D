@@ -10,7 +10,7 @@
 #include <time.h>
 #include "game.h"
 
-int wolf3d(void)
+int main(void)
 {
     game_handler_t game_handler;
     int error = 0;

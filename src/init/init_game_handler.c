@@ -87,13 +87,13 @@ int init_game_handler(game_handler_t *game_handler)
 {
     init_controller(&game_handler->controller);
     init_settings(&game_handler->settings);
-    game_handler->screen_mode = S_MENU;
+    game_handler->screen_mode = S_LORE;
     game_handler->game = NULL;
     game_handler->texture = init_textures();
     game_handler->sound = init_sound();
     game_handler->screen = init_screen(game_handler);
     if (!game_handler->sound || !game_handler->texture ||
-        !game_handler->screen)
+        !game_handler->screen || !init_lore(game_handler->screen))
         return 84;
     game_handler->general_clock = init_clock();
     if (game_handler->general_clock.clock == NULL)

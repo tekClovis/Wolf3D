@@ -8,19 +8,13 @@
 NAME = wolf3d
 
 
-SRC = main.c
-SRC += src/wolf3d.c
+SRC = src/wolf3d.c
 SRC += src/utils.c
 SRC += src/init/create_window.c
 SRC += src/init/init_time.c
-##SRC += src/init/init_wall.c
-##SRC += src/check/is_wall.c
-##SRC += src/game/move_player.c
 SRC += src/game/launch_game.c
 SRC += src/game/choose_window_mode.c
-##SRC += src/game/map/display_full_map.c
 SRC += src/init/init_game_handler.c
-##SRC += src/game/3d/display_3d_map.c
 SRC += src/init/free_game.c
 SRC += src/free/free_game_handler.c
 SRC += src/free/free_screen.c
@@ -66,6 +60,7 @@ SRC += src/game/entities_effects/move_ent.c
 SRC += src/game/weapons/anim_ent_shoot.c
 SRC += src/game/ennemies/move_ennemies.c
 SRC += src/game/ray_casting/draw_floor.c
+SRC += src/game/draw_lore.c
 
 OBJ = $(SRC:.c=.o)
 

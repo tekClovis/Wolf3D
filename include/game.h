@@ -55,6 +55,7 @@ typedef struct screen_s {
     sfRenderWindow *win;
     sfVideoMode win_mode;
     list_t *text;
+    sfText *lore;
 } screen_t;
 
 typedef struct game_handler_s {
@@ -97,6 +98,7 @@ int choose_window_mode(game_handler_t *game_handler);
 int display_full_map(game_handler_t *game_handler);
 int display_menu(game_handler_t *g_handler);
 int run_game(game_handler_t *g_h);
+int draw_lore(game_handler_t *g_h);
 
 /*Player*/
 void player_interaction(entities_t *player, game_handler_t *g_h);
