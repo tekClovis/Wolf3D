@@ -7,6 +7,7 @@
 
 #include "game.h"
 
+static
 bouton_t *set_buttons(img_t *released, void (*action)(game_handler_t *))
 {
     bouton_t *bouton = malloc(sizeof(bouton_t));

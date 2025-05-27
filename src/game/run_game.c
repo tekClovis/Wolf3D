@@ -52,6 +52,8 @@ bool pass_level(game_handler_t *g_h)
             && g_h->game->have_been_f == true)
             return true;
         g_h->game->ent->player->inventory->nb_of_gun++;
+        if (g_h->game->ent->player->inventory->nb_of_gun >= NB_GUN)
+            g_h->game->ent->player->inventory->nb_of_gun = NB_GUN;
         g_h->game->level.actual_level += 1;
         g_h->game->ent->player->property->life = 100;
         sfClock_restart(g_h->game->hud->level_launch.clock);

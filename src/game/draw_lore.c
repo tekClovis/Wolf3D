@@ -15,7 +15,7 @@ int draw_lore(game_handler_t *g_h)
         NULL);
     if (sfKeyboard_isKeyPressed(sfKeyEnter)) {
             g_h->screen_mode = S_MENU;
-            g_h->screen->act_menu = M_PAUSE;
+            g_h->screen->act_menu = M_START;
             }
     return 1;
 }
@@ -23,7 +23,7 @@ int draw_lore(game_handler_t *g_h)
 bool init_lore(screen_t *screen)
 {
     screen->lore = set_txt(40, sfColor_fromRGB(255, 255, 255),
-        (sfVector2f){700, 500}, 
+        (sfVector2f){700, 500},
         "1940, la seconde guerre mondiale est a son paroxysme,\n"
         "le Troisieme Reich mene des experiences terrifiantes dans\n"
         "le chateau de Wolfenstein, une forteresse sinistre perdue\n"
