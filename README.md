@@ -1,5 +1,9 @@
 # Wolf3D
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/tekClovis/tekClovis/main/gif/wolf3d.gif" width="640" alt="Wolf3D" />
+</p>
+
 A Wolfenstein 3D–style first-person shooter written in C with the CSFML library. Epitech project.
 
 1940, WWII. An OSS agent captured during an infiltration mission escapes from the dungeons of Wolfenstein castle and fights his way out, alone, to expose what he has seen.
